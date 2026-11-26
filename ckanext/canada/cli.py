@@ -136,9 +136,9 @@ class PortalUpdater(object):
             time.sleep(self.delay)
 
     def _portal_update(self, activity_date: Optional[str]):
-        outer_verbosity_trace = ''
+        outer_verbosity_trace = ['']
         if self.verbose >= 2:
-            outer_verbosity_trace += (
+            outer_verbosity_trace.append(
                 '\n    VERBOSITY OUTPUT FOR '
                 'portal_update command'
             )
@@ -154,19 +154,19 @@ class PortalUpdater(object):
                     seconds=(hours * 60 + minutes) * 60
                 )
                 if self.verbose >= 2:
-                    outer_verbosity_trace += (
+                    outer_verbosity_trace.append(
                         '\n    activity_datetime=%s' % activity_datetime
                     )
             else:
                 activity_datetime = isodate(activity_date, cast(Context, {}))
                 if self.verbose >= 2:
-                    outer_verbosity_trace += (
+                    outer_verbosity_trace.append(
                         '\n    activity_datetime=%s' % activity_datetime
                     )
         else:
             activity_datetime = datetime.now() - timedelta(days=7)
             if self.verbose >= 2:
-                outer_verbosity_trace += (
+                outer_verbosity_trace.append(
                     '\n    activity_datetime=%s' % activity_datetime
                 )
 
@@ -179,14 +179,20 @@ class PortalUpdater(object):
 
         # TODO: continue outer_verbosity_trace output...
 
-        def changed_package_id_runs(start_date: datetime,
-                                    verbose: Optional[int] = 0,
-                                    _outer_verbosity_trace: Optional[str] = '') -> \
+        def changed_package_id_runs(
+                start_date: datetime,
+                verbose: Optional[int] = 0,
+                # type_ignore_reason: [] allowed
+                _outer_verbosity_trace: Optional[List[str]] = []  # type: ignore
+            ) -> \
             Generator[Union[
                 Tuple[List[bytes], datetime],
                 Tuple[None, None]],
                 None, None]:
             # retrieve a list of changed packages from the registry
+            verbose = verbose if verbose else 0
+            if not _outer_verbosity_trace:
+                _outer_verbosity_trace = []
             retrieved_single_dataset = False
             while True:
                 packages, next_date = _changed_packages_since(
@@ -195,7 +201,7 @@ class PortalUpdater(object):
                     dataset_id=self.dataset_id)
                 if next_date is None or packages is None or retrieved_single_dataset:
                     if verbose >= 2:
-                        _outer_verbosity_trace += (
+                        _outer_verbosity_trace.append(
                             '\n    next_date=%s'
                             '\n    num packages=%s'
                             '\n    single package=%s'
@@ -205,7 +211,7 @@ class PortalUpdater(object):
                         )
                     return
                 if verbose >= 2:
-                    _outer_verbosity_trace += (
+                    _outer_verbosity_trace.append(
                         '\n    yielding Registry num packages=%s, next_date=%s'
                         ' to copy-datasets worker pool...' % (
                             len(packages) if packages else None, next_date)
@@ -235,7 +241,7 @@ class PortalUpdater(object):
             cmd.append('-i')
 
         if self.verbose >= 2:
-            outer_verbosity_trace += (
+            outer_verbosity_trace.append(
                 '\n    building copy-datasets worker pool'
                 '\n    num processes=%s'
                 '\n    mirror=%s'
@@ -259,7 +265,7 @@ class PortalUpdater(object):
                        action: str,
                        reason: str,
                        error: Optional[str] = None,
-                       verbose_str: Optional[str] = None):
+                       verbose_strings: Optional[List[str]] = None):
 
             if not log:
                 return
@@ -272,8 +278,8 @@ class PortalUpdater(object):
                 ]) + '\n')
             if error:
                 log.write(error + '\n')
-            if verbose_str:
-                log.write(verbose_str + '\n')
+            if verbose_strings:
+                log.write(''.join(verbose_strings) + '\n')
             log.flush()
 
         _start = 0
@@ -286,6 +292,7 @@ class PortalUpdater(object):
                 None,
                 "started updating from:",
                 activity_datetime.isoformat(),
+                None,
                 outer_verbosity_trace if self.verbose >= 2 else None)
 
             has_errored = False
@@ -299,6 +306,7 @@ class PortalUpdater(object):
                 job_ids, finished, result = pool.send(enumerate(packages))
                 stats = completion_stats(self.processes)
                 while result is not None:
+                    verbosity_trace = []
                     try:
                         package_id, action, reason, error, \
                             failure_reason, failure_trace, \
@@ -311,12 +319,13 @@ class PortalUpdater(object):
                                    'ERROR',
                                    'Error when processing worker pool',
                                    error_stack,
-                                   verbosity_trace if self.verbose >= 2 else None)
+                                   verbosity_trace if self.verbose >= 2 and
+                                   verbosity_trace else None)
                         if self.verbose:
                             print('ERROR', 'Error when processing worker pool',
                                   error_stack, file=sys.stderr)
-                        if self.verbose >= 2:
-                            print('VERBOSE', verbosity_trace)
+                        if self.verbose >= 2 and verbosity_trace:
+                            print('VERBOSE', ''.join(verbosity_trace))
                         raise click.ClickException(
                             "Worker proccess failed. See stderr or log file.")
                     _stats = next(stats)
@@ -329,7 +338,8 @@ class PortalUpdater(object):
                         has_errored = True
                     if self.verbose >= 2:
                         print(job_ids, _stats, finished, package_id,
-                              'VERBOSE', verbosity_trace)
+                              'VERBOSE', ''.join(verbosity_trace) if verbosity_trace
+                              else None)
 
                     append_log(finished, package_id, action, reason, error,
                                verbosity_trace if self.verbose >= 2 else None)
@@ -363,8 +373,13 @@ class PortalUpdater(object):
 
             if self.verbose >= 3:
                 _elapsed = time.perf_counter() - _start
-                verbosity_trace += (
-                    f'\n    portal_update took {_elapsed:.6f} seconds '
+                print(" --- END")
+                print(f'\n    portal_update took {_elapsed:.6f} seconds ')
+                append_log(
+                    None,
+                    None,
+                    " --- END",
+                    f'portal_update took {_elapsed:.6f} seconds'
                 )
 
             if has_errored:
@@ -380,7 +395,8 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                             since_time: Optional[datetime],
                             ids_only: Optional[bool] = False,
                             verbose: Optional[int] = 0,
-                            verbosity_trace: Optional[str] = '',
+                            # type_ignore_reason: [] allowed
+                            verbosity_trace: Optional[List[str]] = [],  # type: ignore
                             dataset_id: Optional[str] = None) -> \
                                 Union[Tuple[List[bytes], datetime],
                                       Tuple[None, None]]:
@@ -399,9 +415,12 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
     this is different than when no more changes found and (None, None)
     is returned.
     """
+    verbose = verbose if verbose else 0
+    if not verbosity_trace:
+        verbosity_trace = []
     if not since_time:
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    _changed_packages_since - '
                 'no since_time - returning None, None'
             )
@@ -415,21 +434,21 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
             since_time=since_time.isoformat())
     else:
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n   _changed_packages_since - '
                 'dataset_id=%s' % dataset_id
             )
         try:
             source_package = registry.action.package_show(id=dataset_id)
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    _changed_packages_since - '
                     'found single package with dataset_id=%s' % dataset_id
                 )
         except NotFound:
             print(dataset_id + " not found in database.", file=sys.stderr)
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    _changed_packages_since - '
                     'did not find single package with dataset_id=%s' % dataset_id
                 )
@@ -438,14 +457,14 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                 # ckanapi workers are expecting bytes
                 packages.append(source_package['id'].encode('utf-8'))
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    _changed_packages_since - adding '
                         ' Registry package ID %s to output...' %
                         source_package['id']
                     )
             else:
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    _changed_packages_since - Getting datastore_info and '
                         'resource views for Registry package %s' %
                         source_package['id']
@@ -461,7 +480,7 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
 
     if not data:
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    _changed_packages_since - '
                 'no data from changed_packages_activity_timestamp_since - '
                 'returning None, None'
@@ -472,14 +491,14 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
         if ids_only:
             print("Only retrieving changed package IDs...", file=sys.stderr)
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    _changed_packages_since - getting package IDs only...'
                 )
         else:
             print("Retrieving changed package dicts, "
                   "resource views, and resource dictionaries...", file=sys.stderr)
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    _changed_packages_since - getting package dicts, '
                     'resource views, and resource data dictionaries...'
                 )
@@ -488,14 +507,14 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
         try:
             source_package = registry.action.package_show(id=package_id)
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    _changed_packages_since - got Registry package '
                     'dict with dataset_id=%s' % package_id
                 )
         except NotFound:
             print(package_id + " not found in database.", file=sys.stderr)
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    _changed_packages_since - package '
                     'with dataset_id=%s not found on Registry' % package_id
                 )
@@ -504,14 +523,14 @@ def _changed_packages_since(registry: Union[LocalCKAN, RemoteCKAN],
                 # ckanapi workers are expecting bytes
                 packages.append(source_package['id'].encode('utf-8'))
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    _changed_packages_since - adding '
                         ' Registry package ID %s to output...' %
                         source_package['id']
                     )
             else:
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    _changed_packages_since - Getting datastore_info and '
                         'resource views for Registry package %s' %
                         source_package['id']
@@ -542,12 +561,12 @@ def _copy_datasets(source_datastore_uri: Optional[str],
     updated, deleted or left unchanged. This process outputs that
     action as a string 'created', 'updated', 'deleted' or 'unchanged'.
     """
-
-    _start = 0
-    if verbose >= 3:
-        _start = time.perf_counter()
-
+    verbose = verbose if verbose else 0
     with _quiet_int_pipe():
+        _start = 0
+        if verbose >= 3:
+            _start = time.perf_counter()
+
         portal = LocalCKAN(username=user)
 
         now = datetime.now()
@@ -561,7 +580,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
             error: str = ''
             do_update_sync_success_time = False
             # will output to stdout if -vvv
-            verbosity_trace: str = ''
+            verbosity_trace: List[str] = ['']
 
             @contextmanager
             def _capture_exception_details(_reason: str, _package_id: str):
@@ -593,7 +612,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
             source_pkg: Optional[Dict[str, Any]] = json.loads(package)
             package_id = source_pkg['id'] if source_pkg else 'unknown'
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n VERBOSITY OUTPUT FOR '
                     'PACKAGE ID: %s' % package_id
                 )
@@ -602,7 +621,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
             if source_pkg and source_pkg['state'] == 'deleted':
                 source_pkg = None
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Registry package is state=deleted'
                     )
 
@@ -611,16 +630,16 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 _type = source_pkg['type']
                 source_pkg = None
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Registry package type ("%s") is not in '
                         'the "public" types %s' %
                         (_type, ', '.join(list(DATASET_TYPES)))
                     )
 
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Trimming key/values from '
-                    'Registry package %s' % package_id
+                    'Registry package'
                 )
             _trim_package(source_pkg, verbose=verbose,
                           verbosity_trace=verbosity_trace)
@@ -631,7 +650,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     source_pkg = None
                     reason = 'marked not ready to publish'
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Registry '
                             'package ready_to_publish=false'
                         )
@@ -639,7 +658,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     source_pkg = None
                     reason = 'release date not set'
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Registry '
                             'package portal_release_date=None'
                         )
@@ -648,7 +667,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     source_pkg = None
                     reason = 'release date in future'
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Registry '
                             'package portal_release_date>%s' % str(now)
                         )
@@ -656,7 +675,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     # portal packages published public
                     source_pkg['private'] = False
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Setting '
                             'package private=False'
                         )
@@ -669,14 +688,14 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                         'id': package_id
                     })
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Found '
                             'Portal package with id:%s' % package_id
                         )
                 except (NotFound, NotAuthorized):
                     target_pkg = None
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Did not find '
                             'Portal package with id:%s' % package_id
                         )
@@ -689,7 +708,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                         ]) + '\n'
                     )
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    package_show action '
                             'raised a CKANAPIError or URLError'
                         )
@@ -698,12 +717,12 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     target_pkg = None
                     target_deleted = True
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Portal package state=deleted'
                         )
 
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Getting datastore_info and '
                         'resource views for Portal package'
                     )
@@ -711,7 +730,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     target_pkg, portal, verbose=verbose,
                     verbosity_trace=verbosity_trace)
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Trimming key/values from '
                         'Portal package'
                     )
@@ -723,7 +742,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
             # type_ignore_reason: future skip capabilities
             if action == 'skip':  # type: ignore
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    action=skip - passing...'
                     )
                 pass
@@ -733,14 +752,14 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 # do not update sync time if nothing changed
                 do_update_sync_success_time = False
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Portal package is None and Registry package is None'
                     )
             elif target_deleted and source_pkg is not None:
                 action = 'updated'
                 reason = 'undeleting on target'
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Portal package is in deleted state, Registry package '
                         'is not, undeleting on the Portal...'
                         '\n    ignore_hashes=%s' % ignore_hashes
@@ -757,7 +776,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     else:
                         action += ' (ignoring file hash checks) '
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Trying to sync resource views and data '
                             'dictionaries for Portal package %s' % source_pkg['id']
                         )
@@ -773,7 +792,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                         reason += ' ERRORED'
                         do_update_sync_success_time = False
                         if verbose >= 2:
-                            verbosity_trace += (
+                            verbosity_trace.append(
                                 '\n    Portal package failed to undelete, '
                                 'see stderr or logs...'
                             )
@@ -781,7 +800,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     reason += ' ERRORED'
                     do_update_sync_success_time = False
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Portal package failed to undelete, '
                             'see stderr or logs...'
                         )
@@ -790,7 +809,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 if ignore_hashes:
                     action += ' (ignoring file hash checks) '
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Portal package is None, Registry package '
                         'is not, creating new package on the Portal...'
                         '\n    ignore_hashes=%s' % ignore_hashes
@@ -801,7 +820,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 # only try adding datastores and views if no errors
                 if not failure_reason:
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Trying to sync resource views and data '
                             'dictionaries for Portal package %s' % source_pkg['id']
                         )
@@ -817,7 +836,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                         reason += ' ERRORED'
                         do_update_sync_success_time = False
                         if verbose >= 2:
-                            verbosity_trace += (
+                            verbosity_trace.append(
                                 '\n    Portal package failed to be created, '
                                 'see stderr or logs...'
                             )
@@ -825,14 +844,14 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     reason += ' ERRORED'
                     do_update_sync_success_time = False
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Portal package failed to be created, '
                             'see stderr or logs...'
                         )
             elif source_pkg is None:
                 action = 'deleted'
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Registry package is None (state=deleted or NotFound) '
                         'deleting the package from the Portal...'
                     )
@@ -843,7 +862,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     reason += ' ERRORED'
                     do_update_sync_success_time = False
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Portal package failed to get deleted, '
                             'see stderr or logs...'
                         )
@@ -851,7 +870,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 action = 'unchanged'
                 reason = 'no difference found'
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Portal is the same as Registry '
                         'package, skipping...'
                         '\n    ignore_hashes=%s' % ignore_hashes
@@ -864,7 +883,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     action += ' (ignoring file hash checks) '
                     do_update_sync_success_time = True
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Trying to sync resource views and data '
                             'dictionaries for Portal package %s' % source_pkg['id']
                         )
@@ -880,14 +899,14 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                         reason += ' ERRORED'
                         do_update_sync_success_time = False
                         if verbose >= 2:
-                            verbosity_trace += (
+                            verbosity_trace.append(
                                 '\n    Portal package failed to sync, '
                                 'see stderr or logs...'
                             )
             elif target_pkg is not None:
                 action = 'updated'
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Portal package needs updating... '
                         '\n    ignore_hashes=%s' % ignore_hashes
                     )
@@ -899,7 +918,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                         if source_pkg.get(key) !=
                         target_pkg.get(key)
                     }
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Registry pkg_dict is different '
                         'than the Portal pkg_dict. (Registry, Portal):'
                         '\n    %r' % _diff
@@ -916,7 +935,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 # only try adding datastores and views if no errors
                 if not failure_reason:
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Trying to sync resource views and data '
                             'dictionaries for Portal package %s' % source_pkg['id']
                         )
@@ -932,7 +951,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                         reason += ' ERRORED'
                         do_update_sync_success_time = False
                         if verbose >= 2:
-                            verbosity_trace += (
+                            verbosity_trace.append(
                                 '\n    Portal package failed to sync, '
                                 'see stderr or logs...'
                             )
@@ -940,7 +959,7 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                     reason += ' ERRORED'
                     do_update_sync_success_time = False
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    Portal package failed to sync, '
                             'see stderr or logs...'
                         )
@@ -954,10 +973,16 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                 # do not update sync time if we could not match a condition
                 do_update_sync_success_time = False
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Could not determine a sync condition for '
                         'package %s' % package_id
                     )
+
+            if verbose >= 3:
+                _elapsed = time.perf_counter() - _start
+                verbosity_trace.append(
+                    f'\n    copy_dataset took {_elapsed:.6f} seconds '
+                )
 
             sys.stdout.write(json.dumps([package_id,
                                          action,
@@ -968,12 +993,6 @@ def _copy_datasets(source_datastore_uri: Optional[str],
                                          verbosity_trace,
                                          do_update_sync_success_time]) + '\n')
             sys.stdout.flush()
-
-    if verbose >= 3:
-        _elapsed = time.perf_counter() - _start
-        verbosity_trace += (
-            f'\n    copy_dataset took {_elapsed:.6f} seconds '
-        )
 
 
 def _changed_datasets(since_date: str, server: Optional[str],
@@ -1280,7 +1299,8 @@ def _bulk_validate():
 
 def _trim_package(pkg: Optional[Dict[str, Any]] = None,
                   verbose: Optional[int] = 0,
-                  verbosity_trace: Optional[str] = ''):
+                  # type_ignore_reason: [] allowed
+                  verbosity_trace: Optional[List[str]] = []):  # type: ignore
     """
     PortalUpdater member: removes keys from provided package dict.
 
@@ -1288,18 +1308,21 @@ def _trim_package(pkg: Optional[Dict[str, Any]] = None,
     or updating/creating packages.  Also try to convert types and
     create missing fields that will be present in package_show.
     """
+    verbose = verbose if verbose else 0
+    if not verbosity_trace:
+        verbosity_trace = []
     # XXX full of custom hacks and deep knowledge of our schema :-(
     if not pkg:
         if verbose >= 2:
-            verbosity_trace += (
-                '\n    No package supplied...'
+            verbosity_trace.append(
+                '\n    Package is None, skipping...'
             )
         return
     for k in PACKAGE_TRIM_FIELDS:
         if k in pkg:
             del pkg[k]
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Trim: removed %s '
                     'from the package metadata' % k
                 )
@@ -1308,7 +1331,7 @@ def _trim_package(pkg: Optional[Dict[str, Any]] = None,
             if k in r:
                 del r[k]
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Trim: removed %s '
                         'from the resource ("%s") metadata' % (k, r['id'])
                     )
@@ -1316,17 +1339,17 @@ def _trim_package(pkg: Optional[Dict[str, Any]] = None,
             r['datastore_contains_all_records_of_source_file'] = \
                 toolkit.asbool(r['datastore_contains_all_records_of_source_file'])
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Trim: set datastore_contains_all_records_of_source_file=%s '
                     'for the resource ("%s")' % (
                         toolkit.asbool(
                             r['datastore_contains_all_records_of_source_file']),
-                            r['id'])
+                        r['id'])
                 )
         if r.get('url_type') == 'upload' and r['url']:
             r['url'] = r['url'].rsplit('/', 1)[-1]
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Trim: set url to %s '
                     'for the resource ("%s")' % (r['url'], r['id'])
                 )
@@ -1334,46 +1357,51 @@ def _trim_package(pkg: Optional[Dict[str, Any]] = None,
             if k not in r:
                 r[k] = None
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Trim: set %s to None '
                         'for the resource ("%s")' % (k, r['id'])
                     )
     if 'name' not in pkg or not pkg['name']:
         pkg['name'] = pkg['id']
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Trim: set name=id ("%s")' % pkg['name']
             )
     if 'type' not in pkg:
         pkg['type'] = 'dataset'
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Trim: set type=dataset'
             )
     if 'state' not in pkg:
         pkg['state'] = 'active'
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Trim: set state=active'
             )
     for k in ['url']:
         if k not in pkg:
             pkg[k] = ''
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Trim: set %s=""' % k
                 )
 
 
-def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
-                             resource_file_hashes: Dict[str, Any],
-                             source_datastore_uri: Optional[str],
-                             verbose: Optional[int] = 0,
-                             verbosity_trace: Optional[str] = '') \
-                             -> Tuple[str, str, str, str]:
+def _add_datastore_and_views(
+        package: Dict[str, Any], portal: LocalCKAN,
+        resource_file_hashes: Dict[str, Any],
+        source_datastore_uri: Optional[str],
+        verbose: Optional[int] = 0,
+        # type_ignore_reason: [] allowed
+        verbosity_trace: Optional[List[str]] = []  # type: ignore
+            ) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs DataDictionaries, Resource Views, and DataStore tables.
     """
+    verbose = verbose if verbose else 0
+    if not verbosity_trace:
+        verbosity_trace = []
     # create datastore table and views for each resource of the package
     action: str = ''
     error: str = ''
@@ -1382,14 +1410,14 @@ def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
     for resource in package['resources']:
         res_id = resource['id']
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Trying to sync resource views and data '
                 'dictionary for Portal resource %s' % res_id
             )
         if res_id in package.keys():
             if 'data_dict' in package[res_id].keys():
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Trying to sync data dictionary '
                         'and datastore records for Portal resource %s' % res_id
                     )
@@ -1403,13 +1431,13 @@ def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
                                       verbosity_trace=verbosity_trace)
                 if verbose >= 3:
                     _elapsed = time.perf_counter() - _start
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         f'\n    _add_to_datastore took {_elapsed:.6f} seconds '
                     )
                 action += _action
                 error += _error
                 if verbose >= 2 and (_error or _failure_reason or _failure_trace):
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Portal resource data dictionary and datastore records '
                         'failed to sync, see stderr or logs...'
                     )
@@ -1423,7 +1451,7 @@ def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
                     failure_trace = _failure_trace
             if 'views' in package[res_id].keys():
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Trying to sync resource '
                         'views for Portal resource %s' % res_id
                     )
@@ -1435,13 +1463,13 @@ def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
                                verbosity_trace=verbosity_trace)
                 if verbose >= 3:
                     _elapsed = time.perf_counter() - _start
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         f'\n    _add_views took {_elapsed:.6f} seconds '
                     )
                 action += _action
                 error += _error
                 if verbose >= 2 and (_error or _failure_reason or _failure_trace):
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Portal resource views '
                         'failed to sync, see stderr or logs...'
                     )
@@ -1454,22 +1482,27 @@ def _add_datastore_and_views(package: Dict[str, Any], portal: LocalCKAN,
                     failure_reason = _failure_reason
                     failure_trace = _failure_trace
         elif verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    WARNING: Resource ID %s not in package sync keys' % res_id
             )
     return action, error, failure_reason, failure_trace
 
 
-def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
-                      resource_details: Dict[str, Any],
-                      resource_file_hashes: Dict[str, Any],
-                      source_datastore_uri: Optional[str],
-                      verbose: Optional[int] = 0,
-                      verbosity_trace: Optional[str] = '') \
-                      -> Tuple[str, str, str, str]:
+def _add_to_datastore(
+        portal: LocalCKAN, resource: Dict[str, Any],
+        resource_details: Dict[str, Any],
+        resource_file_hashes: Dict[str, Any],
+        source_datastore_uri: Optional[str],
+        verbose: Optional[int] = 0,
+        # type_ignore_reason: [] allowed
+        verbosity_trace: Optional[List[str]] = []  # type: ignore
+            ) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs DataDictionaries and DataStore tables.
     """
+    verbose = verbose if verbose else 0
+    if not verbosity_trace:
+        verbosity_trace = []
     action: str = ''
     error: str = ''
     failure_reason: str = ''
@@ -1514,7 +1547,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
         portal.call_action('datastore_search',
                            {'resource_id': resource['id'], 'limit': 0})
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    datastore_search(limit=0) succeeded '
                 'for resource %s' % resource['id']
             )
@@ -1522,37 +1555,55 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
               resource_file_hashes.get(resource['id']) and
               resource_file_hashes.get(resource['id']) == resource.get('hash')
             ):
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    file hash ("%s") is the same ' % resource.get('hash')
                 )
-        _r_datastore_dictionary = _datastore_dictionary(
+        _p_datastore_dictionary = _datastore_dictionary(
             portal, resource['id'], verbose=verbose,
             verbosity_trace=verbosity_trace)
         if verbose >= 2:
-            if _r_datastore_dictionary == resource_details['data_dict']:
-                verbosity_trace += (
+            if _p_datastore_dictionary == resource_details['data_dict']:
+                verbosity_trace.append(
                     '\n    Registry data dictionary is the same '
                     'as the Portal data dictionary'
                 )
             else:
-                _diff = {
-                    key: (resource_details['data_dict'].get(key),
-                          _r_datastore_dictionary.get(key))
-                    for key in resource_details['data_dict'].keys() |
-                    _r_datastore_dictionary.keys()
-                    if resource_details['data_dict'].get(key) !=
-                    _r_datastore_dictionary.get(key)
+                _registry_order = [
+                    f['datastore_id'] for f in resource_details['data_dict']
+                ]
+                _portal_order = [
+                    f['datastore_id'] for f in _p_datastore_dictionary
+                ]
+                _registry = {
+                    f['datastore_id']: f
+                    for f in resource_details['data_dict']
                 }
-                verbosity_trace += (
+                _portal = {
+                    f['datastore_id']: f
+                    for f in _p_datastore_dictionary
+                }
+                _diff = {
+                    key: (_registry.get(key), _portal.get(key))
+                    for key in _registry.keys() | _portal.keys()
+                    if _registry.get(key) != _portal.get(key)
+                }
+                verbosity_trace.append(
                     '\n    Registry data dictionary is different '
                     'than the Portal data dictionary. (Registry, Portal):'
                     '\n    %r' % _diff
                 )
+                if _registry_order != _portal_order:
+                    verbosity_trace.append(
+                        '\n    Datastore field order has changed.'
+                        '\n    Registry field order: %r'
+                        '\n    Portal field order: %r' %
+                        (_registry_order, _portal_order)
+                    )
         if (
           resource_file_hashes.get(resource['id'])
           and resource_file_hashes.get(resource['id']) ==
           resource.get('hash')
-          and _r_datastore_dictionary ==
+          and _p_datastore_dictionary ==
           resource_details['data_dict']):
             if verbose:
                 action += '\n  File hash and Data Dictionary '\
@@ -1562,7 +1613,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
         else:
             with _capture_exception_details('datastore_delete', resource['id']):
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Deleting Portal datastore for resource %s '
                         'in order to recreate it with datastore_create' %
                         resource['id']
@@ -1577,7 +1628,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
                       'resource %s...trying to create it...' %\
                       resource['id']
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Portal datastore does not exist for resource %s.'
                 'Going to create it with datastore_create' %
                 resource['id']
@@ -1587,7 +1638,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
     datastore_created = False
     with _capture_exception_details('datastore_create', resource['id']):
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Trying to datastore_create for resource %s.' %
                 resource['id']
             )
@@ -1599,7 +1650,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
         action += '\n  datastore-created for ' + resource['id']
         datastore_created = True
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Successfully created datastore with '
                 'datastore_create for resource %s.' %
                 resource['id']
@@ -1609,7 +1660,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
         # load data only if datastore_create was successful
         if not source_datastore_uri:
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Failed to dump and load datastore data '
                     'from the Registry to the Portal for resource %s. '
                     'No source (Registry) database URI was specified.' %
@@ -1633,7 +1684,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
         _out, err = cmd2.communicate()
         if verbose >= 3:
             _elapsed = time.perf_counter() - _start
-            verbosity_trace += (
+            verbosity_trace.append(
                 f'\n    pg_dump and load took {_elapsed:.6f} seconds '
             )
         if not err:
@@ -1646,13 +1697,13 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
                 else:
                     action += '\n    There are no DataStore fields!!!'
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Successfully pg_dump and '
                     'load for resource %s ' % resource['id']
                 )
         else:
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Failed to pg_dump and '
                     'load for resource %s '
                     '\n    %s' % (resource['id'], err)
@@ -1670,7 +1721,7 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
                 # output pg_dump and psql load command errors
                 failure_trace += '\n\npsql command error: %s' % err
     elif verbose >= 2:
-        verbosity_trace += (
+        verbosity_trace.append(
             '\n    Failed to create datastore with '
             'datastore_create for resource %s.' %
             resource['id']
@@ -1679,13 +1730,19 @@ def _add_to_datastore(portal: LocalCKAN, resource: Dict[str, Any],
     return action, error, failure_reason, failure_trace
 
 
-def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
-               resource_details: Dict[str, Any],
-               verbose: Optional[int] = 0,
-               verbosity_trace: Optional[str] = '') -> Tuple[str, str, str, str]:
+def _add_views(
+        portal: LocalCKAN, resource: Dict[str, Any],
+        resource_details: Dict[str, Any],
+        verbose: Optional[int] = 0,
+        # type_ignore_reason: [] allowed
+        verbosity_trace: Optional[List[str]] = []  # type: ignore
+            ) -> Tuple[str, str, str, str]:
     """
     PortalUpdater member: Syncs Resource Views.
     """
+    verbose = verbose if verbose else 0
+    if not verbosity_trace:
+        verbosity_trace = []
     action: str = ''
     error: str = ''
     failure_reason: str = ''
@@ -1732,12 +1789,12 @@ def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
     target_views = portal.call_action('resource_view_list',
                                       {'id': resource['id']})
     if verbose >= 2:
-        verbosity_trace += (
+        verbosity_trace.append(
             '\n    Portal resource %s has %s views ' %
             (resource['id'], len(target_views))
         )
         if len(target_views) > 0:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    Trying to create/update Portal resource views...'
             )
     for src_view in resource_details['views']:
@@ -1749,7 +1806,7 @@ def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
 
         if view_action:
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Executing %s on Portal resource view %s '
                     'for resource %s' %
                     (view_action, src_view['id'], resource['id'])
@@ -1770,7 +1827,7 @@ def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
         if to_delete:
             view_action = 'resource_view_delete'
             if verbose >= 2:
-                verbosity_trace += (
+                verbosity_trace.append(
                     '\n    Executing %s on Portal resource view %s '
                     'for resource %s' %
                     (view_action, target_view['id'], resource['id'])
@@ -1786,11 +1843,16 @@ def _add_views(portal: LocalCKAN, resource: Dict[str, Any],
     return action, error, failure_reason, failure_trace
 
 
-def get_datastore_and_views(package: Optional[Dict[str, Any]],
-                            ckan_instance: Union[LocalCKAN, RemoteCKAN],
-                            verbose: Optional[int] = 0,
-                            verbosity_trace: Optional[str] = '') -> \
-                                Optional[Dict[str, Any]]:
+def get_datastore_and_views(
+        package: Optional[Dict[str, Any]],
+        ckan_instance: Union[LocalCKAN, RemoteCKAN],
+        verbose: Optional[int] = 0,
+        # type_ignore_reason: [] allowed
+        verbosity_trace: Optional[List[str]] = []  # type: ignore
+            ) -> Optional[Dict[str, Any]]:
+    verbose = verbose if verbose else 0
+    if not verbosity_trace:
+        verbosity_trace = []
     if package and 'resources' in package:
         _start = 0
         if verbose >= 3:
@@ -1804,7 +1866,7 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                     print("  Getting resource views and DataStore fields...",
                           file=sys.stderr)
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    DataStore is active for resource %s. '
                         'Getting resource views and DataStore fields...' %
                         resource['id']
@@ -1826,7 +1888,7 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                             "data_dict": _data_dict,
                         }
                         if verbose >= 2:
-                            verbosity_trace += (
+                            verbosity_trace.append(
                                 '\n    Resource %s'
                                 '\n    file hash: %s'
                                 '\n    number of views: %s'
@@ -1840,7 +1902,7 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                               "resource views or DataStore fields...",
                               file=sys.stderr)
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    WARNING: Did not find resource views '
                             'or DataStore fields for resource %s' %
                             resource['id']
@@ -1848,7 +1910,7 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                     pass
                 except ValidationError as e:
                     if verbose >= 2:
-                        verbosity_trace += (
+                        verbosity_trace.append(
                             '\n    ERROR: raised when trying to get '
                             'views or DataStore fields for resource %s'
                             '\n    %s' %
@@ -1866,7 +1928,7 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                     print("  Only getting resource views...",
                           file=sys.stderr)
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    DataStore is inactive for resource %s. '
                         'Only getting resource views...' %
                         resource['id']
@@ -1877,24 +1939,19 @@ def get_datastore_and_views(package: Optional[Dict[str, Any]],
                     package[resource['id']] = {
                         "views": resource_views}
                 if verbose >= 2:
-                    verbosity_trace += (
+                    verbosity_trace.append(
                         '\n    Resource %s number of views: %s ' %
                         (resource['id'], len(resource_views))
                     )
         if verbose >= 3:
-            print('    ')
-            print('DEBUGGING::')
-            print('    ')
-            print('SHOULD DO verbosity_trace STUFF')
-            print('    ')
             _elapsed = time.perf_counter() - _start
-            verbosity_trace += (
+            verbosity_trace.append(
                 f'\n    get_datastore_and_views took {_elapsed:.6f} seconds '
             )
     else:
         if verbose >= 2:
-            verbosity_trace += (
-                '\n    Package has no resources...'
+            verbosity_trace.append(
+                '\n    Package has no resources, skipping...'
             )
     return package
 
@@ -1931,12 +1988,18 @@ def _update_inventory_votes(json_name: str):
                 records=update)
 
 
-def _datastore_dictionary(ckan_instance: Union[LocalCKAN, RemoteCKAN],
-                          resource_id: str, verbose: Optional[int] = 0,
-                          verbosity_trace: Optional[str] = '') -> List[Dict[str, Any]]:
+def _datastore_dictionary(
+        ckan_instance: Union[LocalCKAN, RemoteCKAN],
+        resource_id: str, verbose: Optional[int] = 0,
+        # type_ignore_reason: [] allowed
+        verbosity_trace: Optional[List[str]] = []  # type: ignore
+        ) -> List[Dict[str, Any]]:
     """
     Return the data dictionary info for a resource
     """
+    verbose = verbose if verbose else 0
+    if not verbosity_trace:
+        verbosity_trace = []
     try:
         return [
             f for f in ckan_instance.call_action('datastore_search', {
@@ -1946,7 +2009,7 @@ def _datastore_dictionary(ckan_instance: Union[LocalCKAN, RemoteCKAN],
             if not f['id'].startswith('_')]
     except (NotFound, NotAuthorized):
         if verbose >= 2:
-            verbosity_trace += (
+            verbosity_trace.append(
                 '\n    datastore_search returned NotFound '
                 'for resource %s' % resource_id
             )
@@ -2132,6 +2195,7 @@ def copy_datasets(mirror: Optional[bool] = False,
     Full Usage:\n
         canada copy-datasets [-m] [-o <source url>]
     """
+    verbose = verbose if verbose else 0
     _copy_datasets(source,
                    _get_user(ckan_user),
                    mirror,
@@ -2344,6 +2408,7 @@ def _get_datastore_tables(verbose: Optional[int] = 0) -> List[str]:
 
     Ignores tables starting with underscores.
     """
+    verbose = verbose if verbose else 0
     tables = get_action('datastore_search')(_get_site_user_context(),
                                             {"resource_id": "_table_metadata",
                                              "offset": 0,
@@ -2368,6 +2433,7 @@ def _get_datastore_resources(valid: Optional[bool] = True,
 
     Defaults to only return valid resources.
     """
+    verbose = verbose if verbose else 0
     results = True
     counter = 0
     batch_size = 1000
@@ -2439,6 +2505,7 @@ def _get_datastore_count(context: Context,
     """
     Returns the count of rows in the DataStore table for a given resource ID.
     """
+    verbose = verbose if verbose else 0
     if verbose:
         click.echo("%s/%s -- Checking DataStore record "
                    "count for Resource %s" % (status, max_count, resource_id))
@@ -2495,6 +2562,7 @@ def purge_datatables_views(
         2. Purge DataTables Views for empty DataStore tables;
         3. Purge DataTables Views for non DataStore Resources.
     """
+    verbose = verbose if verbose else 0
     if not quiet:
         click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
 
@@ -2639,6 +2707,7 @@ def purge_datastore_tables(
         3. Set datastore_active flag to False on those Resources
            (via datastore_delete action).
     """
+    verbose = verbose if verbose else 0
     if not quiet:
         click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
 
@@ -2785,7 +2854,7 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
     """
     Re-submits valid DataStore Resources to Validation OR Xloader (use --xloader).
     """
-
+    verbose = verbose if verbose else 0
     try:
         get_action('resource_validation_run')
     except Exception:
@@ -2984,7 +3053,7 @@ def openness_report(
         details: Optional[bool] = False,
         dump: Optional[Union['click.File', bool]] = False,
         package_id: Optional[str] = 'c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7'):
-
+    verbose = verbose if verbose else 0
     lc = LocalCKAN()
 
     try:
@@ -3110,6 +3179,7 @@ def delete_old_triggers(verbose: Optional[int] = 0):
     """
     Delete old, unused database triggers.
     """
+    verbose = verbose if verbose else 0
     _drop_function('no_surrounding_whitespace_error', verbose)
     _drop_function('year_optional_month_day_error', verbose)
     _drop_function('choices_from', verbose)
@@ -3118,6 +3188,7 @@ def delete_old_triggers(verbose: Optional[int] = 0):
 
 
 def _drop_function(name: str, verbose: Optional[int] = 0):
+    verbose = verbose if verbose else 0
     sql = '''
         DROP FUNCTION {name};
         '''.format(name=datastore.identifier(name))
@@ -3147,6 +3218,7 @@ def export_pd_reporting_info(since: str,
                              output: 'click.File',
                              lite: Optional[bool] = False,
                              verbose: Optional[int] = 0):
+    verbose = verbose if verbose else 0
     if verbose:
         click.echo('Compiling PD names...')
     type_names = {}
