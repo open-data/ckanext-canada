@@ -30,10 +30,14 @@ setup(
     canada_security=ckanext.canada.plugin:CanadaSecurityPlugin
     canada_theme=ckanext.canada.plugin:CanadaThemePlugin
 
+    [ckan.rdf.profiles]
+    canada_croissant=ckanext.canada.profiles.croissant:CanadaCroissantProfile
+
     [babel.extractors]
     ckan = ckan.lib.extract:extract_ckan
     pd = ckanext.canada.extract:extract_pd
     """,
+
     message_extractors={
         'ckanext': [
             ('**/tables/**.yaml', 'pd', None),
