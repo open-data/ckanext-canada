@@ -66,6 +66,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
+    datatables_col_class: col-md pd-datatables-primary-key-offset-_id
     format_type:
       en: Free text
       fr: Texte libre
@@ -89,6 +90,7 @@ resources:
     obligation: Mandatory
     form_required: true
     excel_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
     validation:
       en: This field must not be empty
       fr: Ce champ ne doit pas être vide
