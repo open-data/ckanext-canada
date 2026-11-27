@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-27 12:49+0000\n"
+"POT-Creation-Date: 2026-11-27 13:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -961,6 +961,14 @@ msgstr "monétaire"
 #: ckanext/canada/strings.py:164
 msgid "boolean"
 msgstr "booléen"
+
+#: ckanext/canada/strings.py:166
+msgid "open_canada_id"
+msgstr "ouvert_canada_id"
+
+#: ckanext/canada/strings.py:167
+msgid "Unique record identifier on open.canada.ca"
+msgstr "Identifiant unique de l’enregistrement sur ouvert.canada.ca"
 
 #: ckanext/canada/validators.py:140
 #, python-format
@@ -2199,20 +2207,17 @@ msgstr "Dossiers sur les actes répréhensibles fondés"
 #: ckanext/canada/tables/demo/foreign_keys.yaml:6
 #: ckanext/canada/tables/demo/foreign_keys.yaml:7
 msgid "Demo Foreign Keys Dataset Type"
-msgstr ""
-"Type de jeu de données de démonstration pour les clés étrangères"
+msgstr "Type de jeu de données de démonstration pour les clés étrangères"
 
 #. Resource Title for PD Type: demo_foreign_keys
 #: ckanext/canada/tables/demo/foreign_keys.yaml:32
 msgid "Demo Foreign Keys Parent Resource"
-msgstr ""
-"Ressource parent de démonstration pour les clés étrangères"
+msgstr "Ressource parent de démonstration pour les clés étrangères"
 
 #. Resource Title for PD Type: demo_foreign_keys
 #: ckanext/canada/tables/demo/foreign_keys.yaml:221
 msgid "Demo Foreign Keys Child Resource"
-msgstr ""
-"Ressource enfant de démonstration pour les clés étrangères"
+msgstr "Ressource enfant de démonstration pour les clés étrangères"
 
 #. Title for PD Type: demo_sequence
 #. Label for PD Type: demo_sequence
@@ -2221,9 +2226,7 @@ msgstr ""
 #: ckanext/canada/tables/demo/id_sequence.yaml:6
 #: ckanext/canada/tables/demo/id_sequence.yaml:7
 msgid "Demo ID Sequence Dataset Type"
-msgstr ""
-"Type de jeu de données de séquence "
-"d’identifiants de démonstration"
+msgstr "Type de jeu de données de séquence d’identifiants de démonstration"
 
 #. Resource Title for PD Type: demo_sequence
 #. Resource Title for PD Type: demo_info
@@ -2239,9 +2242,7 @@ msgstr "Ressource de collecte d’informations de démonstration"
 #: ckanext/canada/tables/demo/info_collection.yaml:6
 #: ckanext/canada/tables/demo/info_collection.yaml:7
 msgid "Demo Info Collection Dataset Type"
-msgstr ""
-"Type de jeu de données de collecte "
-"d’informations de démonstration"
+msgstr "Type de jeu de données de collecte d’informations de démonstration"
 
 #: ckanext/canada/templates/base.html:5
 msgid "Open Data Registry"
@@ -2837,19 +2838,17 @@ msgid ""
 " access special parts of the web application to demo certain features."
 msgstr ""
 "En tant qu’administrateur système, vous disposez d’un contrôle complet "
-"sur cette instance de CKAN. Vous avez accès à certaines sections spéciales "
-"de l’application Web pour faire la démonstration de fonctionnalités "
-"particulières."
+"sur cette instance de CKAN. Vous avez accès à certaines sections "
+"spéciales de l’application Web pour faire la démonstration de "
+"fonctionnalités particulières."
 
 #: ckanext/canada/templates/admin/demo.html:17
 msgid "Image of the info collection Registry screen"
-msgstr ""
-"Image de l’écran du Registre de collecte d’informations"
+msgstr "Image de l’écran du Registre de collecte d’informations"
 
 #: ckanext/canada/templates/admin/demo.html:19
 msgid "Info Collection Type for Proactive Disclosure"
-msgstr ""
-"Type de collecte d’informations pour la divulgation proactive"
+msgstr "Type de collecte d’informations pour la divulgation proactive"
 
 #: ckanext/canada/templates/admin/demo.html:20
 msgid ""
@@ -2864,18 +2863,15 @@ msgstr ""
 
 #: ckanext/canada/templates/admin/demo.html:21
 msgid "Go to Info Collection Demo"
-msgstr ""
-"Accéder à la démonstration de la collecte d’informations"
+msgstr "Accéder à la démonstration de la collecte d’informations"
 
 #: ckanext/canada/templates/admin/demo.html:30
 msgid "Image of the id sequence collection Registry screen"
-msgstr ""
-"Image de l’écran du Registre de collecte de séquences d’identifiants"
+msgstr "Image de l’écran du Registre de collecte de séquences d’identifiants"
 
 #: ckanext/canada/templates/admin/demo.html:32
 msgid "Automatic ID Sequences for Proactive Disclosure"
-msgstr ""
-"Séquences automatiques d’identifiants pour la divulgation proactive"
+msgstr "Séquences automatiques d’identifiants pour la divulgation proactive"
 
 #: ckanext/canada/templates/admin/demo.html:33
 msgid ""
@@ -2886,12 +2882,11 @@ msgstr ""
 "Démonstration du fonctionnement de ce type de divulgation proactive avec "
 "des identifiants d’enregistrement générés automatiquement. Présentation "
 "de la façon dont les utilisateurs peuvent modifier les clés primaires en "
-"faisant référence à l’identifiant open_canada_id généré."
+"faisant référence à l’identifiant ouvert_canada_id généré."
 
 #: ckanext/canada/templates/admin/demo.html:34
 msgid "Go to ID Sequence Demo"
-msgstr ""
-"Accéder à la démonstration des séquences d’identifiants"
+msgstr "Accéder à la démonstration des séquences d’identifiants"
 
 #: ckanext/canada/templates/admin/demo.html:43
 msgid "Image of the foreign keys JSON output"

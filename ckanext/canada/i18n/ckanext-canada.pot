@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-canada 0.4.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-27 12:49+0000\n"
+"POT-Creation-Date: 2026-11-27 13:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -868,6 +868,14 @@ msgstr ""
 
 #: ckanext/canada/strings.py:164
 msgid "boolean"
+msgstr ""
+
+#: ckanext/canada/strings.py:166
+msgid "open_canada_id"
+msgstr ""
+
+#: ckanext/canada/strings.py:167
+msgid "Unique record identifier on open.canada.ca"
 msgstr ""
 
 #: ckanext/canada/validators.py:140
