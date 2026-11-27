@@ -283,7 +283,7 @@ resources:
 
         IF errors = '{{}}' THEN
           IF NOT importing AND TG_OP = 'INSERT' THEN
-            NEW._id := nextval('demo_sequence_seq') * 100 + 99;
+            NEW._id := nextval({sequence_name}) * 100 + 99;
             NEW._id := NEW._id - (NEW._id - {sequence_modulo_offset}) % 97;
           END IF;
           RETURN NEW;
