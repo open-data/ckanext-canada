@@ -1,0 +1,37 @@
+{#
+Base template snippet for Recombinant forms.
+
+rcomb           - The Recombinant dict
+resource        - The resource dict
+errors          - List of error strings
+chromo          - The Recombinant Chromo dict
+geno            - The Recombinant Geno dict
+record          - The record dict
+choice_fields   - Dict of choice fields
+pk_fields       - List of strings of primary keys
+#}
+{% ckan_extends %}
+
+{% block display_card_footer %}
+  <div class="canada-recombinant-display-card">
+    {{ super() }}
+    {%- if record['record_created'] -%}
+      <span class="canada-recombinant-display-card-separator">|</span>
+      {%- set record_created_field = h.recombinant_get_field(chromo['resource_name'], 'record_created') -%}
+      {%- set record_created_field_label = h.recombinant_language_text(record_created_field.label or 'Record Creation Time') -%}
+      <div><strong><i class="fa fa-clock" aria-hidden="true"></i>&nbsp;{{ record_created_field_label }}{{ _(':') }}</strong><span>&nbsp;{{ h.render_datetime(record['record_created'], '%Y-%m-%d %I:%M:%S %p %Z') }}</span></div>
+    {%- endif -%}
+    {%- if record['record_modified'] -%}
+      <span class="canada-recombinant-display-card-separator">|</span>
+      {%- set record_modified_field = h.recombinant_get_field(chromo['resource_name'], 'record_modified') -%}
+      {%- set record_modified_field_label = h.recombinant_language_text(record_modified_field.label or 'Last Record Modification Time') -%}
+      <div><strong><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;{{ record_modified_field_label }}{{ _(':') }}</strong><span>&nbsp;{{ h.render_datetime(record['record_modified'], '%Y-%m-%d %I:%M:%S %p %Z') }}</span></div>
+    {%- endif -%}
+    {%- if record['user_modified'] -%}
+      <span class="canada-recombinant-display-card-separator">|</span>
+      {%- set user_modified_field = h.recombinant_get_field(chromo['resource_name'], 'user_modified') -%}
+      {%- set user_modified_field_label = h.recombinant_language_text(user_modified_field.label or 'User Last Modified Record') -%}
+      <div><strong><i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{ user_modified_field_label }}{{ _(':') }}</strong><span>&nbsp;{{ record['user_modified'] }}</span></div>
+    {%- endif -%}
+  </div>
+{% endblock %}
