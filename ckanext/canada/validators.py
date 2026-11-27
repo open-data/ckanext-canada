@@ -717,3 +717,38 @@ def canada_resource_language_validator(value: Any, context: Context) -> Any:
         raise Invalid(_('Cannot define other languages '
                         'alongside "No linguistic content; Not applicable"'))
     return value
+
+
+def canada_datastore_field_info_validator(value: Any, context: Context) -> Any:
+    """
+    Custom validator for resource data datastore field info.
+
+    NOTE: schema the inner fields' info and not top level due to
+          current user data dictionaries, and XLoader using info
+          for type_override. Must be done in custom validator due
+          to subschema behavior.
+    """
+    if isinstance(value, str):
+        try:
+            value = json.loads(value)
+        except Exception:
+            pass
+    if not isinstance(value, dict):
+        raise Invalid(_('Expected Dictionary or JSON String'))
+
+    unicode_safe_validator = get_validator('unicode_safe')
+    one_of_validator = get_validator('one_of')
+
+    expected_keys = ['type_override', 'label_en', 'label_fr',
+                     'notes_en', 'notes_fr']
+    # only take expected keys, throwing out everything else.
+    value = dict((k, v) for k, v in value.items() if k in expected_keys)
+    if 'type_override' in value:
+        value['type_override'] = unicode_safe_validator(value['type_override'])
+        value['type_override'] = one_of_validator(h.get_canada_supported_psql_types())(
+            value['type_override'])
+    for k in ['label_en', 'label_fr', 'notes_en', 'notes_fr']:
+        if k not in value:
+            continue
+        value[k] = unicode_safe_validator(value[k])
+    return value

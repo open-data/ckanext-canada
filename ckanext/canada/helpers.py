@@ -63,6 +63,39 @@ RELEASE_DATE_FACET_STEP = 100
 
 REGISTRY_SUBDOMAIN_MATCH = re.compile(r'registry|registre')
 
+SUPPORTED_PSQL_TYPES = [
+    # number types
+    'year',
+    'month',
+    'smallint',
+    'int2',
+    'int',
+    'int4',
+    'int8',
+    'int16',
+    'bigint',
+    'numeric',
+    'real',
+    'float',
+    'float4',
+    'float8',
+    'double',
+    'money',
+    # alpha types
+    'text',
+    '_text',
+    # date types
+    'timestamptz',
+    'timestamp',
+    'date',
+    'timez',
+    'time',
+    'interval',
+    # bool types
+    'boolean',
+    'bool',
+]
+
 
 def is_registry_domain() -> bool:
     """
@@ -1219,3 +1252,7 @@ def org_name_from_res_id(resource_id: Optional[str] = None) -> Optional[str]:
 # type_ignore_reason: incomplete typing
 def get_allowed_frame_hosts() -> Optional[list]:  # type: ignore
     return config.get('ckanext.canada.allowed_frame_hosts')
+
+
+def get_canada_supported_psql_types() -> List[str]:
+    return SUPPORTED_PSQL_TYPES

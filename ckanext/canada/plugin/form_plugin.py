@@ -104,4 +104,6 @@ class CanadaFormsPlugin(p.SingletonPlugin, DefaultDatasetForm):
                 validators.canada_resource_language_validator,
             'canada_output_resource_original_url':
                 validators.canada_output_resource_original_url,
+            'canada_datastore_field_info_validator':
+                validators.canada_datastore_field_info_validator,
             }
