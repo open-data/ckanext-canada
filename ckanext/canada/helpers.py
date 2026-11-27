@@ -1,17 +1,26 @@
-from typing import Optional, Union, Any, Tuple, List, Set, Dict, cast
-from ckan.types import Context
-
 import json
 import re
 import inspect
 from urllib.parse import urlsplit
+import datetime
+import unicodedata
+import html
+from six import text_type
+from bs4 import BeautifulSoup
+import dateutil.parser
+import geomet.wkt as wkt
+from markupsafe import Markup, escape
+
+from typing import Optional, Union, Any, Tuple, List, Set, Dict, cast
+from ckan.types import Context
+
 from sqlalchemy import and_
 # type_ignore_reason: incomplete typing
 from sqlalchemy.exc import NoResultFound, MultipleResultsFound  # type: ignore
+
 from ckan.plugins.toolkit import (
     config,
     asbool,
-    aslist,
     get_action,
     _,
     h,
@@ -21,25 +30,16 @@ from ckan.plugins.toolkit import (
     NotAuthorized
 )
 from ckan.model import User, Package
-from ckanext.activity.model import Activity
 import ckan.model as model
 from ckan.model.license import License
-import datetime
-import unicodedata
-import html
-from six import text_type
-from bs4 import BeautifulSoup
 from ckan import plugins
-
-from ckanext.scheming.helpers import scheming_get_preset
-import dateutil.parser
-import geomet.wkt as wkt
-from markupsafe import Markup, escape
-from ckan.lib.helpers import core_helper
+from ckan.lib.helpers import (
+    core_helper,
+    linked_user as core_linked_user
+)
 from ckan.plugins.core import plugin_loaded
 import ckan.lib.datapreview as datapreview
 
-from ckanext.recombinant.tables import get_chromo
 from ckanext.security.cache.login import max_login_attempts
 
 try:
@@ -50,7 +50,6 @@ except ImportError:
 
 ORG_MAY_PUBLISH_OPTION = 'canada.publish_datasets_organization_name'
 ORG_MAY_PUBLISH_DEFAULT_NAME = 'tb-ct'
-PORTAL_URL_OPTION = 'canada.portal_url'
 PORTAL_URL_DEFAULT_EN = 'https://open.canada.ca'
 PORTAL_URL_DEFAULT_FR = 'https://ouvert.canada.ca'
 DATAPREVIEW_MAX = 500
@@ -60,6 +59,7 @@ CDTS_URI = 'https://www.canada.ca/etc/designs/canada/cdts/gcweb'
 GEO_MAP_TYPE_OPTION = 'wet_theme.geo_map_type'
 GEO_MAP_TYPE_DEFAULT = 'static'
 RELEASE_DATE_FACET_STEP = 100
+PUBLIC_ACTIVITY_USER = '__CKAN_SYSTEM__'
 
 REGISTRY_SUBDOMAIN_MATCH = re.compile(r'registry|registre')
 
@@ -176,7 +176,7 @@ def may_publish_datasets(userobj: Optional['model.User'] = None) -> bool:
 
 def openness_score(pkg: Dict[str, Any]) -> int:
     score = 1
-    field_preset = scheming_get_preset('canada_resource_format')
+    field_preset = h.scheming_get_preset('canada_resource_format')
     fmt_choices = []
     if field_preset:
         fmt_choices = field_preset['choices']
@@ -295,20 +295,26 @@ def normalize_strip_accents(s: Union[str, bytes]) -> str:
 
 
 def portal_url() -> str:
-    url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
-    return str(config.get(PORTAL_URL_OPTION, url))
+    default_url = PORTAL_URL_DEFAULT_FR if h.lang() == 'fr' else PORTAL_URL_DEFAULT_EN
+    config_url = config.get('ckanext.canada.portal_url')
+    if not isinstance(config_url, dict):
+        try:
+            config_url = json.loads(config_url)
+        except (TypeError, AttributeError, UnicodeDecodeError):
+            pass
+    return config_url.get(h.lang(), default_url)
 
 
 def adv_search_url() -> str:
-    return config.get('ckanext.canada.adv_search_url_fr') if \
-        h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en')
+    return config.get('ckanext.canada.adv_search_url_fr', '') if \
+        h.lang() == 'fr' else config.get('ckanext.canada.adv_search_url_en', '')
 
 
 def adv_search_mlt_root() -> str:
     return "{0}/donneesouvertes/similaire/".format(
-        config.get('ckanext.canada.adv_search_url_fr')) if \
+        config.get('ckanext.canada.adv_search_url_fr', '')) if \
             h.lang() == 'fr' else "{0}/opendata/similar/".format(
-                config.get('ckanext.canada.adv_search_url_en'))
+                config.get('ckanext.canada.adv_search_url_en', ''))
 
 
 def ga4_id() -> Optional[str]:
@@ -479,92 +485,6 @@ def is_ready_to_publish(package: Dict[str, Any]) -> bool:
         return False
 
 
-def get_pd_datatable(resource_name: str,
-                     resource_id: str,
-                     owner_org: str,
-                     dataset_type: str) -> str:
-    chromo = get_chromo(resource_name)
-    priority = len(chromo['datastore_primary_key'])
-    pk_priority = 0
-    activity_priority = 1
-    fields = []
-    fids = []
-    for f in chromo['fields']:
-        if f.get('published_resource_computed_field'):
-            continue
-        out = {
-            'type': f['datastore_type'],
-            'id': f['datastore_id'],
-            'label': h.recombinant_language_text(f['label'])}
-        if out['id'] in chromo['datastore_primary_key']:
-            out['priority'] = pk_priority
-            pk_priority += 1
-        elif out['id'] in ('record_modified', 'user_modified'):
-            out['priority'] = activity_priority
-            pk_priority += 1
-        else:
-            out['priority'] = priority
-            priority += 1
-        fields.append(out)
-        fids.append(f['datastore_id'])
-
-    pkids = [fids.index(k) for k in aslist(chromo['datastore_primary_key'])]
-
-    fkids = {}
-    ds_info = get_action('datastore_info')(
-        cast(Context, {'ignore_auth': True}), {'id': resource_id})
-    if 'foreignkeys' in ds_info['meta']:
-        dataset = get_action('recombinant_show')(
-            cast(Context, {'ignore_auth': True}),
-            {'dataset_type': dataset_type,
-             'owner_org': owner_org})
-        resource_names = dict((r['id'], r['name']) for r in dataset['resources'])
-        for fk in ds_info['meta']['foreignkeys']:
-            if resource_id == fk['child_table']:
-                if fk['parent_table'] not in resource_names:
-                    # do not include refs from resources not in this dataset
-                    continue
-                if resource_names[fk['parent_table']] not in fkids:
-                    fkids[resource_names[fk['parent_table']]] = dict(
-                        (fk['child_columns'][fk_pi], fk_pc)
-                        for fk_pi, fk_pc in enumerate(fk['parent_columns']))
-            elif resource_id == fk['parent_table']:
-                if fk['child_table'] not in resource_names:
-                    # do not include records from resources not in this dataset
-                    continue
-                if resource_names[fk['child_table']] not in fkids:
-                    fkids[resource_names[fk['child_table']]] = dict(
-                        (fk['parent_columns'][fk_ci], fk_cc)
-                        for fk_ci, fk_cc in enumerate(fk['child_columns']))
-
-    # TODO: DEPRECATED: REMOVE AFTER FULL PD DATATABLES QA
-    try:
-        user_dict = get_action('user_show')({'ignore_auth': True}, {'id': g.user})
-    except (ObjectNotFound, RuntimeError):
-        user_dict = {}
-    enable_new_template = config['ckanext.canada.enable_pd_datatable_enhanced']
-    if not enable_new_template:
-        enable_new_template = user_dict.get('opt_in_features__pd_datatables',
-                                            enable_new_template)
-    snippet = 'pd_datatable.html' if enable_new_template else 'pd_datatable_depr.html'
-
-    return h.snippet('snippets/%s' % snippet,
-                     resource_name=resource_name,
-                     resource_id=resource_id,
-                     owner_org=owner_org,
-                     primary_keys=pkids,
-                     foreign_keys=fkids,
-                     dataset_type=dataset_type,
-                     ds_fields=fields)
-
-
-def enable_pd_datatable_editor() -> bool:
-    """
-    Return if the PD DataTable Editor should be used or not.
-    """
-    return config['ckanext.canada.enable_pd_datatable_editor']
-
-
 def contact_information(info: str) -> Dict[str, Any]:
     """
     produce label, value pairs from contact info
@@ -655,27 +575,6 @@ def _add_extra_longitude_points(gjson: Dict[str, Any]) -> Dict[str, Any]:
         out.append([lng, lat])
         plng, plat = lng, lat
     return {'coordinates': [out], 'type': 'Polygon'}
-
-
-def recombinant_description_to_markup(text: str) -> Dict[str, Markup]:
-    """
-    Return text as HTML escaped strings joined with '<br/>, links enabled'
-    """
-    # very lax, this is trusted text defined in a schema not user-provided
-    url_pattern = r'(https?:[^)\s"]{20,})'
-    markup = []
-    for i, part in enumerate(re.split(url_pattern,
-                                      h.recombinant_language_text(text))):
-        if i % 2:
-            markup.append(Markup('<a href="{0}">{1}</a>'.format(
-                part, escape(part))))
-        else:
-            markup.extend(Markup('<br/>'.join(
-               escape(t) for t in part.split('\n')
-            )))
-    # extra dict because language text expected and language text helper
-    # will cause plain markup to be escaped
-    return {'en': Markup(''.join(markup))}
 
 
 def get_timeout_length() -> int:
@@ -1194,6 +1093,20 @@ def mail_to_with_params(email_address: str, name: str,
 
 def get_inline_script_nonce() -> str:
     return str(request.environ.get('CSP_NONCE', ''))
+
+
+def linked_user(user: Union[str, model.User],
+                maxlength: int = 0,
+                avatar: int = 20) -> Union[Markup, str, None]:
+    try:
+        if (
+          not g.user and
+          getattr(user, 'name', user) == PUBLIC_ACTIVITY_USER
+        ):
+            return _('System')
+    except RuntimeError:
+        pass
+    return core_linked_user(user, maxlength, avatar)
 
 
 def org_name_from_res_id(resource_id: Optional[str] = None) -> Optional[str]:

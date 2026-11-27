@@ -27,7 +27,7 @@
     {% snippet 'snippets/dataset_facets.html', show_org_facet=true, search_facets=search_facets, facet_titles=facet_titles %}
     {% block extra_facets %}
       {% if h.is_registry_domain() %}
-        {{ h.snippet('snippets/publish_facet.html', search_facets=search_facets, facet_ranges=facet_ranges) }}
+        {% snippet 'snippets/publish_facet.html', search_facets=search_facets, facet_ranges=facet_ranges %}
       {% endif %}
     {% endblock %}
     {% set license = h.get_license('ca-ogl-lgo') %}
@@ -62,7 +62,7 @@
 
   {% block scripts %}
     {{ super() }}
-    {% asset 'canada_public/i18n' %}
+    {% asset 'canada_custom/i18n' %}
   {% endblock %}
 
   {% block primary_content %}

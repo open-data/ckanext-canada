@@ -35,8 +35,10 @@ resources:
         Dépenses pour l’exercice
         financier se terminant
     description:
-      en: This fields shows the current fiscal reporting period’s ending (March 31, YYYY).
-      fr: Ce champ montre l’année de clôture de l’exercice financier en cours (31 mars AAAA).
+      en: >
+        This fields shows the current fiscal reporting period’s ending (March 31, YYYY).
+      fr: >
+        Ce champ montre l’année de clôture de l’exercice financier en cours (31 mars AAAA).
     datastore_type: year
     form_required: true
     datatables_col_class: col-md
@@ -55,8 +57,16 @@ resources:
         Description du mandat du ministère
         (anglais)
     description:
-      en: "Provide a brief explanation, in English, of the department’s mandate, major programs and linkages with core laws or regulations to help readers understand the travel, hospitality and conference expenditures incurred by the department and how they support the department’s mandate, including significant structural or program changes."
-      fr: "Décrivez brièvement, en anglais, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
+      en: >
+        Provide a brief explanation, in English, of the department’s mandate, major programs
+        and linkages with core laws or regulations to help readers understand the travel,
+        hospitality and conference expenditures incurred by the department and how they
+        support the department’s mandate, including significant structural or program changes.
+      fr: >
+        Décrivez brièvement, en anglais, le mandat du ministère, ses principaux programmes
+        et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs
+        à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère,
+        et en quoi ces dépenses soutiennent le mandat du ministère
     obligation: Mandatory
     excel_required: true
     format_type:
@@ -85,8 +95,17 @@ resources:
         Description du mandat du ministère
         (français)
     description:
-      en: "Provide a brief explanation, in French, of the department’s mandate, major programs and linkages with core laws or regulations to help readers understand the travel, hospitality and conference expenditures incurred by the department and how they support the department’s mandate, including significant structural or program changes."
-      fr: "Décrivez brièvement, en français, le mandat du ministère, ses principaux programmes et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le ministère, et en quoi ces dépenses soutiennent le mandat du ministère"
+      en: >
+        Provide a brief explanation, in French, of the department’s mandate,
+        major programs and linkages with core laws or regulations to help readers
+        understand the travel, hospitality and conference expenditures incurred by the
+        department and how they support the department’s mandate, including significant
+        structural or program changes.
+      fr: >
+        Décrivez brièvement, en français, le mandat du ministère, ses principaux programmes
+        et les liens avec les lois ou les règlements fondamentaux afin d’aider les lecteurs
+        à comprendre les dépenses de voyages, d’accueil et de conférences engagées par le
+        ministère, et en quoi ces dépenses soutiennent le mandat du ministère
     obligation: Mandatory
     excel_required: true
     format_type:
@@ -117,8 +136,15 @@ resources:
         activités opérationnelles
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Operational activities for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses activités opérationnelles pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for travel of public servants and non-public
+        servants for the expenditure category – Operational activities for the current
+        reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage de fonctionnaires et
+        non-fonctionnaires pour la catégorie de dépenses activités opérationnelles
+        pour l’exercice financier en cours (année se terminant le 31 mars AAAA),
+        en milliers de dollars
     datastore_type: numeric
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
@@ -150,8 +176,15 @@ resources:
         Principaux intervenants
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – key stakeholders for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage de -fonctionnaires et non-fonctionnaires pour la catégorie de dépenses principaux intervenants,  pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for travel of public servants and
+        non-public servants for the expenditure category – key stakeholders for
+        the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage de -fonctionnaires et
+        non-fonctionnaires pour la catégorie de dépenses principaux intervenants,
+        pour l’exercice financier en cours (année se terminant le 31 mars AAAA),
+        en milliers de dollars
     datastore_type: numeric
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
@@ -183,8 +216,15 @@ resources:
         Formation
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Training for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses formation, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for travel of public servants
+        and non-public servants for the expenditure category – Training for
+        the current reporting fiscal year (Year Ending March 31, YYYY) in
+        thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage de fonctionnaires et
+        non-fonctionnaires pour la catégorie de dépenses formation, pour l’exercice
+        financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
     datastore_type: numeric
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
@@ -216,8 +256,14 @@ resources:
         Autre
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Other for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses autre, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for travel of public servants and non-public
+        servants for the expenditure category – Other for the current reporting fiscal year
+        (Year Ending March 31, YYYY) in thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires
+        pour la catégorie de dépenses autre, pour l’exercice financier en cours (année se terminant
+        le 31 mars AAAA), en milliers de dollars
     datastore_type: numeric
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
@@ -249,8 +295,16 @@ resources:
         Gouvernance interne
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for travel of public servants and non-public servants for the expenditure category – Internal governance for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires et non-fonctionnaires pour la catégorie de dépenses gouvernance interne, pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for travel of public servants and
+        non-public servants for the expenditure category – Internal governance
+        for the current reporting fiscal year (Year Ending March 31, YYYY) in
+        thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage de fonctionnaires et
+        non-fonctionnaires pour la catégorie de dépenses gouvernance interne, pour
+        l’exercice financier en cours (année se terminant le 31 mars AAAA),
+        en milliers de dollars
     datastore_type: numeric
     obligation: 'Mandatory if year ≥ 2018'
     excel_required_formula: 'OR(ISBLANK({year}),{year}>=2018)'
@@ -282,8 +336,14 @@ resources:
         non-fonctionnaires
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for travel of non-public servants for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage de non-fonctionnaires pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for travel of non-public servants
+        for the current reporting fiscal year (Year Ending March 31, YYYY) in
+        thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage de non-fonctionnaires
+        pour l’exercice financier en cours (année se terminant le 31 mars AAAA),
+        en milliers de dollars
     datastore_type: numeric
     obligation: 'Mandatory if year < 2018'
     excel_required_formula: 'AND(NOT(ISBLANK({year})),{year}<2018)'
@@ -319,8 +379,12 @@ resources:
         fonctionnaires
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for travel of public servants for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage de fonctionnaires pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for travel of public servants for the
+        current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage de fonctionnaires pour l’exercice
+        financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
     datastore_type: numeric
     obligation: 'Mandatory if year < 2018'
     excel_required_formula: 'AND(NOT(ISBLANK({year})),{year}<2018)'
@@ -354,8 +418,12 @@ resources:
         Accueil
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for hospitality for the previous reporting fiscal year (Year Ending March 31, YYYY-1) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles d’accueil pour l’exercice financier précédent (année se terminant le 31 mars AAAA-1), en milliers de dollars
+      en: >
+        This field shows annual expenditures for hospitality for the previous reporting
+        fiscal year (Year Ending March 31, YYYY-1) in thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles d’accueil pour l’exercice financier précédent
+        (année se terminant le 31 mars AAAA-1), en milliers de dollars
     datastore_type: numeric
     obligation: Mandatory
     excel_required: true
@@ -380,8 +448,12 @@ resources:
         aux conférences
         (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for conference fees for the current reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de conférences pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for conference fees for the current
+        reporting fiscal year (Year Ending March 31, YYYY) in thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de conférences pour l’exercice
+        financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
     datastore_type: numeric
     obligation: Mandatory
     excel_required: true
@@ -407,8 +479,14 @@ resources:
         ministre et du personnel du
         ministre (Milliers de dollars)
     description:
-      en: This field shows annual expenditures for international travel by Minister and Minister’s staff for the current reporting year (Year Ending March 31, YYYY) in thousands of dollars
-      fr: Ce champ montre les dépenses annuelles de voyage à l’étranger du ministre et de son personnel pour l’exercice financier en cours (année se terminant le 31 mars AAAA), en milliers de dollars
+      en: >
+        This field shows annual expenditures for international travel by Minister and
+        Minister’s staff for the current reporting year (Year Ending March 31, YYYY)
+        in thousands of dollars
+      fr: >
+        Ce champ montre les dépenses annuelles de voyage à l’étranger du ministre
+        et de son personnel pour l’exercice financier en cours (année se terminant le
+        31 mars AAAA), en milliers de dollars
     datastore_type: numeric
     obligation: Mandatory
     excel_required: true
@@ -431,8 +509,14 @@ resources:
         du total des dépenses de voyages
         (anglais)
     description:
-      en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for travel of public servants and non-public servants.
-      fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
+      en: >
+        Provide a brief explanation, in English, of the significant reason(s) for
+        the increase/decrease in annual expenditures for travel of public servants
+        and non-public servants.
+      fr: >
+        Expliquez brièvement, en anglais, la ou les raisons significatives de
+        l’augmentation ou de la diminution des dépenses annuelles de voyage
+        pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{travel_compared_fiscal_year_fr}}.length > 0'
@@ -455,8 +539,12 @@ resources:
         du total des dépenses de voyages
         (français)
     description:
-      en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for travel of public servants and non-public servants.
-      fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
+      en: >
+        Provide a brief explanation, in French, of the significant reason(s) for the
+        increase/decrease in annual expenditures for travel of public servants and non-public servants.
+      fr: >
+        Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation
+        ou de la diminution des dépenses annuelles de voyage pour les fonctionnaires et non-fonctionnaires.
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{travel_compared_fiscal_year_en}}.length > 0'
@@ -479,8 +567,12 @@ resources:
         Explication d’un écart important
         (anglais)
     description:
-      en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for hospitality.
-      fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
+      en: >
+        Provide a brief explanation, in English, of the significant reason(s) for the
+        increase/decrease in annual expenditures for hospitality.
+      fr: >
+        Expliquez brièvement, en anglais, la ou les raisons significatives de
+        l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{hospitality_compared_fiscal_year_fr}}.length > 0'
@@ -503,8 +595,12 @@ resources:
         Explication d’un écart important
         (français)
     description:
-      en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for hospitality.
-      fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles d’accueil.
+      en: >
+        Provide a brief explanation, in French, of the significant reason(s) for
+        the increase/decrease in annual expenditures for hospitality.
+      fr: >
+        Expliquez brièvement, en français, la ou les raisons significatives de
+        l’augmentation ou de la diminution des dépenses annuelles d’accueil.
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{hospitality_compared_fiscal_year_en}}.length > 0'
@@ -527,8 +623,12 @@ resources:
         Explication d’un écart important
         (anglais)
     description:
-      en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for conference fees.
-      fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences.
+      en: >
+        Provide a brief explanation, in English, of the significant reason(s)
+        for the increase/decrease in annual expenditures for conference fees.
+      fr: >
+        Expliquez brièvement, en anglais, la ou les raisons significatives de
+        l’augmentation ou de la diminution des dépenses annuelles de conférences.
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{conference_fees_compared_fiscal_year_fr}}.length > 0'
@@ -551,8 +651,12 @@ resources:
         Explication d’un écart important
         (français)
     description:
-      en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for conference fees.
-      fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de conférences
+      en: >
+        Provide a brief explanation, in French, of the significant reason(s)
+        for the increase/decrease in annual expenditures for conference fees.
+      fr: >
+        Expliquez brièvement, en français, la ou les raisons significatives de
+        l’augmentation ou de la diminution des dépenses annuelles de conférences
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{conference_fees_compared_fiscal_year_en}}.length > 0'
@@ -575,8 +679,14 @@ resources:
         Explication d’un écart important
         (anglais)
     description:
-      en: Provide a brief explanation, in English, of the significant reason(s) for the increase/decrease in annual expenditures for international travel by the minister and minister's staff.
-      fr: Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
+      en: >
+        Provide a brief explanation, in English, of the significant reason(s) for the
+        increase/decrease in annual expenditures for international travel by the
+        minister and minister's staff.
+      fr: >
+        Expliquez brièvement, en anglais, la ou les raisons significatives de l’augmentation
+        ou de la diminution des dépenses annuelles de voyage à l’étranger pour
+        le ministre et son personnel.
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{minister_compared_fiscal_year_fr}}.length > 0'
@@ -600,8 +710,14 @@ resources:
         Explication d’un écart important
         (français)
     description:
-      en: Provide a brief explanation, in French, of the significant reason(s) for the increase/decrease in annual expenditures for international travel by the minister and minister's staff.
-      fr: Expliquez brièvement, en français, la ou les raisons significatives de l’augmentation ou de la diminution des dépenses annuelles de voyage à l’étranger pour le ministre et son personnel.
+      en: >
+        Provide a brief explanation, in French, of the significant reason(s) for the
+        increase/decrease in annual expenditures for international travel by the
+        minister and minister's staff.
+      fr: >
+        Expliquez brièvement, en français, la ou les raisons significatives de
+        l’augmentation ou de la diminution des dépenses annuelles de voyage à
+        l’étranger pour le ministre et son personnel.
     datastore_type: text
     datatables_col_class: col-xxl
     js_required_eval: '{{minister_compared_fiscal_year_en}}.length > 0'

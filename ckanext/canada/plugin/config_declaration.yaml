@@ -29,16 +29,11 @@ groups:
           Disables the internal Content-Security-Policy header.
           Should not be set to True in production environments.
         validators: boolean_validator
-      - key: ckanext.canada.enable_pd_datatable_enhanced
-        default: false
+      - key: ckanext.canada.portal_url
+        default: {"en":"https://open.canada.ca","fr":"https://ouvert.canada.ca"}
         description: |
-          Enables the improved DataTables for Recombinant type resources.
-        validators: boolean_validator
-      - key: ckanext.canada.enable_pd_datatable_editor
-        default: false
-        description: |
-          Enables the custom DataTables editor for Recombinant type resources.
-        validators: boolean_validator
+          Set the English and French Portal Base URIs with schemes.
+        validators: convert_to_json_if_string dict_only
       - key: ckanext.canada.allowed_frame_hosts
         default: ['canada.ca', '*.canada.ca', '*.gc.ca']
         description: |

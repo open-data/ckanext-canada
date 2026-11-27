@@ -1,8 +1,11 @@
 # -*- coding: UTF-8 -*-
-from ckanext.canada.tests import CanadaTestBase, mock_is_registry_domain
+from ckanext.canada.tests import (
+    CanadaTestBase,
+    mock_is_registry_domain,
+    get_test_domains
+)
 import pytest
 import mock
-from urllib.parse import urlparse
 from io import BytesIO
 from openpyxl.workbook import Workbook  # noqa: F401
 from ckan.plugins.toolkit import h
@@ -20,7 +23,10 @@ from ckanext.canada.tests.factories import (
     CanadaAPIToken as APIToken,
     CanadaSysadminWithToken as Sysadmin
 )
-from ckanext.canada.tests.helpers import MockFlashMessages
+from ckanext.canada.tests.helpers import (
+    MockFlashMessages,
+    get_relative_offset_from_response
+)
 
 from ckanext.recombinant.tables import get_chromo
 from ckanext.recombinant.read_excel import read_excel
@@ -34,12 +40,6 @@ from ckanext.recombinant.write_excel import (
 flashes = MockFlashMessages()
 
 
-def _get_relative_offset_from_response(response):
-    assert response.headers
-    assert 'Location' in response.headers
-    return urlparse(response.headers['Location'])._replace(scheme='', netloc='').geturl()
-
-
 @pytest.mark.usefixtures('with_request_context')
 class TestPackageWebForms(CanadaTestBase):
     @classmethod
@@ -48,11 +48,15 @@ class TestPackageWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestPackageWebForms, self).setup_class()
+
+        test_domain_map = get_test_domains()
         self.sysadmin = Sysadmin()
         editor = User()
-        self.extra_environ_tester = {'Authorization': self.sysadmin['token']}
+        self.extra_environ_tester = {'Authorization': self.sysadmin['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': self.sysadmin['name'].encode('ascii')}
-        self.extra_environ_editor = {'Authorization': editor['token']}
+        self.extra_environ_editor = {'Authorization': editor['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': self.sysadmin['name'],
@@ -69,7 +73,8 @@ class TestPackageWebForms(CanadaTestBase):
 
         offset = h.url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester)
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create Dataset' in response.body
         assert 'Before you can create a dataset you need to create an organization' not in response.body
@@ -78,11 +83,12 @@ class TestPackageWebForms(CanadaTestBase):
                             data=self._filled_dataset_form(dataset_id),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=False)
+                            follow_redirects=False)  # no need for redirects
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester)
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Add data to the dataset' in response.body
 
@@ -90,11 +96,12 @@ class TestPackageWebForms(CanadaTestBase):
                             data=self._filled_resource_form(dataset_id),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=False)
+                            follow_redirects=False)  # no need for redirects
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester)
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Resource added' in response.body
 
@@ -114,7 +121,7 @@ class TestPackageWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_editor,
                             follow_redirects=False)
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
                            environ_overrides=self.environ_overrides_editor)
 
@@ -126,7 +133,7 @@ class TestPackageWebForms(CanadaTestBase):
                             environ_overrides=self.environ_overrides_editor,
                             follow_redirects=False)
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
                            environ_overrides=self.environ_overrides_editor)
 
@@ -139,7 +146,8 @@ class TestPackageWebForms(CanadaTestBase):
 
         offset = h.url_for('dataset.new')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester)
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create Dataset' in response.body
         assert 'Before you can create a dataset you need to create an organization' not in response.body
@@ -153,7 +161,7 @@ class TestPackageWebForms(CanadaTestBase):
                             data=incomplete_dataset_form,
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Errors in form' in response.body
         assert 'Title (French):' in response.body
@@ -174,11 +182,12 @@ class TestPackageWebForms(CanadaTestBase):
                             data=self._filled_dataset_form(dataset_id),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=False)
+                            follow_redirects=False)  # catch redirect
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester,)
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Add data to the dataset' in response.body
 
@@ -192,7 +201,7 @@ class TestPackageWebForms(CanadaTestBase):
                             data=incomplete_resource_form,
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=True)
+                            follow_redirects=False)  # expecting redirect
 
         assert 'Errors in form' in response.body
         assert 'Title (English):' in response.body
@@ -245,7 +254,10 @@ class TestNewUserWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestNewUserWebForms, self).setup_class()
-        self.extra_environ_tester = {'Authorization': str(u"")}
+
+        test_domain_map = get_test_domains()
+        self.extra_environ_tester = {'Authorization': str(u""),
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_tester = {'REMOTE_USER': str(u"")}
         self.org = Organization()
 
@@ -255,7 +267,8 @@ class TestNewUserWebForms(CanadaTestBase):
     def test_new_user_required_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester)
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Request an Account' in response.body
 
@@ -263,18 +276,20 @@ class TestNewUserWebForms(CanadaTestBase):
                             data=self._filled_new_user_form(),
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=False)
+                            follow_redirects=False)  # catch redirect
 
         lc = LocalCKAN()
         new_user = lc.action.user_show(name='newusername')
         api_token = APIToken(user=new_user['id'])
         new_user['token'] = api_token['token']
-        self.extra_environ_tester = {'Authorization': new_user['token']}
-        self.environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
+        _extra_environ_tester = {'Authorization': new_user['token'],
+                                 'HTTP_HOST': self.extra_environ_tester['HTTP_HOST']}
+        _environ_overrides_tester = {'REMOTE_USER': new_user['name'].encode('ascii')}
 
-        offset = _get_relative_offset_from_response(response)
-        response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester)
+        offset, _host = get_relative_offset_from_response(response)
+        response = app.get(offset, extra_environ=_extra_environ_tester,
+                           environ_overrides=_environ_overrides_tester,
+                           follow_redirects=True)  # expecting redirect
 
         assert 'Account Created' in response.body
         assert 'Thank you for creating your account for the Open Government registry' in response.body
@@ -283,7 +298,8 @@ class TestNewUserWebForms(CanadaTestBase):
     def test_new_user_missing_fields(self, app):
         offset = h.url_for('user.register')
         response = app.get(offset, extra_environ=self.extra_environ_tester,
-                           environ_overrides=self.environ_overrides_tester)
+                           environ_overrides=self.environ_overrides_tester,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Request an Account' in response.body
 
@@ -297,7 +313,7 @@ class TestNewUserWebForms(CanadaTestBase):
                             data=incomplete_new_user_form,
                             extra_environ=self.extra_environ_tester,
                             environ_overrides=self.environ_overrides_tester,
-                            follow_redirects=True)
+                            follow_redirects=False)  # no need for redirects
 
         assert 'The form contains invalid entries' in response.body
         assert 'Name: Missing value' in response.body
@@ -325,14 +341,19 @@ class TestRecombinantWebForms(CanadaTestBase):
         Setup any state specific to the execution of the given class.
         """
         super(TestRecombinantWebForms, self).setup_class()
+        test_domain_map = get_test_domains()
+
         member = User()
         editor = User()
         sysadmin = Sysadmin()
-        self.extra_environ_member = {'Authorization': member['token']}
+        self.extra_environ_member = {'Authorization': member['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_member = {'REMOTE_USER': member['name'].encode('ascii')}
-        self.extra_environ_editor = {'Authorization': editor['token']}
+        self.extra_environ_editor = {'Authorization': editor['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_editor = {'REMOTE_USER': editor['name'].encode('ascii')}
-        self.extra_environ_system = {'Authorization': sysadmin['token']}
+        self.extra_environ_system = {'Authorization': sysadmin['token'],
+                                     'HTTP_HOST': test_domain_map['registry']['en']}
         self.environ_overrides_system = {'REMOTE_USER': sysadmin['name'].encode('ascii')}
         self.org = Organization(users=[{
             'name': member['name'],
@@ -399,20 +420,14 @@ class TestRecombinantWebForms(CanadaTestBase):
         self._lc_create_pd_record(org=org, is_nil=True)
         return excel_template(dataset_type=self.pd_type, org=org)
 
-    def _lc_get_pd_package_id(self, org=None):
-        lc = LocalCKAN()
-        org = org if org else self.org
-        self._lc_init_pd(org=org)
-        rval = lc.action.recombinant_show(dataset_type=self.pd_type, owner_org=org['name'])
-        return rval['id']
-
     @mock.patch.object(h, 'is_registry_domain', mock_is_registry_domain)
     def test_member_cannot_init_pd(self, app):
         offset = h.url_for('recombinant.preview_table',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_member)
+                           environ_overrides=self.environ_overrides_member,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update records' in response.body
 
@@ -424,7 +439,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             extra_environ=self.extra_environ_member,
                             environ_overrides=self.environ_overrides_member,
                             status=403,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'not authorized to add dataset' in response.body or \
                'not authorized to create packages' in response.body
@@ -435,7 +450,8 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update records' in response.body
 
@@ -446,11 +462,12 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=create_pd_form,
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=False)
+                            follow_redirects=False)  # catch redirect
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' in response.body
 
@@ -460,7 +477,8 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update records' in response.body
 
@@ -471,11 +489,12 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=create_pd_form,
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=False)
+                            follow_redirects=False)  # catch redirect
 
-        offset = _get_relative_offset_from_response(response)
+        offset, _host = get_relative_offset_from_response(response)
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' in response.body
 
@@ -489,7 +508,8 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=no_ati_email_org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Your organization does not have an Access to Information email on file' in response.body
 
@@ -497,7 +517,8 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Your organization does not have an Access to Information email on file' not in response.body
         assert 'Informal Requests for ATI Records Previously Released are being sent to' in response.body
@@ -506,12 +527,13 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_member_cannot_create_single_record(self, app):
         self._lc_init_pd()
 
-        offset = h.url_for('canada.create_pd_record',
+        offset = h.url_for('recombinant.create_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         # members should not be able to acces create_pd_record endpoint
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_member, status=403)
+                           environ_overrides=self.environ_overrides_member, status=403,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Unauthorized to create a resource for this package' in response.body
 
@@ -521,7 +543,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             extra_environ=self.extra_environ_member,
                             environ_overrides=self.environ_overrides_member,
                             status=403,
-                            follow_redirects=True)
+                            follow_redirects=False)  # no need for redirects
 
         assert 'Unauthorized to create a resource for this package' in response.body
 
@@ -531,11 +553,12 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_editor_can_create_single_record(self, app):
         self._lc_init_pd()
 
-        offset = h.url_for('canada.create_pd_record',
+        offset = h.url_for('recombinant.create_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # catch redirect
 
         assert 'Create Record' in response.body
 
@@ -544,7 +567,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=pd_record_form,
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Record Created' in response.body
 
@@ -554,11 +577,12 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_admin_can_create_single_record(self, app):
         self._lc_init_pd()
 
-        offset = h.url_for('canada.create_pd_record',
+        offset = h.url_for('recombinant.create_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # catch redirect
 
         assert 'Create Record' in response.body
 
@@ -567,7 +591,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=pd_record_form,
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Record Created' in response.body
 
@@ -575,13 +599,15 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_member_cannot_update_single_record(self, app):
         self._lc_create_pd_record()
 
-        offset = h.url_for('canada.update_pd_record',
+        offset = h.url_for('recombinant.update_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
         # members should not be able to acces update_pd_record endpoint
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_member, status=403)
+                           environ_overrides=self.environ_overrides_member,
+                           status=403,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Unauthorized to update dataset' in response.body
 
@@ -593,7 +619,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             extra_environ=self.extra_environ_member,
                             environ_overrides=self.environ_overrides_member,
                             status=403,
-                            follow_redirects=True)
+                            follow_redirects=False)  # no need for redirects
 
         assert 'Unauthorized to update dataset' in response.body
 
@@ -603,12 +629,13 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_editor_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
-        offset = h.url_for('canada.update_pd_record',
+        offset = h.url_for('recombinant.update_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Update Record' in response.body
 
@@ -619,7 +646,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=pd_record_form,
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
@@ -629,12 +656,13 @@ class TestRecombinantWebForms(CanadaTestBase):
     def test_admin_can_update_single_record(self, app):
         self._lc_create_pd_record()
 
-        offset = h.url_for('canada.update_pd_record',
+        offset = h.url_for('recombinant.update_record',
                            resource_name=self.pd_type,
                            owner_org=self.org['name'],
                            pk=self.example_record['request_number'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Update Record' in response.body
 
@@ -645,7 +673,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=pd_record_form,
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Record {} Updated'.format(self.example_record['request_number']) in response.body
 
@@ -673,7 +701,8 @@ class TestRecombinantWebForms(CanadaTestBase):
 
         # members should be able to download template
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_member)
+                           environ_overrides=self.environ_overrides_member,
+                           follow_redirects=False)  # no need for redirects
         template_file = BytesIO()
         # use get_data instead of body to avoid decoding issues. This is a file, we want bytes.
         template_file.write(response.get_data(as_text=False))
@@ -767,20 +796,22 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_member)
+                           environ_overrides=self.environ_overrides_member,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' not in response.body
         assert 'xls_update' not in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=template_file)
         response = app.post(form_action,
                             data=dataset_form,
                             extra_environ=self.extra_environ_member,
                             environ_overrides=self.environ_overrides_member,
                             status=403,
-                            follow_redirects=True)
+                            follow_redirects=False)  # no need for redirects
 
         assert 'not authorized to update resource' in response.body
 
@@ -795,18 +826,20 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=template_file)
         response = app.post(form_action,
                             data=dataset_form,
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
@@ -821,18 +854,20 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=template_file)
         response = app.post(form_action,
                             data=dataset_form,
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Your file was successfully uploaded into the central system.' in response.body
 
@@ -845,11 +880,13 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_member)
+                           environ_overrides=self.environ_overrides_member,
+                           follow_redirects=False)  # no need for redirects
         assert 'xls_update' not in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=good_template_file,
                                                 action='validate')
         response = app.post(form_action,
@@ -857,7 +894,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             extra_environ=self.extra_environ_member,
                             environ_overrides=self.environ_overrides_member,
                             status=403,
-                            follow_redirects=True)
+                            follow_redirects=False)  # no need for redirects
 
         assert 'not authorized to update resource' in response.body
 
@@ -874,19 +911,21 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=bad_template_file,
                                                 action='validate')
         response = app.post(form_action,
                             data=dataset_form,
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Year: Please enter a valid year' in response.body
         assert 'Month (1-12): Please enter a month number from 1-12' in response.body
@@ -898,7 +937,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=dataset_form,
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'No errors found.' in response.body
 
@@ -915,19 +954,21 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.upload',
-                                id=self._lc_get_pd_package_id())
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         dataset_form = self._filled_upload_form(filestream=bad_template_file,
                                                 action='validate')
         response = app.post(form_action,
                             data=dataset_form,
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Year: Please enter a valid year' in response.body
         assert 'Month (1-12): Please enter a month number from 1-12' in response.body
@@ -939,7 +980,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=dataset_form,
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'No errors found.' in response.body
 
@@ -998,21 +1039,22 @@ class TestRecombinantWebForms(CanadaTestBase):
                            resource_name=self.pd_type,
                            owner_org=self.org['name'])
         response = app.get(offset, extra_environ=self.extra_environ_member,
-                           environ_overrides=self.environ_overrides_member)
+                           environ_overrides=self.environ_overrides_member,
+                           follow_redirects=False)  # no need for redirects
 
         assert 'Create and update multiple records' not in response.body
         assert 'delete-form' not in response.body
 
         # members are no longer allowed to submit the bulk delete form
         form_action = h.url_for('recombinant.delete_records',
-                                id=self._lc_get_pd_package_id(),
-                                resource_id=records_to_delete['resource_id'])
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_member,
                             environ_overrides=self.environ_overrides_member,
                             status=403,
-                            follow_redirects=True)
+                            follow_redirects=False)  # no need for redirects
 
         assert 'not authorized to update resource' in response.body
 
@@ -1022,7 +1064,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             extra_environ=self.extra_environ_member,
                             environ_overrides=self.environ_overrides_member,
                             status=403,
-                            follow_redirects=True)
+                            follow_redirects=False)  # no need for redirects
 
         assert 'not authorized to update resource' in response.body
 
@@ -1037,17 +1079,18 @@ class TestRecombinantWebForms(CanadaTestBase):
                            owner_org=self.org['name'])
 
         response = app.get(offset, extra_environ=self.extra_environ_editor,
-                           environ_overrides=self.environ_overrides_editor)
+                           environ_overrides=self.environ_overrides_editor,
+                           follow_redirects=False)  # no need for redirects
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.delete_records',
-                                id=self._lc_get_pd_package_id(),
-                                resource_id=records_to_delete['resource_id'])
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=False)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Confirm Delete' in response.body
         assert 'Are you sure you want to delete 2 records' in response.body
@@ -1057,7 +1100,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_editor,
                             environ_overrides=self.environ_overrides_editor,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert '2 deleted.' in response.body
 
@@ -1072,17 +1115,19 @@ class TestRecombinantWebForms(CanadaTestBase):
                            owner_org=self.org['name'])
 
         response = app.get(offset, extra_environ=self.extra_environ_system,
-                           environ_overrides=self.environ_overrides_system)
+                           environ_overrides=self.environ_overrides_system,
+                           follow_redirects=False)  # no need for redirects
+
         assert 'Create and update multiple records' in response.body
 
         form_action = h.url_for('recombinant.delete_records',
-                                id=self._lc_get_pd_package_id(),
-                                resource_id=records_to_delete['resource_id'])
+                                resource_name=self.pd_type,
+                                owner_org=self.org['name'])
         response = app.post(form_action,
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert 'Confirm Delete' in response.body
         assert 'Are you sure you want to delete 2 records' in response.body
@@ -1092,7 +1137,7 @@ class TestRecombinantWebForms(CanadaTestBase):
                             data=records_to_delete['form'],
                             extra_environ=self.extra_environ_system,
                             environ_overrides=self.environ_overrides_system,
-                            follow_redirects=True)
+                            follow_redirects=True)  # expecting redirect
 
         assert '2 deleted.' in response.body
 

@@ -1,8 +1,4 @@
-from .dataset_plugin import CanadaDatasetsPlugin
-from .form_plugin import CanadaFormsPlugin
-from .internal_plugin import CanadaInternalPlugin
-from .public_plugin import CanadaPublicPlugin
-from .security_plugin import CanadaSecurityPlugin
+from .logic_plugin import CanadaLogicPlugin
 from .theme_plugin import CanadaThemePlugin
 
 # XXX Monkey patch to work around libcloud/azure 400 error on get_container
@@ -13,10 +9,6 @@ except ImportError:
     pass
 
 __all__ = [
-    'CanadaDatasetsPlugin',
-    'CanadaFormsPlugin',
-    'CanadaInternalPlugin',
-    'CanadaPublicPlugin',
-    'CanadaSecurityPlugin',
+    'CanadaLogicPlugin',
     'CanadaThemePlugin'
 ]

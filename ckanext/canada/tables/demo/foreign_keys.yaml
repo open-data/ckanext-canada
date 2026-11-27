@@ -1,0 +1,453 @@
+dataset_type: demo_foreign_keys
+target_dataset: demo_foreign_keys
+
+
+title: Demo Foreign Keys Dataset Type
+shortname: Demo Foreign Keys Dataset Type
+notes: Demo Foreign Keys Dataset Type
+
+# open_canada_id generation rule:
+#
+#   Assign unique _id across *all* records and so that (_id % 97) == 61
+#   These _id values are exported as open_canada_id in the combined csv dataset
+#
+#   The last two _id digits are check digits. Mod 97 prevents almost all numeric
+#   typos (Mod 97 is also used for international bank account check digits)
+#
+#   61 chosen only because "Foreign Keys", F ≈ 6, K ≈ 1.
+#   open_canada_id values for other record types use values
+#   different than 61 so that open_canada_ids are unique across all record types
+#
+#   Use check digits from 03-99 because numbers ending in 00 look approximate,
+#   i.e. for all open_canada_id values (_id % 100) > 2
+#
+# the foreign constraints work best without it
+#
+# datastore_create_sequence: demo_foreign_keys_seq
+# sequence_modulo_offset: 61
+
+template_version: 3
+
+portal_type: dataset
+collection: demo
+
+resources:
+- title: Demo Foreign Keys Parent Resource
+  resource_name: demo_foreign_keys_parent
+
+  published_resource_id: 1473887f-338c-22ec-8715-ecb48c67d17e
+
+  edit_using__id: false  # the foreign constraints work best without it
+  create_form: true
+  edit_form: true
+  excel_template: true
+
+  fields:
+  # Dev: Published Resource Field
+  - datastore_id: open_canada_id
+    label:
+      en: open_canada_id
+      fr: open_canada_id
+    description:
+      en: >
+        Unique record identifier on open.canada.ca
+      fr: >
+        Identifiant unique de l’enregistrement du open.canada.ca
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  - datastore_id: reference_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: >
+        Sample Reference Number Field
+      fr: >
+        Exemple de champ du numéro de référence
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: This field must not be empty
+      fr: Ce champ ne doit pas être vide
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  - datastore_id: value
+    datastore_type: money
+    label:
+      en: Monetary Value
+      fr: Valeur monétaire
+    description:
+      en: >
+        Sample Money Field
+      fr: >
+        Exemple de champ monétaire
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This value must not be negative.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Cette valeur ne doit pas être négative.
+    excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
+    js_error_eval: 'VALUE.length > 0 && parseInt(VALUE) < 0'
+    form_attrs:
+      size: 20
+
+  - datastore_id: description
+    datastore_type: text
+    label:
+      en: Description
+      fr: Description
+    description:
+      en: >
+        Example Text Area Field
+      fr: >
+        Exemple de champ de zone de texte
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    datatables_col_class: col-xxl
+    max_chars: 350
+    format_type:
+      en: Free text
+      fr: Texte libre
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 350
+
+  # Dev: req dynamic field
+  - datastore_id: record_created
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: record_modified
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: user_modified
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  # Dev: Published Resource Field
+  - datastore_id: owner_org
+    label:
+      en: Department ID
+      fr: ID du ministère
+    description:
+      en: >
+        Identifies the applied ID of the department or agency.
+      fr: >
+        Identifie le code d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  datastore_primary_key: ["reference_number"]
+  datastore_indexes: ""
+
+  default_preview_sort: reference_number
+
+  triggers:
+  - demo_foreign_keys_parent_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+      BEGIN
+        -- NOTE: always require primary keys
+        errors := errors || required_error(NEW.reference_number, 'reference_number');
+        IF NEW.reference_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['reference_number', {reference_number_error}]];
+        END IF;
+        NEW.reference_number := trim_lead_trailing(NEW.reference_number);
+
+        errors := errors || required_error(NEW.value, 'value');
+        NEW.value := round(NEW.value, 2);
+        IF NEW.value IS NOT NULL AND NEW.value < 0 THEN
+            errors := errors || ARRAY[['value', {negative_number_error}]];
+        END IF;
+
+        errors := errors || required_error(NEW.description, 'description');
+        NEW.description := trim_lead_trailing(NEW.description);
+        errors := errors || max_char_error(NEW.description, 350, 'description');
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    required_error: This field must not be empty
+    reference_number_error: Comma is not allowed in Reference Number field
+    max_length_error: This field has a maximum length of {} characters.
+    negative_number_error: This value must not be negative
+
+  examples:
+    record:
+      reference_number: "2019-Q3-00001"
+      value: '450000'
+      description: "free text of description..."
+    filter_one:
+      reference_number: 2019-Q3-00001
+    sort: reference_number
+
+- title: Demo Foreign Keys Child Resource
+  resource_name: demo_foreign_keys_child
+
+  published_resource_id: 1523887f-338c-22ec-8715-ecb48c67d17e
+
+  edit_using__id: false  # the foreign constraints work best without it
+  create_form: true
+  edit_form: true
+  excel_template: true
+
+  fields:
+  # Dev: Published Resource Field
+  - datastore_id: _id
+    label:
+      en: open_canada_id
+      fr: open_canada_id
+    description:
+      en: >
+        Unique record identifier on open.canada.ca
+      fr: >
+        Identifiant unique de l’enregistrement du open.canada.ca
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  - datastore_id: reference_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: >
+        Sample Reference Number Field
+      fr: >
+        Exemple de champ du numéro de référence
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: This field must not be empty
+      fr: Ce champ ne doit pas être vide
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  - datastore_id: amendment_value
+    datastore_type: money
+    label:
+      en: Amended Monetary Value
+      fr: Valeur monétaire modifiée
+    description:
+      en: >
+        Sample Money Field
+      fr: >
+        Exemple de champ monétaire
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    validation:
+      en: |
+        This field must not be empty.
+        This value must not be negative.
+      fr: |
+        Ce champ ne doit pas être vide.
+        Cette valeur ne doit pas être négative.
+    excel_error_formula: 'OR({default_formula},VALUE({cell})<0)'
+    js_error_eval: 'VALUE.length > 0 && parseInt(VALUE) < 0'
+    form_attrs:
+      size: 20
+
+  - datastore_id: reason
+    datastore_type: text
+    label:
+      en: Reason
+      fr: Motif
+    description:
+      en: >
+        Example Text Area Field
+      fr: >
+        Exemple de champ de zone de texte
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    datatables_col_class: col-xxl
+    max_chars: 350
+    format_type:
+      en: Free text
+      fr: Texte libre
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 350
+
+  # Dev: req dynamic field
+  - datastore_id: record_created
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: record_modified
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: user_modified
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  # Dev: Published Resource Field
+  - datastore_id: owner_org
+    label:
+      en: Department ID
+      fr: ID du ministère
+    description:
+      en: >
+        Identifies the applied ID of the department or agency.
+      fr: >
+        Identifie le code d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  datastore_primary_key: ["reference_number"]
+  datastore_foreign_keys:
+    demo_foreign_keys_parent:
+      reference_number: reference_number
+  datastore_indexes: ""
+
+  default_preview_sort: reference_number
+
+  triggers:
+  - demo_foreign_keys_child_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+        importing boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'recombinant_import' = ANY(flags)));
+      BEGIN
+        -- NOTE: always require primary keys
+        errors := errors || required_error(NEW.reference_number, 'reference_number');
+        IF NEW.reference_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['reference_number', {reference_number_error}]];
+        END IF;
+        NEW.reference_number := trim_lead_trailing(NEW.reference_number);
+
+        errors := errors || required_error(NEW.amendment_value, 'amendment_value');
+        NEW.amendment_value := round(NEW.amendment_value, 2);
+        IF NEW.amendment_value IS NOT NULL AND NEW.amendment_value < 0 THEN
+            errors := errors || ARRAY[['amendment_value', {negative_number_error}]];
+        END IF;
+
+        errors := errors || required_error(NEW.reason, 'reason');
+        NEW.reason := trim_lead_trailing(NEW.reason);
+        errors := errors || max_char_error(NEW.reason, 350, 'reason');
+
+        IF TG_OP = 'UPDATE' THEN
+          errors := errors || required_error(NEW._id, '_id');
+        END IF;
+
+        IF errors = '{{}}' THEN
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    required_error: This field must not be empty
+    reference_number_error: Comma is not allowed in Reference Number field
+    max_length_error: This field has a maximum length of {} characters.
+    negative_number_error: This value must not be negative
+
+  examples:
+    record:
+      reference_number: "2019-Q3-00001"
+      amendment_value: '550000'
+      reason: "free text of reasoning..."
+    filter_one:
+      reference_number: 2019-Q3-00001
+    sort: reference_number
+
+excel_column_heading_style:
+  PatternFill:
+    fgColor: FF33bbff
+    patternType: solid
+  Font:
+    color: FF333333
+    underline: single
+excel_edge_style:
+  PatternFill:
+    fgColor: FF00aaff
+    patternType: solid
+  Font:
+    color: FF333333
+excel_example_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF33bbff
+  Font:
+    color: FF333333
+excel_header_style:
+  PatternFill:
+    fgColor: FF00aaff
+    patternType: solid
+  Font:
+    color: FF333333
+    bold: true
+    size: 16
+datatables_style:
+  header:
+    bgColor: 00aaff
+  select:
+    bgColor: 80d5ff
+    fgColor: 333333
