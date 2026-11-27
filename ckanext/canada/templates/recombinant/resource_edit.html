@@ -92,3 +92,9 @@
     </aside>
   </div>
 {% endblock %}
+
+
+{%- block scripts -%}
+  {{ super() }}
+  {% asset 'canada_public/css' %}
+{%- endblock -%}

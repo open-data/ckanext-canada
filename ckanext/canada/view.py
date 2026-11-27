@@ -923,3 +923,11 @@ def login():
     if not h.is_registry_domain():
         return abort(404)
     return core_login()
+
+
+@canada_views.route('/ckan-admin/demo', methods=['GET'])
+def admin_demo():
+    if not is_sysadmin(g.user):
+        abort(403, _('Not authorized to see this page'))
+
+    return render('admin/demo.html', extra_vars={})
