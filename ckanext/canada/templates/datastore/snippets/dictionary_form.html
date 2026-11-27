@@ -2,6 +2,22 @@
 
 {% import 'macros/form.html' as form %}
 
+{% block datapusher_xloader_fields %}
+  {%- set selected_type = field.get('info', {}).get('type_override', '') -%}
+  {%- set options = [
+    {'name': '', 'value': ''},
+    {'name': 'text', 'value': 'text'},
+    {'name': 'numeric', 'value': 'numeric'},
+    {'name': 'timestamp', 'value': 'timestamp'},
+  ] -%}
+  {%- if selected_type in h.get_canada_supported_psql_types() -%}
+    {%- do options.append({'name': selected_type, 'value': selected_type}) -%}
+  {%- endif -%}
+  {{ form.select('info__' ~ position ~ '__type_override',
+    attrs={'class': 'form-control form-select', 'autocomplete': 'off'},
+    label=_('Type Override'), options=options, selected=selected_type) }}
+{% endblock %}
+
 {% block standard_fields %}
   {{ form.input('info__' ~ position ~ '__label_en',
     label=_('English Label'), id='field-f' ~ position ~ 'label_en',

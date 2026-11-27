@@ -92,4 +92,5 @@ class CanadaThemePlugin(p.SingletonPlugin):
             'obfuscate_to_code_points',
             'mail_to',
             'get_allowed_frame_hosts',
+            'get_canada_supported_psql_types',
         ])

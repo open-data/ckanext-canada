@@ -6,11 +6,11 @@ import logging
 
 from typing import Optional, List, Dict, cast
 from flask.typing import BeforeRequestCallable
-from ckan.types import Context, Response, Any
+from ckan.types import Context, Response, Any, Schema
 
 import ckan.plugins as p
 from ckan.model.resource import Resource
-from ckan.plugins.toolkit import g, h, request
+from ckan.plugins.toolkit import g, h, request, get_validator
 
 from ckanext.datastore.interfaces import IDataDictionaryForm
 from ckanext.scheming.plugins import SchemingDatasetsPlugin
@@ -319,4 +319,39 @@ class CanadaDatasetsPlugin(SchemingDatasetsPlugin):
                 field['info'] = plugin_data.get('info', {})
             elif '_info' in plugin_data:
                 field['info'] = plugin_data.get('_info', {})
+        expected_keys = ['type_override', 'label_en', 'label_fr',
+                         'notes_en', 'notes_fr']
+        # only output expected keys, ignoring everything else.
+        field['info'] = dict((k, v) for k, v in field['info'].items()
+                             if k in expected_keys)
+        if (
+            'type_override' in field['info'] and
+            field['info']['type_override'] not in h.get_canada_supported_psql_types()
+        ):
+            field['info']['type_override'] = ''
         return field
+
+    def update_datastore_create_schema(self, schema: Schema) -> Schema:
+        """
+        Custom schema for resource data datastore field dictionaries.
+
+        NOTE: schema the inner fields' info and not top level due to
+              current user data dictionaries, and XLoader using info
+              for type_override.
+        """
+        not_empty_validator = get_validator('not_empty')
+        unicode_safe_validator = get_validator('unicode_safe')
+        datastore_field_name_validator = get_validator('datastore_field_name')
+        ignore_empty_validator = get_validator('ignore_empty')
+        ignore_validator = get_validator('ignore')
+        datastore_field_info_validator = get_validator(
+            'canada_datastore_field_info_validator')
+        if not isinstance(schema['fields'], dict):
+            schema['fields'] = {
+                '__extras': [ignore_validator],
+                'id': [not_empty_validator, unicode_safe_validator,
+                       datastore_field_name_validator],
+                'type': [ignore_empty_validator],
+            }
+        schema['fields']['info'] = [datastore_field_info_validator]
+        return schema

@@ -243,6 +243,52 @@ class TestDatastoreValidation(CanadaTestBase):
         assert 'language' in report
         assert report.get('language') == 'fr'
 
+    @pytest.mark.usefixtures("mock_uploads")
+    def test_datastore_field_info_schema(self, mock_uploads):  # noqa: F811
+        """
+        The field info should respect our custom schema/validation.
+        """
+        resource, _fake_stream = self._setup_resource_upload('sample.csv')
+
+        with pytest.raises(ValidationError) as ve:
+            self.action.datastore_create(
+                resource_id=resource['id'],
+                force=True,
+                fields=[{
+                    'id': 'AAPL_x',
+                    'type': 'text',
+                    'info': {
+                        'type_override': 'BLAH',
+                        'label_en': '',
+                        'label_fr': '',
+                        'notes_en': '',
+                        'notes_fr': '',
+                    }
+                }])
+        err = ve.value.error_dict
+        assert 'Value must be one of ' in err['fields'][0]['info'][0]
+
+        response = self.action.datastore_create(
+            resource_id=resource['id'],
+            force=True,
+            fields=[{
+                'id': 'AAPL_x',
+                'type': 'text',
+                'extra': 'this is random extra stuff...',
+                'info': {
+                    'type_override': 'int4',
+                    'label_en': 'This is a label',
+                    'label_fr': 'This is a label FR',
+                    'notes_en': 'This is a description',
+                    'notes_fr': 'This is a description FR',
+                    'extra': 'this is random extra stuff...',
+                }
+            }])
+
+        # normal __extras handling is fine here, it won't go anywhere in the db
+        assert response['fields'][0]['__extras'] == {'extra': 'this is random extra stuff...'}
+        assert 'extra' not in response['fields'][0]
+
 
 class TestDatastoreXloader(CanadaTestBase):
     @classmethod
