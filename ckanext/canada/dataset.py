@@ -507,6 +507,13 @@ def update_dataset_search_params(search_params: Dict[str, Any]):
             # NOTE: if querying ready_to_publish, only show "public" dataset types
             search_params['fq_list'] += ['+dataset_type:(info OR dataset)',]
 
+        if not search_params.get('extras', {}).pop('__RECOMBINANT_CONTEXT__', False):
+            # exclude demo schemas from the package_search
+            # if not doing Recombinant logic actions.
+            search_params['fq_list'] += [
+                '-dataset_type:(demo_info OR demo_sequence OR demo_foreign_keys)'
+            ]
+
         # NOTE: modify the ready_to_publish facet to only show "public" dataset types
         search_params['facet.query'] = [
             FACET_QUERY_MAP['ready_to_publish']['true'],

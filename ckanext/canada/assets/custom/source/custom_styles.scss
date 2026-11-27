@@ -480,6 +480,38 @@ tbody.recombinant-data-dictionary-suffix-ref{
     background-color: #d9edf7 !important;
   }
 }
+
+.canada-demo-card{
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  .card-img-top{
+    width: 40% !important;
+    max-width: 40% !important;
+    min-width: 40% !important;
+  }
+  .card-body{
+    flex: 1;
+  }
+  .card-text{
+    font-size: 16px !important;
+  }
+}
+
+.canada-recombinant-display-card{
+  text-align: left !important;
+  > div{
+    display: inline !important;
+    text-align: left !important;
+  }
+  .canada-recombinant-display-card-separator{
+    margin-left: 5px;
+    margin-right: 5px;
+    display: inline-block;
+    opacity: 0.75;
+  }
+}
 /*###################
 ##       END       ##
 ##  Miscellaneous  ##
