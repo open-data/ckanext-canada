@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-19 17:21+0000\n"
+"POT-Creation-Date: 2026-11-27 16:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1023,6 +1023,14 @@ msgstr "monétaire"
 msgid "boolean"
 msgstr "booléen"
 
+#: ckanext/canada/strings.py:166
+msgid "open_canada_id"
+msgstr "ouvert_canada_id"
+
+#: ckanext/canada/strings.py:167
+msgid "Unique record identifier on open.canada.ca"
+msgstr "Identifiant unique de l’enregistrement sur ouvert.canada.ca"
+
 #: ckanext/canada/validators.py:223
 #, python-format
 msgid "Tag \"%s\" length is less than minimum %s"
@@ -1204,7 +1212,7 @@ msgstr ""
 " (sauf si le compte spécifié n'existe pas)"
 
 #: ckanext/canada/view.py:463 ckanext/canada/view.py:471
-#: ckanext/canada/view.py:513
+#: ckanext/canada/view.py:513 ckanext/canada/view.py:931
 msgid "Not authorized to see this page"
 msgstr "Non autorisé à voir cette page"
 
@@ -1315,9 +1323,16 @@ msgstr ""
 #. SQL Trigger String for PD Type: reclassification
 #. SQL Trigger String for PD Type: travelq
 #. SQL Trigger String for PD Type: wrongdoing
+#. SQL Trigger String for PD Type: demo_foreign_keys
+#. SQL Trigger String for PD Type: demo_sequence
+#. SQL Trigger String for PD Type: demo_info
 #: ckanext/canada/tables/adminaircraft.yaml:401
 #: ckanext/canada/tables/briefingt.yaml:361
 #: ckanext/canada/tables/contracts.yaml:2847
+#: ckanext/canada/tables/demo/foreign_keys.yaml:208
+#: ckanext/canada/tables/demo/foreign_keys.yaml:405
+#: ckanext/canada/tables/demo/id_sequence.yaml:297
+#: ckanext/canada/tables/demo/info_collection.yaml:326
 #: ckanext/canada/tables/grantsmonthly.yaml:1841
 #: ckanext/canada/tables/hospitalityq.yaml:796
 #: ckanext/canada/tables/qpnotes.yaml:421
@@ -1375,7 +1390,10 @@ msgstr "Veuillez entrer une valeur comprise entre 1 et 12"
 #. SQL Trigger String for PD Type: ati
 #. SQL Trigger String for PD Type: hospitalityq
 #. SQL Trigger String for PD Type: service
+#. SQL Trigger String for PD Type: demo_foreign_keys
 #: ckanext/canada/tables/ati.yaml:165 ckanext/canada/tables/ati.yaml:296
+#: ckanext/canada/tables/demo/foreign_keys.yaml:210
+#: ckanext/canada/tables/demo/foreign_keys.yaml:407
 #: ckanext/canada/tables/hospitalityq.yaml:798
 #: ckanext/canada/tables/service.yaml:1925
 #: ckanext/canada/tables/service.yaml:2893
@@ -1523,7 +1541,20 @@ msgstr ""
 "attribués de plus de 10 000 $ pour votre organisation"
 
 #. SQL Trigger String for PD Type: contracts
+#. SQL Trigger String for PD Type: demo_foreign_keys
+#. SQL Trigger String for PD Type: demo_sequence
+#. SQL Trigger String for PD Type: demo_info
 #: ckanext/canada/tables/contracts.yaml:2846
+#: ckanext/canada/tables/demo/foreign_keys.yaml:73
+#: ckanext/canada/tables/demo/foreign_keys.yaml:207
+#: ckanext/canada/tables/demo/foreign_keys.yaml:262
+#: ckanext/canada/tables/demo/foreign_keys.yaml:404
+#: ckanext/canada/tables/demo/id_sequence.yaml:74
+#: ckanext/canada/tables/demo/id_sequence.yaml:95
+#: ckanext/canada/tables/demo/id_sequence.yaml:296
+#: ckanext/canada/tables/demo/info_collection.yaml:78
+#: ckanext/canada/tables/demo/info_collection.yaml:97
+#: ckanext/canada/tables/demo/info_collection.yaml:325
 msgid "This field must not be empty"
 msgstr "Ce champ ne doit pas être vide"
 
@@ -1741,13 +1772,13 @@ msgstr ""
 
 #. Title for PD Type: grants
 #. Resource Title for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:3 ckanext/canada/tables/grants.yaml:20
+#: ckanext/canada/tables/grants.yaml:3 ckanext/canada/tables/grants.yaml:34
 msgid "Proactive Publication - Grants and Contributions"
 msgstr "Publication proactive - Subventions et les contributions"
 
 #. Label for PD Type: grants
 #. Resource Label for PD Type: grants
-#: ckanext/canada/tables/grants.yaml:4 ckanext/canada/tables/grants.yaml:21
+#: ckanext/canada/tables/grants.yaml:4 ckanext/canada/tables/grants.yaml:35
 msgid "Grants and Contributions"
 msgstr "Subventions et les contributions"
 
@@ -1840,6 +1871,13 @@ msgstr ""
 
 #. SQL Trigger String for PD Type: grantsmonthly
 #. SQL Trigger String for PD Type: service
+#. SQL Trigger String for PD Type: demo_foreign_keys
+#. SQL Trigger String for PD Type: demo_sequence
+#. SQL Trigger String for PD Type: demo_info
+#: ckanext/canada/tables/demo/foreign_keys.yaml:209
+#: ckanext/canada/tables/demo/foreign_keys.yaml:406
+#: ckanext/canada/tables/demo/id_sequence.yaml:298
+#: ckanext/canada/tables/demo/info_collection.yaml:327
 #: ckanext/canada/tables/grantsmonthly.yaml:1842
 #: ckanext/canada/tables/service.yaml:1926
 #: ckanext/canada/tables/service.yaml:2894
@@ -2249,6 +2287,50 @@ msgstr "Publication proactive - Dossiers sur les actes répréhensibles fondés"
 #: ckanext/canada/tables/wrongdoing.yaml:15
 msgid "Founded Wrongdoing"
 msgstr "Dossiers sur les actes répréhensibles fondés"
+
+#. Title for PD Type: demo_foreign_keys
+#. Label for PD Type: demo_foreign_keys
+#. Description for PD Type: demo_foreign_keys
+#: ckanext/canada/tables/demo/foreign_keys.yaml:5
+#: ckanext/canada/tables/demo/foreign_keys.yaml:6
+#: ckanext/canada/tables/demo/foreign_keys.yaml:7
+msgid "Demo Foreign Keys Dataset Type"
+msgstr "Type de jeu de données de démonstration pour les clés étrangères"
+
+#. Resource Title for PD Type: demo_foreign_keys
+#: ckanext/canada/tables/demo/foreign_keys.yaml:32
+msgid "Demo Foreign Keys Parent Resource"
+msgstr "Ressource parent de démonstration pour les clés étrangères"
+
+#. Resource Title for PD Type: demo_foreign_keys
+#: ckanext/canada/tables/demo/foreign_keys.yaml:221
+msgid "Demo Foreign Keys Child Resource"
+msgstr "Ressource enfant de démonstration pour les clés étrangères"
+
+#. Title for PD Type: demo_sequence
+#. Label for PD Type: demo_sequence
+#. Description for PD Type: demo_sequence
+#: ckanext/canada/tables/demo/id_sequence.yaml:5
+#: ckanext/canada/tables/demo/id_sequence.yaml:6
+#: ckanext/canada/tables/demo/id_sequence.yaml:7
+msgid "Demo ID Sequence Dataset Type"
+msgstr "Type de jeu de données de séquence d’identifiants de démonstration"
+
+#. Resource Title for PD Type: demo_sequence
+#. Resource Title for PD Type: demo_info
+#: ckanext/canada/tables/demo/id_sequence.yaml:32
+#: ckanext/canada/tables/demo/info_collection.yaml:32
+msgid "Demo Info Collection Resource"
+msgstr "Ressource de collecte d’informations de démonstration"
+
+#. Title for PD Type: demo_info
+#. Label for PD Type: demo_info
+#. Description for PD Type: demo_info
+#: ckanext/canada/tables/demo/info_collection.yaml:5
+#: ckanext/canada/tables/demo/info_collection.yaml:6
+#: ckanext/canada/tables/demo/info_collection.yaml:7
+msgid "Demo Info Collection Dataset Type"
+msgstr "Type de jeu de données de collecte d’informations de démonstration"
 
 #: ckanext/canada/templates/base.html:5
 msgid "Open Data Registry"
@@ -2828,6 +2910,94 @@ msgstr "Publier des dossiers"
 #: ckanext/canada/templates/admin/jobs.html:57
 msgid "Job Queue"
 msgstr "File d'attente des tâches"
+
+#: ckanext/canada/templates/admin/base.html:19
+#: ckanext/canada/templates/admin/demo.html:5
+msgid "Demo"
+msgstr "Démo"
+
+#: ckanext/canada/templates/admin/demo.html:7
+msgid ""
+"As a sysadmin user you have full control over this CKAN instance. You can"
+" access special parts of the web application to demo certain features."
+msgstr ""
+"En tant qu’administrateur système, vous disposez d’un contrôle complet "
+"sur cette instance de CKAN. Vous avez accès à certaines sections "
+"spéciales de l’application Web pour faire la démonstration de "
+"fonctionnalités particulières."
+
+#: ckanext/canada/templates/admin/demo.html:17
+msgid "Image of the info collection Registry screen"
+msgstr "Image de l’écran du Registre de collecte d’informations"
+
+#: ckanext/canada/templates/admin/demo.html:19
+msgid "Info Collection Type for Proactive Disclosure"
+msgstr "Type de collecte d’informations pour la divulgation proactive"
+
+#: ckanext/canada/templates/admin/demo.html:20
+msgid ""
+"Demo how this Proactive Disclosure type works without Excel Templates, "
+"using only Webforms and APIs. Show how the Stately Records work with the "
+"\"Save for later\" feature."
+msgstr ""
+"Démonstration du fonctionnement de ce type de divulgation proactive sans "
+"modèles Excel, en utilisant uniquement les formulaires Web et les API. "
+"Présentation du fonctionnement des enregistrements avec état à l’aide de "
+"la fonctionnalité « Enregistrer pour plus tard »."
+
+#: ckanext/canada/templates/admin/demo.html:21
+msgid "Go to Info Collection Demo"
+msgstr "Accéder à la démonstration de la collecte d’informations"
+
+#: ckanext/canada/templates/admin/demo.html:30
+msgid "Image of the id sequence collection Registry screen"
+msgstr "Image de l’écran du Registre de collecte de séquences d’identifiants"
+
+#: ckanext/canada/templates/admin/demo.html:32
+msgid "Automatic ID Sequences for Proactive Disclosure"
+msgstr "Séquences automatiques d’identifiants pour la divulgation proactive"
+
+#: ckanext/canada/templates/admin/demo.html:33
+msgid ""
+"Demo how this Proactive Disclosure type works with generated (automatic) "
+"record IDs. Show how users may modify Primary Keys, by referencing the "
+"generated open_canada_id."
+msgstr ""
+"Démonstration du fonctionnement de ce type de divulgation proactive avec "
+"des identifiants d’enregistrement générés automatiquement. Présentation "
+"de la façon dont les utilisateurs peuvent modifier les clés primaires en "
+"faisant référence à l’identifiant ouvert_canada_id généré."
+
+#: ckanext/canada/templates/admin/demo.html:34
+msgid "Go to ID Sequence Demo"
+msgstr "Accéder à la démonstration des séquences d’identifiants"
+
+#: ckanext/canada/templates/admin/demo.html:43
+msgid "Image of the foreign keys JSON output"
+msgstr "Image de la sortie JSON des clés étrangères"
+
+#: ckanext/canada/templates/admin/demo.html:45
+msgid "Foreign Keys for Proactive Disclosure"
+msgstr "Clés étrangères pour la divulgation proactive"
+
+#: ckanext/canada/templates/admin/demo.html:46
+msgid ""
+"Demo how this Proactive Disclosure type works with Foreign Key "
+"Constraints in a Parent/Child table relationship. Show how Parent data is"
+" required in order to create and reference Child data."
+msgstr ""
+"Démonstration du fonctionnement de ce type de divulgation proactive avec "
+"des contraintes de clés étrangères dans une relation entre tables parent "
+"et enfant. Présentation de la façon dont les données de la table parent "
+"sont requises pour créer et référencer les données de la table enfant."
+
+#: ckanext/canada/templates/admin/demo.html:47
+msgid "Go to Foreign Key Demo"
+msgstr "Accéder à la démonstration des clés étrangères"
+
+#: ckanext/canada/templates/admin/demo.html:55
+msgid "There are no available demos at this time."
+msgstr "Il n’y a aucune démonstration disponible pour le moment."
 
 #: ckanext/canada/templates/admin/index.html:5
 msgid "Administer CKAN"
@@ -3495,6 +3665,9 @@ msgstr "Modifier le jeu de données"
 #: ckanext/canada/templates/package/read_base.html:89
 #: ckanext/canada/templates/package/read_base.html:105
 #: ckanext/canada/templates/package/read_base.html:182
+#: ckanext/canada/templates/recombinant/snippets/display_card.html:22
+#: ckanext/canada/templates/recombinant/snippets/display_card.html:28
+#: ckanext/canada/templates/recombinant/snippets/display_card.html:34
 #: ckanext/canada/templates/snippets/organization.html:30
 #: ckanext/canada/templates/snippets/organization.html:34
 #: ckanext/canada/templates/snippets/package_item.html:95
