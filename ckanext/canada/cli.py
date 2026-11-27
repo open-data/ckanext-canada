@@ -85,7 +85,9 @@ RESOURCE_TRIM_FIELDS = [
     'webstore_last_updated', 'state',
     'description', 'tracking_summary', 'mimetype_inner',
     'mimetype', 'cache_url', 'created', 'webstore_url',
-    'position', 'metadata_modified']
+    'position', 'metadata_modified',
+    # XLoader fields
+    'ckan_url', 'original_url']
 
 
 class PortalUpdater(object):
