@@ -15,7 +15,7 @@ sidebar_extra_content:
   en: 'Description and guidance are being developed. If you have questions, please email [consultation@pco-bcp.gc.ca](mailto:consultation@pco-bcp.gc.ca).'
   fr: 'La description et les directives sont en développement. Si vous avez des questions, veuillez écrire à [consultation@pco-bcp.gc.ca](mailto:consultation@pco-bcp.gc.ca).'
 
-guide_link: http://www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canada.ca
+guide_link: https//www.gcpedia.gc.ca/wiki/Consultations_Registry_on_Open.Canada.ca
 
 resources:
 - title: Open Dialogue - Consultations
@@ -34,8 +34,17 @@ resources:
       en: Registration Number
       fr: Numéro d’enregistrement
     description:
-      en: "This field is populated by the user. It is a unique reference number given to each line item in the spreadsheet. Having a unique identifier for each item will allow users locate a specific item in the registry should they need to modify or delete. The Registration Number should respect the following format: C-XXXXXXX."
-      fr: "Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de référence unique donné à chaque article de la feuille de calcul. Les utilisateurs peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à supprimer. Le numéro d’enregistrement doit respecter le format suivant : C-XXXXXXX."
+      en: >
+        This field is populated by the user. It is a unique reference number
+        given to each line item in the spreadsheet. Having a unique identifier
+        for each item will allow users locate a specific item in the registry should
+        they need to modify or delete. The Registration Number should respect the
+        following format: C-XXXXXXX.
+      fr: >
+        Cette zone doit être remplie par l’utilisateur. Il s’agit d’un numéro de
+        référence unique donné à chaque article de la feuille de calcul. Les utilisateurs
+        peuvent ainsi trouver, dans un registre donné, un article précis à modifier ou à
+        supprimer. Le numéro d’enregistrement doit respecter le format suivant : C-XXXXXXX.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -54,8 +63,10 @@ resources:
       en: Publish Record
       fr: Prêt à publier?
     description:
-      en: This field identifies whether this record can be published as a summary on the appropriate public facing website.
-      fr: Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
+      en: >
+        This field identifies whether this record can be published as a summary on the appropriate public facing website.
+      fr: >
+        Cette zone indique si un résumé du dossier peut être publié sur le site Web public approprié.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -83,8 +94,15 @@ resources:
       en: Partner Department(s)
       fr: Ministère(s) partenaire(s)
     description:
-      en: This field identifies the name(s) of the departments who are collaborating on the identified engagement process. Please provide the numerical code associated to each department and separated by commas.
-      fr: Cette zone indique le ministère ou les ministères qui collaborent au processus de participation en question. Il faut indiquer le nom complet des ministères (aucun acronyme).
+      en: >
+        This field identifies the name(s) of the departments who are
+        collaborating on the identified engagement process. Please
+        provide the numerical code associated to each department and
+        separated by commas.
+      fr: >
+        Cette zone indique le ministère ou les ministères qui collaborent
+        au processus de participation en question. Il faut indiquer le nom
+        complet des ministères (aucun acronyme).
     obligation: Optional
     format_type:
       en: Free text (comma separated list of codes from reference table)
@@ -104,8 +122,10 @@ resources:
       en: Subjects
       fr: Sujets
     description:
-      en: This field indicates the different subjects related to the engagement process.
-      fr: Cette zone indique les différents sujets sur lesquels porte le processus de participation.
+      en: >
+        This field indicates the different subjects related to the engagement process.
+      fr: >
+        Cette zone indique les différents sujets sur lesquels porte le processus de participation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01")'
@@ -129,8 +149,10 @@ resources:
       en: Consultation Title (English)
       fr: Titre de la consultation (en anglais)
     description:
-      en: This field identifies the complete name of the consultation in English.
-      fr: Cette zone indique le titre, en anglais, de la consultation.
+      en: >
+        This field identifies the complete name of the consultation in English.
+      fr: >
+        Cette zone indique le titre, en anglais, de la consultation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -152,8 +174,10 @@ resources:
       en: Consultation Title (French)
       fr: Titre de la consultation (en français)
     description:
-      en: This field identifies the complete name of the consultation in French.
-      fr: Cette zone indique le titre, en français, de la consultation.
+      en: >
+        This field identifies the complete name of the consultation in French.
+      fr: >
+        Cette zone indique le titre, en français, de la consultation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -175,8 +199,19 @@ resources:
       en: Description (English)
       fr: Description (en anglais)
     description:
-      en: This field provides information regarding the nature of consultation and engagement activities in English. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
-      fr: Cette zone fournit de l’information, en anglais, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
+      en: >
+        This field provides information regarding the nature of consultation
+        and engagement activities in English. This includes a description of
+        the main objectives and expected outcomes of the engagement process.
+        Users are invited to explain how the engagement activities, methods
+        and/or tools will help meet the consultation’s objectives.
+      fr: >
+        Cette zone fournit de l’information, en anglais, sur la nature des
+        activités de consultation et de participation. On y trouve notamment
+        une description des principaux objectifs et des résultats attendus du
+        processus de participation. On invite les utilisateurs à expliquer en
+        quoi les activités, les méthodes et les outils permettront d’atteindre
+        les objectifs de la consultation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01") || {{description_fr}}.length > 0'
@@ -199,8 +234,18 @@ resources:
       en: Description (French)
       fr: Description (en français)
     description:
-      en: This field provides information regarding the nature of consultation and engagement activities in French. This includes a description of the main objectives and expected outcomes of the engagement process. Users are invited to explain how the engagement activities, methods and/or tools will help meet the consultation’s objectives.
-      fr: Cette zone fournit de l’information, en français, sur la nature des activités de consultation et de participation. On y trouve notamment une description des principaux objectifs et des résultats attendus du processus de participation. On invite les utilisateurs à expliquer en quoi les activités, les méthodes et les outils permettront d’atteindre les objectifs de la consultation.
+      en: >
+        This field provides information regarding the nature of consultation
+        and engagement activities in French. This includes a description of the
+        main objectives and expected outcomes of the engagement process.
+        Users are invited to explain how the engagement activities, methods
+        and/or tools will help meet the consultation’s objectives.
+      fr: >
+        Cette zone fournit de l’information, en français, sur la nature des activités
+        de consultation et de participation. On y trouve notamment une description des
+        principaux objectifs et des résultats attendus du processus de participation.
+        On invite les utilisateurs à expliquer en quoi les activités, les méthodes et
+        les outils permettront d’atteindre les objectifs de la consultation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01") || {{description_en}}.length > 0'
@@ -223,8 +268,10 @@ resources:
       en: Target Participants and Audience
       fr: Participants visés et public cible
     description:
-      en: This field provides information regarding the target participants and audience of the engagement process.
-      fr: Cette zone précise les participants visés et le public cible du processus de participation.
+      en: >
+        This field provides information regarding the target participants and audience of the engagement process.
+      fr: >
+        Cette zone précise les participants visés et le public cible du processus de participation.
     obligation: Mandatory
     excel_required_formula: 'or(isblank({end_date}),{end_date}>=DATE(2018,1,1))'
     js_required_eval: '{{end_date}}.length == 0 || new Date({{end_date}}) >= new Date("2018-01-01")'
@@ -247,8 +294,10 @@ resources:
       en: Start Date
       fr: Date de début
     description:
-      en: This field indicates when a planned consultation will begin to accept input from participants.
-      fr: Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
+      en: >
+        This field indicates when a planned consultation will begin to accept input from participants.
+      fr: >
+        Ce champ indique quand une séance de planification prévue commencera à accepter les commentaires des participants.
     obligation: Mandatory
     # FIXME: add trigger to ensure start_date is not in future, and dates are chronological
     excel_required: true
@@ -268,8 +317,16 @@ resources:
       en: End Date
       fr: Date de fin
     description:
-      en: This field indicates the end date of the consultation. The consultation is considered closed when no more engagement activities will take place and/or when a department begins analysing the input received during the engagement process.
-      fr: Ce champ indique la date à laquelle la consultation a pris fin. Une consultation est terminée lorsqu’il n’y a plus d’activités de participation qui se tiendront et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre du processus de participation.
+      en: >
+        This field indicates the end date of the consultation. The consultation
+        is considered closed when no more engagement activities will take place
+        and/or when a department begins analysing the input received during the
+        engagement process.
+      fr: >
+        Ce champ indique la date à laquelle la consultation a pris fin. Une consultation
+        est terminée lorsqu’il n’y a plus d’activités de participation qui se tiendront
+        et/ou lorsqu’un ministère entreprend l’analyse des commentaires reçus dans le cadre
+        du processus de participation.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -288,8 +345,10 @@ resources:
       en: Status
       fr: État
     description:
-      en: The field indicates the current status of the engagement process.
-      fr: Cette zone indique l’état d’avancement du processus de participation.
+      en: >
+        The field indicates the current status of the engagement process.
+      fr: >
+        Cette zone indique l’état d’avancement du processus de participation.
     obligation: Mandatory
     # FIXME: missing required trigger for status
     excel_required: true
@@ -330,8 +389,11 @@ resources:
       en: Link to Consultations Profile Page (English)
       fr: Lien vers la page du profil des consultations (en anglais)
     description:
-      en: This field provides the link to the English engagement information profile page.
-      fr: Cette zone contient le lien vers la page de profil (en anglais) qui donne des renseignements sur le processus de participation du public.
+      en: >
+        This field provides the link to the English engagement information profile page.
+      fr: >
+        Cette zone contient le lien vers la page de profil (en anglais) qui donne des
+        renseignements sur le processus de participation du public.
     obligation: Mandatory
     form_required: true
     format_type:
@@ -351,8 +413,11 @@ resources:
       en: Link to Consultations Profile Page (French)
       fr: Lien vers la page du profil des consultations (en français)
     description:
-      en: This field provides the link to the French engagement information profile page.
-      fr: Cette zone contient le lien vers la page profil française qui contient des renseignements sur le processus de participation.
+      en: >
+        This field provides the link to the French engagement information profile page.
+      fr: >
+        Cette zone contient le lien vers la page profil française qui contient des
+        renseignements sur le processus de participation.
     obligation: Mandatory
     form_required: true
     format_type:
@@ -372,8 +437,12 @@ resources:
       en: Report Available online
       fr: Rapport disponible en ligne
     description:
-      en: This field indicates if the “What we Heard” report is completed, published and made available online on the Consulting with Canadians website.
-      fr: Cette zone indique si le rapport intitulé « Ce que nous avons entendu » est terminé, publié et disponible sur le site Web « Consultations auprès des Canadiens ».
+      en: >
+        This field indicates if the “What we Heard” report is completed,
+        published and made available online on the Consulting with Canadians website.
+      fr: >
+        Cette zone indique si le rapport intitulé « Ce que nous avons entendu » est
+        terminé, publié et disponible sur le site Web « Consultations auprès des Canadiens ».
     obligation: Mandatory
     # FIXME: missing required trigger for report_available_online
     excel_required: true
@@ -401,8 +470,11 @@ resources:
       en: Link to the “What we Heard” Report in English
       fr: Lien – rapport « Ce que nous avons entendu » en anglais
     description:
-      en: This field provides the link to the “What we Heard” report when it is available online.
-      fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » en anglais après que le rapport est affiché en ligne.
+      en: >
+        This field provides the link to the “What we Heard” report when it is available online.
+      fr: >
+        Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu »
+        en anglais après que le rapport est affiché en ligne.
     obligation: Optional
     format_type:
       en: Web address
@@ -422,8 +494,11 @@ resources:
       en: Link to the “What we Heard” Report in French
       fr: Lien – rapport « Ce que nous avons entendu » en français
     description:
-      en: This field provides the link to the “What we Heard” report when it is available online.
-      fr: Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu » après que le rapport est affiché en ligne.
+      en: >
+        This field provides the link to the “What we Heard” report when it is available online.
+      fr: >
+        Cette zone contient le lien vers le rapport intitulé « Ce que nous avons entendu »
+        après que le rapport est affiché en ligne.
     obligation: Optional
     format_type:
       en: Web address
@@ -443,8 +518,14 @@ resources:
       en: Departmental Consultation Contact
       fr: Responsable de la consultation au ministère
     description:
-      en: This field provide the email address of the departmental consultation and public engagement contact (if applicable). The department consultation contact is defined as the primary contact for departmental consultations.
-      fr: Cette zone indique l’adresse courriel de la personne du ministère responsable de la consultation et de la participation du public (s’il y a lieu). Le responsable de la consultation au ministère est le principal responsable des consultations du ministère.
+      en: >
+        This field provide the email address of the departmental consultation
+        and public engagement contact (if applicable). The department consultation
+        contact is defined as the primary contact for departmental consultations.
+      fr: >
+        Cette zone indique l’adresse courriel de la personne du ministère responsable
+        de la consultation et de la participation du public (s’il y a lieu). Le responsable
+        de la consultation au ministère est le principal responsable des consultations du ministère.
     obligation: Optional
     format_type:
       en: Email
@@ -463,8 +544,14 @@ resources:
       en: Policy/Program Lead for the Consultation
       fr: Responsable des politiques ou des programmes pour la consultation
     description:
-      en: This field provides the email address of the policy or program lead for the consultation. The policy or program lead is defined as the person leading the specific consultation and accountable for the engagement activities.
-      fr: Cette zone indique l’adresse courriel du responsable des politiques ou des programmes pour la consultation. Il s’agit de la personne qui dirige la consultation en question et qui doit rendre des comptes sur les activités de participation.
+      en: >
+        This field provides the email address of the policy or program lead for
+        the consultation. The policy or program lead is defined as the person leading
+        the specific consultation and accountable for the engagement activities.
+      fr: >
+        Cette zone indique l’adresse courriel du responsable des politiques ou des
+        programmes pour la consultation. Il s’agit de la personne qui dirige la consultation
+        en question et qui doit rendre des comptes sur les activités de participation.
     obligation: Optional
     format_type:
       en: Email
@@ -483,8 +570,13 @@ resources:
       en: Remarks (English)
       fr: Remarques (en anglais)
     description:
-      en: This field identifies additional information on the consultation that could not be submitted in other fields, in English
-      fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en anglais).
+      en: >
+        This field identifies additional information on the consultation that
+        could not be submitted in other fields, in English
+      fr: >
+        Cette zone comprend des renseignements supplémentaires sur la
+        consultation qu’il n’était pas possible d’inscrire dans d’autres
+        zones (en anglais).
     obligation: Optional
     js_required_eval: '{{remarks_fr}}.length > 0'
     format_type:
@@ -505,8 +597,13 @@ resources:
       en: Remarks (French)
       fr: Remarques (en français)
     description:
-      en: This field identifies additional information on the consultation that could not be submitted in other fields, in French.
-      fr: Cette zone comprend des renseignements supplémentaires sur la consultation qu’il n’était pas possible d’inscrire dans d’autres zones (en français).
+      en: >
+        This field identifies additional information on the consultation
+        that could not be submitted in other fields, in French.
+      fr: >
+        Cette zone comprend des renseignements supplémentaires sur la
+        consultation qu’il n’était pas possible d’inscrire dans d’autres
+        zones (en français).
     obligation: Optional
     js_required_eval: '{{remarks_en}}.length > 0'
     format_type:
@@ -527,8 +624,14 @@ resources:
       en: High Profile
       fr: Haute visibilité
     description:
-      en: This field indicates whether the consultation or public engagement initiative is considered high profile. The consultation is considered high profile if it meets one or more of the criteria in the ‘Rationale’ field.
-      fr: "Cette zone indique si la consultation ou initiative de participation est à haute visibilité. La consultation est considérée comme de haute visibilité si elle réponde à un ou plus de critères à la zone 'Raison'."
+      en: >
+        This field indicates whether the consultation or public engagement initiative
+        is considered high profile. The consultation is considered high profile if it
+        meets one or more of the criteria in the ‘Rationale’ field.
+      fr: >
+        Cette zone indique si la consultation ou initiative de participation est à haute
+        visibilité. La consultation est considérée comme de haute visibilité si elle
+        réponde à un ou plus de critères à la zone 'Raison'.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -555,8 +658,13 @@ resources:
       en: Rationale
       fr: Raison
     description:
-      en: The field indicates the rationale that prompted the public engagement initiative. This field includes only criteria that define high profile public engagement.
-      fr: Cette zone comprend le(s) motif(s) de l’activité de participation du public. Cette zone inclut uniquement les critères qui définissent une consultation ou participation public de profil élevé.
+      en: >
+        The field indicates the rationale that prompted the public engagement initiative.
+        This field includes only criteria that define high profile public engagement.
+      fr: >
+        Cette zone comprend le(s) motif(s) de l’activité de participation du public.
+        Cette zone inclut uniquement les critères qui définissent une consultation ou
+        participation public de profil élevé.
     obligation: Mandatory
     excel_required_formula: 'LEFT({high_profile},1)="Y"'
     js_required_eval: '{{high_profile}}.length > 0 && {{high_profile}} == "Y"'
@@ -711,8 +819,8 @@ resources:
       report_link_en: ""
       report_link_fr: ""
       status: P
-      profile_page_en: http://example.gc.ca/en
-      profile_page_fr: http://example.gc.ca/fr
+      profile_page_en: https//example.gc.ca/en
+      profile_page_fr: https//example.gc.ca/fr
       subjects: ["IP", "CD", "HS", "SE"]
       target_participants_and_audience: ["IP", "IG", "PT"]
       title_en: Family Services Program Reform
