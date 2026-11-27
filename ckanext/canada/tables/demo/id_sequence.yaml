@@ -1,0 +1,344 @@
+dataset_type: demo_sequence
+target_dataset: demo_sequence
+
+
+title: Demo ID Sequence Dataset Type
+shortname: Demo ID Sequence Dataset Type
+notes: Demo ID Sequence Dataset Type
+
+# open_canada_id generation rule:
+#
+#   Assign unique _id across *all* records and so that (_id % 97) == 45
+#   These _id values are exported as open_canada_id in the combined csv dataset
+#
+#   The last two _id digits are check digits. Mod 97 prevents almost all numeric
+#   typos (Mod 97 is also used for international bank account check digits)
+#
+#   45 chosen only because "Demo Sequence", D ≈ 4, S ≈ 5.
+#   open_canada_id values for other record types use values
+#   different than 45 so that open_canada_ids are unique across all record types
+#
+#   Use check digits from 03-99 because numbers ending in 00 look approximate,
+#   i.e. for all open_canada_id values (_id % 100) > 2
+datastore_create_sequence: demo_sequence_seq
+sequence_modulo_offset: 45
+
+template_version: 3
+
+portal_type: dataset
+collection: demo
+
+resources:
+- title: Demo Info Collection Resource
+  resource_name: demo_sequence
+
+  published_resource_id: 1495487f-338c-33fc-8715-ecb48c67d17e
+
+  edit_using__id: true  # new standard of _id usage
+  create_form: true
+  edit_form: true
+  excel_template: true
+
+  fields:
+  # Dev: Published Resource Field
+  - datastore_id: open_canada_id
+    label:
+      en: open_canada_id
+      fr: open_canada_id
+    description:
+      en: >
+        Unique record identifier on open.canada.ca
+      fr: >
+        Identifiant unique de l’enregistrement du open.canada.ca
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  - datastore_id: reference_number
+    label:
+      en: Reference Number
+      fr: Numéro de référence
+    description:
+      en: >
+        Sample Reference Number Field
+      fr: >
+        Exemple de champ du numéro de référence
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    datatables_col_class: col-md pd-datatables-primary-key-offset-_id
+    format_type:
+      en: Free text
+      fr: Texte libre
+    validation:
+      en: This field must not be empty
+      fr: Ce champ ne doit pas être vide
+    visible_to_public: Yes
+    occurrence: Single
+    datastore_type: text
+
+  - datastore_id: year
+    datastore_type: year
+    label:
+      en: Year
+      fr: Année
+    description:
+      en: >
+        Sample Year Field
+      fr: >
+        Exemple de champ de l’année
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    datatables_col_class: col-sm pd-datatables-primary-key-offset-md
+    validation:
+      en: This field must not be empty
+      fr: Ce champ ne doit pas être vide
+    extract_date_year: true
+    form_attrs:
+      size: 20
+
+  - datastore_id: country
+    label:
+      en: Country
+      fr: Pays
+    description:
+      en: >
+        Example Select Field
+      fr: >
+        Exemple de champ de sélection
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    datastore_type: text
+    datatables_col_class: col-lg
+    choices_file: ../choices/country.json
+
+  - datastore_id: reason
+    label:
+      en: Reason
+      fr: Motif
+    description:
+      en: >
+        Sample Multi-Select Field
+      fr: >
+        Exemple de champ à sélection multiple
+    obligation: Mandatory
+    form_required: true
+    excel_required: true
+    format_type:
+      en: Controlled List
+      fr: Liste contrôlée
+    validation:
+      en: This field must not be empty.
+      fr: Ce champ ne doit pas être vide.
+    occurrence: Repeatable
+    datastore_type: _text
+    datatables_col_class: col-md
+    datatables_full_text_choices: true
+    form_snippet: scheming/form_snippets/multiple_select.html
+    choice_order_expression: 'value.get("order", 0), code'
+    choices:
+      LEISURE:
+        en: Leisure and Relaxation
+        fr: Loisirs et détente
+        order: 0
+      ADVENTURE:
+        en: Adventure and Exploration
+        fr: Aventure et exploration
+        order: 1
+      CULTURE:
+        en: Cultural Experiences
+        fr: Expériences culturelles
+        order: 2
+      FAMILY:
+        en: Visiting Family and Friends
+        fr: Visite à la famille et aux amis
+        order: 3
+      BUSINESS:
+        en: Business Travel
+        fr: Voyages d’affaires
+        order: 4
+      EDUCATION:
+        en: Education and Learning
+        fr: Éducation et apprentissage
+        order: 5
+      WELLNESS:
+        en: Health and Wellness
+        fr: Santé et bien-être
+        order: 6
+      NATURE:
+        en: Nature and Outdoor Activities
+        fr: Nature et activités de plein air
+        order: 7
+      EVENTS:
+        en: Special Events and Celebrations
+        fr: Événements spéciaux et célébrations
+        order: 8
+      OTHER:
+        en: Other
+        fr: Autre
+        order: 9
+
+  - datastore_id: additional_info
+    datastore_type: text
+    label:
+      en: Additional Information
+      fr: Renseignements supplémentaires
+    description:
+      en: >
+        Example Text Area Field
+      fr: >
+        Exemple de champ de zone de texte
+    obligation: Optional
+    form_required: false
+    excel_required: false
+    datatables_col_class: col-xxl
+    max_chars: 350
+    format_type:
+      en: Free text
+      fr: Texte libre
+    form_snippet: scheming/form_snippets/textarea.html
+    form_attrs:
+      class: form-control canada-width-full d-block
+      maxlength: 350
+
+  # Dev: req dynamic field
+  - datastore_id: record_created
+    label:
+      en: Record Creation Time
+      fr: Heure de la création du dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: record_modified
+    label:
+      en: Last Record Modification Time
+      fr: Heure de la dernière modification au dossier
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: timestamp
+    preview_class: bg-info
+
+  # Dev: req dynamic field
+  - datastore_id: user_modified
+    label:
+      en: User Last Modified Record
+      fr: Dernier enregistrement modifié par l'utilisateur
+    import_template_include: false
+    visible_to_public: false
+    datastore_type: text
+    preview_class: bg-info
+
+  # Dev: Published Resource Field
+  - datastore_id: owner_org
+    label:
+      en: Department ID
+      fr: ID du ministère
+    description:
+      en: >
+        Identifies the applied ID of the department or agency.
+      fr: >
+        Identifie le code d'usage du ministère ou de l'organisme.
+    obligation: Mandatory
+    datastore_type: text
+    published_resource_computed_field: true
+
+  datastore_primary_key: ["reference_number", "year"]
+  datastore_indexes: ""
+
+  default_preview_sort: year, reference_number
+
+  triggers:
+  - demo_sequence_trigger: |
+      DECLARE
+        errors text[][] := '{{}}';
+        crval RECORD;
+        importing boolean NOT NULL := (SELECT EXISTS (SELECT 1 FROM datastore_app_context WHERE 'recombinant_import' = ANY(flags)));
+      BEGIN
+        -- NOTE: always require primary keys
+        errors := errors || required_error(NEW.reference_number, 'reference_number');
+        IF NEW.reference_number LIKE '%,%' THEN
+          errors := errors || ARRAY[['reference_number', {reference_number_error}]];
+        END IF;
+        NEW.reference_number := trim_lead_trailing(NEW.reference_number);
+        errors := errors || required_error(NEW.year, 'year');
+
+        errors := errors || required_error(NEW.country, 'country');
+        errors := errors || choice_error(NEW.country, {country}, 'country');
+
+        errors := errors || required_error(NEW.reason, 'reason');
+        crval := choices_clean_error(NEW.reason, {reason}, 'reason');
+        errors := errors || crval.error;
+
+        NEW.additional_info := trim_lead_trailing(NEW.additional_info);
+        errors := errors || max_char_error(NEW.additional_info, 350, 'additional_info');
+
+        IF TG_OP = 'UPDATE' THEN
+          errors := errors || required_error(NEW._id, '_id');
+        END IF;
+
+        IF errors = '{{}}' THEN
+          IF NOT importing AND TG_OP = 'INSERT' THEN
+            NEW._id := nextval({sequence_name}) * 100 + 99;
+            NEW._id := NEW._id - (NEW._id - {sequence_modulo_offset}) % 97;
+          END IF;
+          RETURN NEW;
+        END IF;
+        RAISE EXCEPTION E'TAB-DELIMITED\t%', array_to_string(errors, E'\t');
+      END;
+  - update_record_modified_created_trigger
+
+  trigger_strings:  # yaml | not supported
+    required_error: This field must not be empty
+    reference_number_error: Comma is not allowed in Reference Number field
+    max_length_error: This field has a maximum length of {} characters.
+
+  examples:
+    record:
+      reference_number: "2019-Q3-00001"
+      year: 2026
+      country: 'AU'
+      reason: 'LEISURE'
+      additional_info: "free text of additional information..."
+    filter_one:
+      reference_number: 2019-Q3-00001
+      year: 2026
+    sort: year, reference_number
+
+excel_column_heading_style:
+  PatternFill:
+    fgColor: FF33bbff
+    patternType: solid
+  Font:
+    color: FF333333
+    underline: single
+excel_edge_style:
+  PatternFill:
+    fgColor: FF00aaff
+    patternType: solid
+  Font:
+    color: FF333333
+excel_example_style:
+  PatternFill:
+    patternType: solid
+    fgColor: FF33bbff
+  Font:
+    color: FF333333
+excel_header_style:
+  PatternFill:
+    fgColor: FF00aaff
+    patternType: solid
+  Font:
+    color: FF333333
+    bold: true
+    size: 16
+datatables_style:
+  header:
+    bgColor: 00aaff
+  select:
+    bgColor: 80d5ff
+    fgColor: 333333

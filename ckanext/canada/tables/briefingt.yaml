@@ -25,11 +25,13 @@ resources:
   # 3.3
   - datastore_id: tracking_number
     label:
-      en: Briefing Note Number
-      fr: Numéro de suivi
+      en: Reference Number
+      fr: Numéro de référence
     description:
-      en: This field will display the internal tracking number of the Briefing Note.
-      fr: Ce champ affichera le numéro de suivi interne de la note de breffage.
+      en: >
+        This field will display the internal tracking number of the Briefing Note.
+      fr: >
+        Ce champ affichera le numéro de suivi interne de la note de breffage.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -47,8 +49,10 @@ resources:
       en: Title (English)
       fr: Titre (en anglais)
     description:
-      en: This field is populated by the user with the official title of the Briefing Note, in English.
-      fr: Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en anglais.
+      en: >
+        This field is populated by the user with the official title of the Briefing Note, in English.
+      fr: >
+        Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en anglais.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -69,8 +73,10 @@ resources:
       en: Title (French)
       fr: Titre (en français)
     description:
-      en: This field is populated by the user with the official title of the Briefing Note, in French.
-      fr: Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en français.
+      en: >
+        This field is populated by the user with the official title of the Briefing Note, in French.
+      fr: >
+        Ce champ est rempli par l'utilisateur avec le titre officiel de la note de breffage, en français.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -91,8 +97,12 @@ resources:
       en: Originating Sector (English)
       fr: Secteur d’origine (en anglais)
     description:
-      en: The Sector, Branch, or Division where the Briefing Note originated in English. If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
-      fr: Le secteur, la direction ou la division d'où provient la note de breffage en anglais. S'il y a plusieurs secteurs/directions/divisions, on peut les séparer par un point-virgule (;).
+      en: >
+        The Sector, Branch, or Division where the Briefing Note originated in English.
+        If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
+      fr: >
+        Le secteur, la direction ou la division d'où provient la note de breffage en anglais.
+        S'il y a plusieurs secteurs/directions/divisions, on peut les séparer par un point-virgule (;).
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -113,8 +123,12 @@ resources:
       en: Originating Sector (French)
       fr: Secteur d’origine (en français)
     description:
-      en: The Sector, Branch, or Division where the Briefing Note originated in French. If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
-      fr: Le secteur, la direction ou la division d'où provient la note de breffage en français S'il y a plusieurs secteurs/directions/divisions, on peut les séparer par un point-virgule (;).
+      en: >
+        The Sector, Branch, or Division where the Briefing Note originated in French.
+        If there are multiple sectors/branches/divisions, they may be separated by a semicolon (;)
+      fr: >
+        Le secteur, la direction ou la division d'où provient la note de breffage en français.
+        S'il y a plusieurs secteurs/directions/divisions, on peut les séparer par un point-virgule (;).
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -135,8 +149,10 @@ resources:
       en: Addressee
       fr: Destinataire
     description:
-      en: This field will display the person to whom the briefing note is addressed.
-      fr: Ce champ affichera le nom de la personne à qui la note de breffage est adressée.
+      en: >
+        This field will display the person to whom the briefing note is addressed.
+      fr: >
+        Ce champ affichera le nom de la personne à qui la note de breffage est adressée.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -167,8 +183,10 @@ resources:
       en: Date Received
       fr: Date de réception
     description:
-      en: This field will display the date on which the Briefing Note was received in the addressee's office.
-      fr: Ce champ affichera la date à laquelle la note de breffage a été reçue par le bureau du destinataire.
+      en: >
+        This field will display the date on which the Briefing Note was received in the addressee's office.
+      fr: >
+        Ce champ affichera la date à laquelle la note de breffage a été reçue par le bureau du destinataire.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -187,8 +205,16 @@ resources:
       en: Action Required
       fr: Mesure requise
     description:
-      en: "The Action Required is the purpose of the briefing note; For Information: If the item is being routed solely for the information of the addressee; For Approval/Signature: If the item is for approval or signature only of the addressee; For Decision: If the item requests the addressee make a decisive decision"
-      fr: "La mesure requise représente le but de la note de breffage; À titre d'information : Si l'élément n'est envoyé que pour informer le destinataire; Pour approbation/signature; Si l'élément est envoyé à des fins d'approbation ou de signature seulement par le destinataire; Pour décision : Si l'élément demande au destinataire de prendre une décision décisive."
+      en: >
+        The Action Required is the purpose of the briefing note; For Information:
+        If the item is being routed solely for the information of the addressee;
+        For Approval/Signature: If the item is for approval or signature only of
+        the addressee; For Decision: If the item requests the addressee make a decisive decision
+      fr: >
+        La mesure requise représente le but de la note de breffage; À titre d'information :
+        Si l'élément n'est envoyé que pour informer le destinataire; Pour approbation/signature;
+        Si l'élément est envoyé à des fins d'approbation ou de signature seulement par le destinataire;
+        Pour décision : Si l'élément demande au destinataire de prendre une décision décisive.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -218,8 +244,10 @@ resources:
       en: Additional Information (English)
       fr: Renseignements supplémentaires (en anglais)
     description:
-      en: This field will display any additional information/comments for the Briefing Note, in English.
-      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
+      en: >
+        This field will display any additional information/comments for the Briefing Note, in English.
+      fr: >
+        Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en anglais.
     obligation: Optional
     excel_required: false
     format_type:
@@ -242,8 +270,10 @@ resources:
       en: Additional Information (French)
       fr: Renseignements supplémentaires (en français)
     description:
-      en: This field will display any additional information/comments for the Briefing Note, in French.
-      fr: Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
+      en: >
+        This field will display any additional information/comments for the Briefing Note, in French.
+      fr: >
+        Ce champ affichera de plus amples renseignements/commentaires concernant la note de breffage, en français.
     obligation: Optional
     excel_required: false
     format_type:
@@ -328,7 +358,7 @@ resources:
   - update_record_modified_created_trigger
 
   trigger_strings:  # yaml | not supported
-    tracking_number_error: Comma is not allowed in Briefing Note Number field
+    tracking_number_error: Comma is not allowed in Reference Number field
 
   examples:
     record:
@@ -364,8 +394,14 @@ resources:
       en: Year
       fr: Année
     description:
-      en: This tab / field in the template is only populated if there are no briefing notes for the reporting period. This field should be populated with the year of the reporting period.
-      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de notes de breffage pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année de la période d’établissement de rapports.
+      en: >
+        This tab / field in the template is only populated if there are no briefing
+        notes for the reporting period. This field should be populated with the year
+        of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de notes de breffage
+        pour la période d’établissement de rapports. Ce champ doit être rempli avec l’année
+        de la période d’établissement de rapports.
     obligation: Mandatory
     excel_required: true
     form_required: true
@@ -383,8 +419,14 @@ resources:
       en: Month (1-12)
       fr: Mois (1-12)
     description:
-      en: This tab / field in the template is only populated if there are no briefing notes for the reporting period. This field should be populated with the month of the reporting period.
-      fr: Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de notes de breffage pour la période d’établissement de rapports. Ce champ doit être rempli avec le mois de la période d’établissement de rapports.
+      en: >
+        This tab / field in the template is only populated if there are no briefing
+        notes for the reporting period. This field should be populated with the
+        month of the reporting period.
+      fr: >
+        Cet onglet/champ du modèle n’est rempli que s'il n'y a pas de notes de breffage
+        pour la période d’établissement de rapports. Ce champ doit être rempli avec
+        le mois de la période d’établissement de rapports.
     validation:
       en: Must be in the range of 1-12 (representing January-December).
       fr: Doit être dans la gamme de 1-12 (représente janvier-décembre)

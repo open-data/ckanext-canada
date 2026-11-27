@@ -63,6 +63,9 @@
       <div class="recombinant-action-panels-container">
         {% block action_panels %}{{ super() }}{% endblock %}
       </div>
+      <div class="recombinant-record-output-container">
+        {% block record_output %}{{ super() }}{% endblock %}
+      </div>
     </div>
     <aside class="col-md-3">
       {% if geno.notes %}
@@ -90,9 +93,8 @@
   </div>
 {% endblock %}
 
-{% block primary %}
+
+{%- block scripts -%}
   {{ super() }}
-  {% if resource and 'error' not in resource %}
-    {{ h.get_pd_datatable(resource.name, resource.id, organization.name, dataset.dataset_type) }}
-  {% endif %}
-{% endblock %}
+  {% asset 'canada_public/css' %}
+{%- endblock -%}

@@ -8,14 +8,14 @@ permissions:
 
 jobs:
   typecheck:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # ubuntu-latest
     container:
       image: opendatacanada/ckan-pytest  # primary executor
     steps:
       - name: Install Node
         run: |
           apk add nodejs npm
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Check Source Dependency Versions
@@ -72,6 +72,9 @@ jobs:
           pip install -e .
           pip install -r requirements.txt
           pip install -r test-requirements.txt
+          if [[ -f "requirements-security-patch.txt" ]]; then
+            pip install -r requirements-security-patch.txt
+          fi;
           python3 setup.py develop
           pip install -e 'git+https://github.com/open-data/ckanext-cloudstorage.git@canada-v2.10#egg=ckanext-cloudstorage' -r 'https://raw.githubusercontent.com/open-data/ckanext-cloudstorage/canada-v2.10/requirements.txt'
           cd /srv/app

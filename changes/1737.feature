@@ -1,0 +1,1 @@
+Added `-vv` (semantic verbosity and diff outputs) and `-vvv` (same as `-vv` but with `time.perf_counter` stats) support to the PortalSync command stack. Both verbosity levels output to the log stream.

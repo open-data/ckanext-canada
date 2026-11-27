@@ -59,7 +59,7 @@ def pytest_collection_finish(session: Session) -> None:
     service_id_data = os.path.join(
         os.path.split(__file__)[0],
         'samples/ref_data/test_ref_service_service_ids.csv')
-    loaded = _load_csv_ref_data('ref_service_service_ids',
+    loaded = _load_csv_ref_data('_ref_service_service_ids',
                                 [
                                     'service_id',
                                     'label_en',
@@ -68,12 +68,12 @@ def pytest_collection_finish(session: Session) -> None:
                                 ],
                                 service_id_data, verbose=False)
     if loaded:
-        print('Loaded test_ref_service_service_ids.csv into ref_service_service_ids')
+        print('Loaded test_ref_service_service_ids.csv into _ref_service_service_ids')
 
     program_id_data = os.path.join(
         os.path.split(__file__)[0],
         'samples/ref_data/test_ref_service_program_ids.csv')
-    loaded = _load_csv_ref_data('ref_service_program_ids',
+    loaded = _load_csv_ref_data('_ref_service_program_ids',
                                 [
                                     'program_id',
                                     'label_en',
@@ -82,7 +82,7 @@ def pytest_collection_finish(session: Session) -> None:
                                 ],
                                 program_id_data, verbose=False)
     if loaded:
-        print('Loaded test_ref_service_program_ids.csv into ref_service_program_ids')
+        print('Loaded test_ref_service_program_ids.csv into _ref_service_program_ids')
 
     # NOTE: always make a tbs-sct org
     try:

@@ -1,0 +1,1 @@
+Renamed Service Inventory Reference Table Names to start with an underscore, to avoid problems with datastore triggers being applied by set-permissions and to be consistent with other datastore system tables.

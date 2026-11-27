@@ -1,0 +1,57 @@
+{% extends "admin/base.html" %}
+
+{% block secondary_content %}
+  <section class="panel panel-info">
+    <header class="panel-heading canada-panel-heading"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{{- _('Demo') -}}</header>
+    <div class="panel-body">
+      <p>{{- _('As a sysadmin user you have full control over this CKAN instance. You can access special parts of the web application to demo certain features.') -}}</p>
+    </div>
+  </section>
+{% endblock %}
+
+{% block primary_content_inner %}
+  {%- set available_demos = [] -%}
+  {%- set rcomb_types = h.recombinant_get_types() -%}
+  {%- if 'demo_info' in rcomb_types -%}
+    <div class="card canada-demo-card">
+      <img class="card-img-top" src="{{- h.url_for_static('/static/img/demo/demo_info.png') -}}" alt="{{- _('Image of the info collection Registry screen') -}}">
+      <div class="card-body">
+        <strong class="card-title">{{- _('Info Collection Type for Proactive Disclosure') -}}</strong>
+        <p class="card-text">{{- _('Demo how this Proactive Disclosure type works without Excel Templates, using only Webforms and APIs. Show how the Stately Records work with the "Save for later" feature.') -}}</p>
+        <a href="{{- h.url_for('recombinant.type_redirect', resource_name='demo_info') -}}" target="_blank" class="btn btn-primary btn-sm">{{- _('Go to Info Collection Demo') -}}</a>
+      </div>
+    </div>
+    <div class="canada-v10-spacer"></div>
+    <div class="canada-v10-spacer"></div>
+    {%- do available_demos.append('demo_info') -%}
+  {%- endif -%}
+  {%- if 'demo_sequence' in rcomb_types -%}
+    <div class="card canada-demo-card">
+      <img class="card-img-top" src="{{- h.url_for_static('/static/img/demo/demo_sequence.png') -}}" alt="{{- _('Image of the id sequence collection Registry screen') -}}">
+      <div class="card-body">
+        <strong class="card-title">{{- _('Automatic ID Sequences for Proactive Disclosure') -}}</strong>
+        <p class="card-text">{{- _('Demo how this Proactive Disclosure type works with generated (automatic) record IDs. Show how users may modify Primary Keys, by referencing the generated open_canada_id.') -}}</p>
+        <a href="{{- h.url_for('recombinant.type_redirect', resource_name='demo_sequence') -}}" target="_blank" class="btn btn-primary btn-sm">{{- _('Go to ID Sequence Demo') -}}</a>
+      </div>
+    </div>
+    <div class="canada-v10-spacer"></div>
+    <div class="canada-v10-spacer"></div>
+    {%- do available_demos.append('demo_sequence') -%}
+  {%- endif -%}
+  {%- if 'demo_foreign_keys' in rcomb_types -%}
+    <div class="card canada-demo-card">
+      <img class="card-img-top" src="{{- h.url_for_static('/static/img/demo/demo_foreign_keys.png') -}}" alt="{{- _('Image of the foreign keys JSON output') -}}">
+      <div class="card-body">
+        <strong class="card-title">{{- _('Foreign Keys for Proactive Disclosure') -}}</strong>
+        <p class="card-text">{{- _('Demo how this Proactive Disclosure type works with Foreign Key Constraints in a Parent/Child table relationship. Show how Parent data is required in order to create and reference Child data.') -}}</p>
+        <a href="{{- h.url_for('recombinant.type_redirect', resource_name='demo_foreign_keys_parent') -}}" target="_blank" class="btn btn-primary btn-sm">{{- _('Go to Foreign Key Demo') -}}</a>
+      </div>
+    </div>
+    <div class="canada-v10-spacer"></div>
+    <div class="canada-v10-spacer"></div>
+    {%- do available_demos.append('demo_foreign_keys') -%}
+  {%- endif -%}
+  {%- if not available_demos -%}
+  <p>{{- _('There are no available demos at this time.') -}}</p>
+  {%- endif -%}
+{% endblock %}

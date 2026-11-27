@@ -1,20 +1,20 @@
-name: Download DAC members list 
+name: Download DAC members list
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
         with:
-          python-version: '2.7'
-  
+          python-version: '3.9'
+
       - name: Install dependencies
         run: pip install pyyaml
-          
+
       - name: download DAC members list
         run: |
           python bin/download_dac.py -o ckanext/canada/tables/choices/dac_members.yaml -v 0

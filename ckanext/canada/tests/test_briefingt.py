@@ -50,7 +50,7 @@ class TestBriefingT(CanadaTestBase):
         err = ve.value.error_dict
         assert 'records' in err
         assert 'tracking_number' in err['records'][0]
-        assert err['records'][0]['tracking_number'] == ['Comma is not allowed in Briefing Note Number field']
+        assert err['records'][0]['tracking_number'] == ['Comma is not allowed in Reference Number field']
 
     def test_blank(self):
         """
