@@ -371,13 +371,14 @@ def _get_site_user_context() -> Context:
     return cast(Context, {"user": user['name'], "ignore_auth": True})
 
 
-def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
+def _get_datastore_tables(verbose: Optional[int] = 0) -> List[str]:
     """
     Returns a list of resource ids (table names) from
     the DataStore database.
 
     Ignores tables starting with underscores.
     """
+    verbose = verbose if verbose else 0
     tables = get_action('datastore_search')(_get_site_user_context(),
                                             {"resource_id": "_table_metadata",
                                              "offset": 0,
@@ -395,13 +396,14 @@ def _get_datastore_tables(verbose: Optional[bool] = False) -> List[str]:
 
 def _get_datastore_resources(valid: Optional[bool] = True,
                              is_datastore_active: Optional[bool] = True,
-                             verbose: Optional[bool] = False) -> List[str]:
+                             verbose: Optional[int] = 0) -> List[str]:
     """
     Returns a list of resource ids that are DataStore
     enabled and that are of upload url_type.
 
     Defaults to only return valid resources.
     """
+    verbose = verbose if verbose else 0
     results = True
     counter = 0
     batch_size = 1000
@@ -467,12 +469,13 @@ def _get_datastore_resources(valid: Optional[bool] = True,
 
 def _get_datastore_count(context: Context,
                          resource_id: str,
-                         verbose: Optional[bool] = False,
+                         verbose: Optional[int] = 0,
                          status: Optional[int] = 1,
                          max_count: Optional[int] = 1):
     """
     Returns the count of rows in the DataStore table for a given resource ID.
     """
+    verbose = verbose if verbose else 0
     if verbose:
         click.echo("%s/%s -- Checking DataStore record "
                    "count for Resource %s" % (status, max_count, resource_id))
@@ -514,13 +517,13 @@ DATASTORE_DESTRUCTION_MESSAGE = """
 @click.option('-l', '--list-output', is_flag=True,
               type=click.BOOL,
               help='List the Resource View IDs instead of executing everything.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 def purge_datatables_views(
         resource_id: Optional[str] = None,
         quiet: Optional[bool] = False,
         list_output: Optional[bool] = False,
-        verbose: Optional[bool] = False):
+        verbose: Optional[int] = 0):
     """
     Handles purging of DataTables Views for invalid and empty DataStore Resources.
 
@@ -529,6 +532,7 @@ def purge_datatables_views(
         2. Purge DataTables Views for empty DataStore tables;
         3. Purge DataTables Views for non DataStore Resources.
     """
+    verbose = verbose if verbose else 0
     if not quiet:
         click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
 
@@ -657,13 +661,13 @@ def purge_datatables_views(
 @click.option('-l', '--list-output', is_flag=True,
               type=click.BOOL,
               help='List the Resource IDs instead of executing everything.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 def purge_datastore_tables(
         resource_id: Optional[str] = None,
         quiet: Optional[bool] = False,
         list_output: Optional[bool] = False,
-        verbose: Optional[bool] = False):
+        verbose: Optional[int] = 0):
     """
     Handles purging of invalid and empty DataStore tables.
 
@@ -673,6 +677,7 @@ def purge_datastore_tables(
         3. Set datastore_active flag to False on those Resources
            (via datastore_delete action).
     """
+    verbose = verbose if verbose else 0
     if not quiet:
         click.confirm(DATASTORE_DESTRUCTION_MESSAGE, abort=True)
 
@@ -789,8 +794,8 @@ def purge_datastore_tables(
               help='Resource ID to re-submit to Validation. Defaults to None.')
 @click.option('-e', '--empty-only', is_flag=True,
               type=click.BOOL, help='Only re-submit empty DataStore Resources.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 @click.option('-q', '--quiet', is_flag=True,
               type=click.BOOL, help='Suppress human interaction.')
 @click.option('-l', '--list-output', is_flag=True,
@@ -809,7 +814,7 @@ def purge_datastore_tables(
               help='Skip submitting to Xloader after Validation.')
 def resubmit_datastore_resources(resource_id: Optional[str] = None,
                                  empty_only: Optional[bool] = False,
-                                 verbose: Optional[bool] = False,
+                                 verbose: Optional[int] = 0,
                                  quiet: Optional[bool] = False,
                                  list_output: Optional[bool] = False,
                                  xloader: Optional[bool] = False,
@@ -819,7 +824,7 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
     """
     Re-submits valid DataStore Resources to Validation OR Xloader (use --xloader).
     """
-
+    verbose = verbose if verbose else 0
     try:
         get_action('resource_validation_run')
     except Exception:
@@ -1004,8 +1009,8 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
 
 
 @canada.command(short_help="Generates the report for dataset Opennes Ratings.")
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 @click.option('-d', '--details', is_flag=True,
               type=click.BOOL, help='Include more dataset details.')
 @click.option('-D', '--dump', type=click.File('w'),
@@ -1014,11 +1019,11 @@ def resubmit_datastore_resources(resource_id: Optional[str] = None,
               default='c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7',
               help='Dataset ID, defaults to c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7')
 def openness_report(
-        verbose: Optional[bool] = False,
+        verbose: Optional[int] = 0,
         details: Optional[bool] = False,
         dump: Optional[Union['click.File', bool]] = False,
         package_id: Optional[str] = 'c4c5c7f1-bfa6-4ff6-b4a0-c164cb2060f7'):
-
+    verbose = verbose if verbose else 0
     lc = LocalCKAN()
 
     try:
@@ -1138,12 +1143,13 @@ def openness_report(
 
 
 @canada.command(short_help="Deletes old database triggers.")
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
-def delete_old_triggers(verbose: Optional[bool] = False):
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
+def delete_old_triggers(verbose: Optional[int] = 0):
     """
     Delete old, unused database triggers.
     """
+    verbose = verbose if verbose else 0
     _drop_function('no_surrounding_whitespace_error', verbose)
     _drop_function('year_optional_month_day_error', verbose)
     _drop_function('choices_from', verbose)
@@ -1151,7 +1157,8 @@ def delete_old_triggers(verbose: Optional[bool] = False):
     _drop_function('inventory_trigger', verbose)
 
 
-def _drop_function(name: str, verbose: Optional[bool] = False):
+def _drop_function(name: str, verbose: Optional[int] = 0):
+    verbose = verbose if verbose else 0
     sql = '''
         DROP FUNCTION {name};
         '''.format(name=datastore.identifier(name))
@@ -1187,13 +1194,14 @@ def privatize_non_portal_packages():
               help='Dump results to a CSV file.')
 @click.option('-l', '--lite', is_flag=True,
               type=click.BOOL, help='Only output one record per unique user.')
-@click.option('-v', '--verbose', is_flag=True,
-              type=click.BOOL, help='Increase verbosity.')
+@click.option('-v', '--verbose', count=True,
+              type=click.INT, help='Increase verbosity.')
 def export_pd_reporting_info(since: str,
                              type: Union[str, List[str]],
                              output: 'click.File',
                              lite: Optional[bool] = False,
-                             verbose: Optional[bool] = False):
+                             verbose: Optional[int] = 0):
+    verbose = verbose if verbose else 0
     if verbose:
         click.echo('Compiling PD names...')
     type_names = {}
