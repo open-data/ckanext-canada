@@ -20,8 +20,11 @@ notes: Demo Foreign Keys Dataset Type
 #
 #   Use check digits from 03-99 because numbers ending in 00 look approximate,
 #   i.e. for all open_canada_id values (_id % 100) > 2
-datastore_create_sequence: demo_foreign_keys_seq
-sequence_modulo_offset: 61
+#
+# the foreign constraints work best without it
+#
+# datastore_create_sequence: demo_foreign_keys_seq
+# sequence_modulo_offset: 61
 
 template_version: 3
 
