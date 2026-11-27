@@ -4,7 +4,21 @@ title: Proactive Publication - Grants and Contributions
 shortname: Grants and Contributions
 notes: Access, upload and modify the Grants and Contributions reports for your organization
 
+# Grants & Contributions open_canada_id generation rule, see also:
+# https://github.com/open-data/ckanext-canada/issues/1693
+#
+# Assign unique _id across *all* Grants & Contributions records and so that:
+#     (_id % 97) == 63 and (_id % 100) > 2
+# These _id values are exported as open_canada_id in the combined csv dataset
+#
+# The last two _id digits are check digits. The mod 97 check prevents almost
+# all numeric typos.
+
+# 63 is the Mod 97 value selected for Grants & Contributions records.
+# open_canada_id values for other record types use different values so that
+# open_canada_ids are unique across all record types.
 datastore_create_sequence: grants_seq
+sequence_modulo_offset: 63
 
 template_version: 3
 template_updated: 2025-12-01  # last qa confirmed: 2025-12-01
@@ -53,8 +67,8 @@ resources:
         Agreement Number in these cases.
       fr: >
         Le numéro d'entente est le numéro attribué à l'entente dans le système ministériel
-        des subventions et contributions. Les numéros d'entente sont uniques seulement à
-        l'intérieur d'une organisation (`owner_org`).
+        des subventions et contributions. Les numéros d'entente sont uniques seulement
+        à l'intérieur d'une organisation (`owner_org`).
 
 
         Le numéro d'entente constitue la deuxième partie de la clé primaire de cette table :
@@ -1598,22 +1612,8 @@ resources:
 
         IF errors = '{{}}' THEN
           IF NOT importing AND TG_OP = 'INSERT' THEN
-            -- Grants & Contributions open_canada_id generation rule, see also:
-            -- https://github.com/open-data/ckanext-canada/issues/1693
-
-            -- Assign unique _id across *all* Grants & Contributions records and so that:
-            --     (_id % 97) == 63 and (_id % 100) > 2
-            -- These _id values are exported as open_canada_id in the combined csv dataset
-
-            -- The last two _id digits are check digits. The mod 97 check prevents almost
-            -- all numeric typos.
-
-            -- 63 is the Mod 97 value selected for Grants & Contributions records.
-            -- open_canada_id values for other record types use different values so that
-            -- open_canada_ids are unique across all record types.
-
-            NEW._id := nextval('grants_seq') * 100 + 99;
-            NEW._id := NEW._id - (NEW._id - 63) % 97;
+            NEW._id := nextval({sequence_name}) * 100 + 99;
+            NEW._id := NEW._id - (NEW._id - {sequence_modulo_offset}) % 97;
           END IF;
           RETURN NEW;
         END IF;
