@@ -28,8 +28,10 @@ resources:
       en: Reporting Period
       fr: Période de déclaration
     description:
-      en: Year and month of the update
-      fr: Année et mois de la mise à jour
+      en: >
+        Year and month of the update
+      fr: >
+        Année et mois de la mise à jour
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -56,8 +58,11 @@ resources:
       en: Commitments
       fr: Engagements
     description:
-      en: The 4 commitments in the 2025-2029 National Action Plan on Open Government
-      fr: Les 4 engagements dans le Plan d'action national du Canada pour un gouvernement ouvert de 2025-2029
+      en: >
+        The 4 commitments in the 2025-2029 National Action Plan on Open Government
+      fr: >
+        Les 4 engagements dans le Plan d'action national du Canada
+        pour un gouvernement ouvert de 2025-2029
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -90,8 +95,10 @@ resources:
       en: Milestones
       fr: Jalons
     description:
-      en: This list contains milestones that correspond to the chosen commitment
-      fr: Cette liste contient des jalons correspondant à l'engagement choisi
+      en: >
+        This list contains milestones that correspond to the chosen commitment
+      fr: >
+        Cette liste contient des jalons correspondant à l'engagement choisi
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -176,8 +183,10 @@ resources:
       en: Indicators
       fr: Indicateurs
     description:
-      en: The indicators related to the chosen milestone
-      fr: Les indicateurs liés au jalon choisi
+      en: >
+        The indicators related to the chosen milestone
+      fr: >
+        Les indicateurs liés au jalon choisi
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -670,8 +679,10 @@ resources:
       en: Indicator (English)
       fr: Indicateur (anglais)
     description:
-      en: The indicator related to the chosen milestone, in English
-      fr: L'indicateurs liés au jalon choisi en anglais
+      en: >
+        The indicator related to the chosen milestone, in English
+      fr: >
+        L'indicateurs liés au jalon choisi en anglais
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -683,8 +694,10 @@ resources:
       en: Indicator (French)
       fr: Indicateur (français)
     description:
-      en: The indicator related to the chosen milestone, in French
-      fr: L'indicateur liés au jalon choisi en français
+      en: >
+        The indicator related to the chosen milestone, in French
+      fr: >
+        L'indicateur liés au jalon choisi en français
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -696,8 +709,10 @@ resources:
       en: Indicator Deadline (English)
       fr: Date limite de l'indicateur (anglais)
     description:
-      en: Completion deadline for selected indicator, in English
-      fr: Date limite d'achèvement pour l'indicateur sélectionné en anglais
+      en: >
+        Completion deadline for selected indicator, in English
+      fr: >
+        Date limite d'achèvement pour l'indicateur sélectionné en anglais
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -709,8 +724,10 @@ resources:
       en: Indicator Deadline (French)
       fr: Date limite de l'indicateur (français)
     description:
-      en: Completion deadline for selected indicator, in French
-      fr: Date limite d'achèvement pour l'indicateur sélectionné en français
+      en: >
+        Completion deadline for selected indicator, in French
+      fr: >
+        Date limite d'achèvement pour l'indicateur sélectionné en français
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -722,8 +739,10 @@ resources:
       en: Indicator Lead Department
       fr: Ministère responsable
     description:
-      en: Department responsible for the implementation of the selected indicator
-      fr: Ministère responsable de la mise en oeuvre de l'indicateur sélectionné
+      en: >
+        Department responsible for the implementation of the selected indicator
+      fr: >
+        Ministère responsable de la mise en oeuvre de l'indicateur sélectionné
     obligation: Mandatory
     datastore_type: _text
     published_resource_computed_field: true
@@ -734,8 +753,10 @@ resources:
       en: Status
       fr: État
     description:
-      en: Indicate the current status of the commitment
-      fr: Indiquer l'état actuel de l'engagement
+      en: >
+        Indicate the current status of the commitment
+      fr: >
+        Indiquer l'état actuel de l'engagement
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -771,8 +792,12 @@ resources:
       en: Progress during reporting period (English)
       fr: Progrès au cours du  période de déclaration (anglais)
     description:
-      en: 1-3 bullets outlining progress made during the most recent reportnig period. If no progress has been made, please write "NIL"
-      fr: 1-3 balles décrivant les progrès réalisés au cours dupériode de déclaration. Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
+      en: >
+        1-3 bullets outlining progress made during the most recent reportnig period.
+        If no progress has been made, please write "NIL"
+      fr: >
+        1-3 balles décrivant les progrès réalisés au cours dupériode de déclaration.
+        Si aucun progrès n'a été réalisé, veuillez écrire "NIL"
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -794,8 +819,12 @@ resources:
       en: Progress during reporting period (French)
       fr: Progrès au cours du période de déclaration (français)
     description:
-      en: 1-3 bullets outlining progress made during the most recent reporting period. If no progress has been made, please write "NUL"
-      fr: 1-3 balles décrivant les progrès réalisés au cours du dernier période de déclaration. Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
+      en: >
+        1-3 bullets outlining progress made during the most recent reporting period.
+        If no progress has been made, please write "NUL"
+      fr: >
+        1-3 balles décrivant les progrès réalisés au cours du dernier période de déclaration.
+        Si aucun progrès n'a été réalisé, veuillez écrire "NUL"
     obligation: Mandatory
     occurrence: Single
     excel_required: true
@@ -817,8 +846,12 @@ resources:
       en: Evidence of progress (English)
       fr: Preuve de progrès (anglais)
     description:
-      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
-      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
+      en: >
+        Any supporting evidence to demonstrate the progress you have made.
+        This could include websites, links to documents, or other information.
+      fr: >
+        Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis.
+        Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
     occurrence: Single
     datastore_type: text
@@ -840,8 +873,12 @@ resources:
       en: Evidence of progress (French)
       fr: Preuve de progrès (français)
     description:
-      en: Any supporting evidence to demonstrate the progress you have made. This could include websites, links to documents, or other information.
-      fr: Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis. Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
+      en: >
+        Any supporting evidence to demonstrate the progress you have made.
+        This could include websites, links to documents, or other information.
+      fr: >
+        Toute preuve à l'appui pour démontrer les progrès que vous avez accomplis.
+        Cela peut inclure des sites Web, des liens vers des documents ou d'autres informations.
     obligation: Optional
     occurrence: Single
     datastore_type: text
@@ -863,8 +900,10 @@ resources:
       en: Challenges (English)
       fr: Défis (anglais)
     description:
-      en: Describe any challenges faced, in English
-      fr: Décrivez les défis rencontrés en anglais
+      en: >
+        Describe any challenges faced, in English
+      fr: >
+        Décrivez les défis rencontrés en anglais
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
@@ -904,8 +943,10 @@ resources:
       en: Challenges (French)
       fr: Défis (français)
     description:
-      en: Describe any challenges faced, in French
-      fr: Décrivez les défis rencontrés en français
+      en: >
+        Describe any challenges faced, in French
+      fr: >
+        Décrivez les défis rencontrés en français
     obligation:
       en: Mandatory, conditional
       fr: Obligatoire, conditionnel
@@ -975,8 +1016,10 @@ resources:
       en: Department ID
       fr: ID du ministère
     description:
-      en: Identifies the applied ID of the department or agency.
-      fr: Identifie l'ID d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied ID of the department or agency.
+      fr: >
+        Identifie l'ID d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true
@@ -987,8 +1030,10 @@ resources:
       en: Department Name
       fr: Nom du ministère
     description:
-      en: Identifies the applied title of the department or agency.
-      fr: Identifie le titre d'usage du ministère ou de l'organisme.
+      en: >
+        Identifies the applied title of the department or agency.
+      fr: >
+        Identifie le titre d'usage du ministère ou de l'organisme.
     obligation: Mandatory
     datastore_type: text
     published_resource_computed_field: true

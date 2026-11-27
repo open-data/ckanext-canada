@@ -31,26 +31,51 @@ resources:
       en: Reference Number
       fr: Numéro de référence
     description:
-      en: |
-        The Reference number is populated by departments. It is a unique reference number given to each entry. Having a unique identifier for each item will allow departments to locate a specific item in the registry should they need to modify or delete.
+      en: >
+        The Reference number is populated by departments. It is a unique reference number given to each entry.
+        Having a unique identifier for each item will allow departments to locate a specific item in
+        the registry should they need to modify or delete.
+
 
         Controlled format; This field is populated in the following format DDD-YYYY-YYYY-QX-XXXXX
-         1. DDD represents the department number – Use the same three-digit number as the ‘Departmental Identifier’, which is the department number per the Chart of Accounts list of departments. Ensure you are reviewing the most current year: https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-eng.html
-         2. YYYY-YYYY represents the fiscal year
-         3. QX represents the fiscal quarter
-         4. XXXXX represents the unique number assigned by the department for each entry.
 
-        For example, entries in the 2018-2019 Q1 fiscal year should be assigned numbers as follows: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
-      fr: |
-        Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
+
+        1. DDD represents the department number – Use the same three-digit number as the ‘Departmental Identifier’,
+        which is the department number per the Chart of Accounts list of departments. Ensure you are
+        reviewing the most current year: https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-eng.html
+
+        2. YYYY-YYYY represents the fiscal year
+
+        3. QX represents the fiscal quarter
+
+        4. XXXXX represents the unique number assigned by the department for each entry.
+
+
+        For example, entries in the 2018-2019 Q1 fiscal year should be assigned numbers as follows: 001-2018-2019-Q1-00001,
+        001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.
+      fr: >
+        Ce champ est rempli par l’utilisateur. L’identificateur de projet ministériel permet aux ministères
+        d’identifier rapidement les rapports produits dans leur propre système. Les ministères devraient utiliser
+        un chiffre qui est logique pour le ministère. Ces renseignements seront publiés dans le cadre du rapport.
+
 
         Format contrôlé; Ce champ est rempli au format suivant: DDD-YYYY-YYYY-QX-XXXXX
-         1.	DDD représente le numéro du ministère - Utilisez le même numéro à trois chiffres que l’«Identificateur ministériel», qui est le numéro de ministère selon la liste du plan comptable des ministères. Assurez-vous de consulter l’année la plus récente : https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-fra.html
-         2.	AAAA-AAAA représente l'année fiscale
-         3.	QX représente le trimestre fiscal
-         4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.
 
-        Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants: 001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.'
+
+          1.	DDD représente le numéro du ministère - Utilisez le même numéro à trois chiffres que
+          l’«Identificateur ministériel», qui est le numéro de ministère selon la liste du plan comptable
+          des ministères. Assurez-vous de consulter l’année la plus récente :
+          https://www.tpsgc-pwgsc.gc.ca/recgen/pceaf-gwcoa/2425/txt/rg-3-num-fra.html
+
+          2.	AAAA-AAAA représente l'année fiscale
+
+          3.	QX représente le trimestre fiscal
+
+          4.	XXXXX représente le numéro unique attribué par le département pour chaque entrée.
+
+
+        Par exemple, les numéros de l'exercice 2018-2019 du T1 devraient recevoir les numéros suivants:
+        001-2018-2019-Q1-00001, 001-2018-2019-Q1-00002, 001-2018-2019-Q1-00003, etc.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -98,8 +123,13 @@ resources:
       en: Amendment Date
       fr: Date de modification
     description:
-      en: This field is populated by departments and indicates the date on which an amendment (or amendments) took place. If the amendment number is not zero, this field is required.
-      fr: Ce champ est rempli par les ministères et indique la date à laquelle une modification (ou des modifications) a été apportée. Vous devez remplir ce champ si le numéro de la modification indique un autre chiffre que 0.
+      en: >
+        This field is populated by departments and indicates the date on which an amendment
+        (or amendments) took place. If the amendment number is not zero, this field is required.
+      fr: >
+        Ce champ est rempli par les ministères et indique la date à laquelle une modification
+        (ou des modifications) a été apportée. Vous devez remplir ce champ si le numéro de la
+        modification indique un autre chiffre que 0.
     obligation:
       en: Mandatory if amendment number set
       fr: Obligatoire si le numéro de modification est défini
@@ -117,8 +147,12 @@ resources:
       en: Agreement Type
       fr: Type d’entente
     description:
-      en: This field is populated by departments and indicates whether the agreement signed is a grant, contribution or other transfer payment.
-      fr: Ce champ est rempli par les ministères et indique si l'entente signée vise une subvention, une contribution ou un autre paiement de transfert.
+      en: >
+        This field is populated by departments and indicates whether the agreement
+        signed is a grant, contribution or other transfer payment.
+      fr: >
+        Ce champ est rempli par les ministères et indique si l'entente signée vise
+        une subvention, une contribution ou un autre paiement de transfert.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -147,8 +181,10 @@ resources:
       en: Recipient Type
       fr: Type de bénéficiaire
     description:
-      en: The recipient type helps identify who is receiving the money.
-      fr: Le type de bénéficiaire permet d'identifier qui reçoit l'argent.
+      en: >
+        The recipient type helps identify who is receiving the money.
+      fr: >
+        Le type de bénéficiaire permet d'identifier qui reçoit l'argent.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -193,28 +229,64 @@ resources:
       en: Recipient Business Number
       fr: Numéro d'entreprise du bénéficiaire
     description:
-      en: |
-        The Business Number is a nine digit number issued by the Canada Revenue Agency since 1994. Per the Directive on the Business Number, it has been identified as the standard identifier for all transactions between businesses and the Government of Canada, including transactions linked to grant and/or contribution funding.
+      en: >
+        The Business Number is a nine digit number issued by the Canada Revenue Agency since 1994.
+        Per the Directive on the Business Number, it has been identified as the standard identifier
+        for all transactions between businesses and the Government of Canada, including transactions
+        linked to grant and/or contribution funding.
 
-        This guidance further aligns with the Government of Canada data reference standard on business number: Data reference standard on the business number - Canada.ca (https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/enabling-interoperability/gc-enterprise-data-reference-standards/data-reference-standard-business-number.html)
+
+        This guidance further aligns with the Government of Canada data reference standard on business
+        number: Data reference standard on the business number - Canada.ca
+        (https://www.canada.ca/en/government/system/digital-government/digital-government-innovations/enabling-interoperability/gc-enterprise-data-reference-standards/data-reference-standard-business-number.html)
+
 
         The business number should be populated for an organization or charity.
 
-        Real-time validation of business identity information linked to the Business Number, including legal name and operating name, for sole proprietorship, partnerships and incorporations, is available to departments through the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca.
 
-        To validate a Business Number associated with a charity, departments can access the List of Charities basic search on the Canada.ca website. Enter the Charity name and click the Search button. Then click the Charity name of the search result to find additional information about the charity (e.g., Charity Program number, charity status, effective date of status, designation, etc.) Legal name and operating name cannot be validated using this basic search.
+        Real-time validation of business identity information linked to the Business Number, including legal name and
+        operating name, for sole proprietorship, partnerships and incorporations, is available to departments through
+        the Business Number Web Validation Service. For more details contact ic.bnadoptionne.ic@canada.ca.
 
-        A business number is issued when an organization is registered federally, provincially or municipally. It does not change and will allow for consistent identification even if the legal name, the operation name or the organization changes over the life cycle of the grant or contribution.
-      fr: |
-        Depuis 1994, l’Agence du revenu du Canada émet des numéros d’entreprise à neuf chiffres. Aux termes de la Directive sur le numéro d’entreprise, le numéro d’entreprise constitue l’identificateur standard de toutes les opérations effectuées entre une entreprise et le gouvernement du Canada, y compris les opérations associées à une subvention ou à un financement de contribution.
 
-        Cette directive est également conforme à la norme de référence sur les données du numéro d'entreprise du gouvernement du Canada : Norme référentielle relative aux données sur le numéro d’entreprise - Canada.ca (https://www.canada.ca/fr/gouvernement/systeme/gouvernement-numerique/innovations-gouvernementales-numeriques/permettre-interoperabilite/normes-referentielles-pangouvernementales-relatives-donnees-gc/norme-referentielle-relative-donnees-numero-entreprise.html)
+        To validate a Business Number associated with a charity, departments can access the List of Charities basic
+        search on the Canada.ca website. Enter the Charity name and click the Search button. Then click the Charity
+        name of the search result to find additional information about the charity (e.g., Charity Program number,
+        charity status, effective date of status, designation, etc.) Legal name and operating name cannot be
+        validated using this basic search.
+
+
+        A business number is issued when an organization is registered federally, provincially or municipally. It does not
+        change and will allow for consistent identification even if the legal name, the operation name or the organization
+        changes over the life cycle of the grant or contribution.
+      fr: >
+        Depuis 1994, l’Agence du revenu du Canada émet des numéros d’entreprise à neuf chiffres. Aux termes de
+        la Directive sur le numéro d’entreprise, le numéro d’entreprise constitue l’identificateur standard de
+        toutes les opérations effectuées entre une entreprise et le gouvernement du Canada, y compris les opérations
+        associées à une subvention ou à un financement de contribution.
+
+
+        Cette directive est également conforme à la norme de référence sur les données du numéro d'entreprise du
+        gouvernement du Canada : Norme référentielle relative aux données sur le numéro d’entreprise - Canada.ca
+        (https://www.canada.ca/fr/gouvernement/systeme/gouvernement-numerique/innovations-gouvernementales-numeriques/permettre-interoperabilite/normes-referentielles-pangouvernementales-relatives-donnees-gc/norme-referentielle-relative-donnees-numero-entreprise.html)
+
 
         Le numéro d’entreprise devrait être consigné pour une organisation ou un organisme de bienfaisance.
 
-        Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca.
 
-        Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le nom légal et le nom commercial au moyen de la fonction de recherche de base.
+        Les ministères peuvent obtenir la validation en temps réel de l’identité d’une entreprise en saisissant
+        son numéro d’entreprise dans le Service de validation du numéro d’entreprise en ligne, qui inclut le nom
+        légal et le nom commercial pour les entreprises individuelles, les partenariats et les constitutions en
+        personne morale. Si vous voulez obtenir de plus amples renseignements, envoyez un courriel à ic.bnadoptionne.ic@canada.ca.
+
+
+        Pour valider un numéro d’entreprise associé à un organisme de bienfaisance, les ministères peuvent effectuer
+        une recherche de base dans la Liste d’organismes de bienfaisance, sur le site Web Canada.ca. Entrez le nom de
+        l’organisme de bienfaisance, puis cliquez sur le bouton de Recherche. Ensuite, cliquez sur le nom de l’organisme
+        de bienfaisance tiré du résultat de la recherche afin de trouver de plus amples renseignements sur l’organisme de
+        bienfaisance (p. ex., le numéro du programme de bienfaisance, le statut de l’organisme de bienfaisance, la date
+        d’entrée en vigueur du statut et la désignation de l’organisme de bienfaisance). Il est impossible de valider le
+        nom légal et le nom commercial au moyen de la fonction de recherche de base.
     obligation:
       en: Optional
       fr: Facultatif
@@ -263,14 +335,20 @@ resources:
       en: Recipient Legal Name (English|French)
       fr: Nom légal du bénéficiaire (anglais|français)
     description:
-      en: |
-        The recipient legal name is meant to complement the existing “Recipient business number” field. It is the legal name of the recipient. This information should be taken from the agreement.
+      en: >
+        The recipient legal name is meant to complement the existing “Recipient business number” field.
+        It is the legal name of the recipient. This information should be taken from the agreement.
 
-        Only translated if the legal name is provided in both official languages by the recipient.  Provide in the following format: name English|name French.
-      fr: |
-        Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ». Cette information devrait être tirée de l'entente de subvention ou de contribution.
 
-        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+        Only translated if the legal name is provided in both official languages by the recipient.
+        Provide in the following format: name English|name French.
+      fr: >
+        Le nom légal du bénéficiaire se veut complémentaire au champ « Numéro d'entreprise du bénéficiaire ».
+        Cette information devrait être tirée de l'entente de subvention ou de contribution.
+
+
+        Traduction seulement si le nom légal est fourni dans les deux langues officielles par le
+        bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -292,14 +370,27 @@ resources:
       en: Recipient Operating Name (English|French)
       fr: Nom commercial du bénéficiaire (anglais|français)
     description:
-      en: |
-        The “Recipient operating name” is an optional field used when an organization operates under a name that differs from its legal name or business number. When a researcher receives funding through a university, this information would be populated here. This field is not intended to capture the ultimate recipient of a grant or contribution; instead, the name of the person receiving funding from the Government of Canada should be entered.
+      en: >
+        The “Recipient operating name” is an optional field used when an organization operates under
+        a name that differs from its legal name or business number. When a researcher receives funding
+        through a university, this information would be populated here. This field is not intended to
+        capture the ultimate recipient of a grant or contribution; instead, the name of the person
+        receiving funding from the Government of Canada should be entered.
 
-        Only translated if the name is provided in both official languages by the recipient. Provide in the following format: Legal name English|Legal name French.
-      fr: |
-        Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui reçoit le financement du gouvernement du Canada.
 
-        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+        Only translated if the name is provided in both official languages by the recipient. Provide in
+        the following format: Legal name English|Legal name French.
+      fr: >
+        Le champ « Nom commercial du bénéficiaire » est un champ facultatif utilisé dans le cas
+        d'organisations qui exercent leurs activités sous un nom différent de leur nom légal ou de leur
+        numéro d'entreprise. Dans le cas de chercheurs qui reçoivent leur financement par l'entremise
+        d'une université, cette information doit être entrée ici. Ce champ ne sert pas à saisir le nom du
+        bénéficiaire ultime de la subvention ou de la contribution, mais plutôt celui de la personne qui
+        reçoit le financement du gouvernement du Canada.
+
+
+        Traduction seulement si le nom est fourni dans les deux langues officielles par le bénéficiaire.
+        Fournir dans le format suivant : nom anglais|nom français.
     format_type:
       en: Free text
       fr: Texte libre
@@ -314,14 +405,22 @@ resources:
       en: Research Organization (English|French)
       fr: Organisme de recherche (anglais|français)
     description:
-      en: |
-        The “Research organization” is an optional field for including information about the organization that the recipient represents. This field will be used mainly to highlight academic organizations that researchers have partnered with.
+      en: >
+        The “Research organization” is an optional field for including information about the
+        organization that the recipient represents. This field will be used mainly to highlight
+        academic organizations that researchers have partnered with.
 
-        Only translated if the organization name is provided in both official languages by the recipient in the following format: name English|name French.
-      fr: |
-        Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
 
-        Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
+        Only translated if the organization name is provided in both official languages by the
+        recipient in the following format: name English|name French.
+      fr: >
+        Le champ « Organisme de recherche » est facultatif. Il sert à inclure les renseignements sur
+        l'organisation que le bénéficiaire représente. Ce champ sera surtout utilisé pour mettre en
+        évidence les organisations avec lesquelles les chercheurs ont formé un partenariat.
+
+
+        Traduction seulement si le nom de l'organisme est fourni dans les deux langues officielles
+        par le bénéficiaire. Fournir dans le format suivant : nom anglais|nom français.
     obligation:
       en: Optional
       fr: Facultatif
@@ -339,8 +438,10 @@ resources:
       en: Recipient Country
       fr: Pays du bénéficiaire
     description:
-      en: The “Recipient country” is a mandatory field. It is the country in which the recipient resides.
-      fr: Le « Pays du bénéficiaire » est un champ obligatoire qui indique le pays de résidence du bénéficiaire.
+      en: >
+        The “Recipient country” is a mandatory field. It is the country in which the recipient resides.
+      fr: >
+        Le « Pays du bénéficiaire » est un champ obligatoire qui indique le pays de résidence du bénéficiaire.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -361,8 +462,12 @@ resources:
       en: Recipient Province or Territory
       fr: Province ou territoire du bénéficiaire
     description:
-      en: The "Recipient province or territory" is a mandatory field if the Recipient Country is Canada and identifies where, within Canada, the recipient resides.
-      fr: Le champ « province ou territoire du bénéficiaire » est un champ obligatoire si le pays destinataire est le Canada et indique le lieu de résidence du bénéficiaire au Canada.
+      en: >
+        The "Recipient province or territory" is a mandatory field if the Recipient Country is
+        Canada and identifies where, within Canada, the recipient resides.
+      fr: >
+        Le champ « province ou territoire du bénéficiaire » est un champ obligatoire si le pays
+        destinataire est le Canada et indique le lieu de résidence du bénéficiaire au Canada.
     obligation:
       en: Mandatory if Recipient Country is Canada
       fr: Obligatoire si le pays destinataire est le Canada
@@ -419,18 +524,29 @@ resources:
       en: Recipient City (English|French)
       fr: Ville du bénéficiaire (anglais|français)
     description:
-      en: |
-        The "Recipient city" is a mandatory field that identifies which city the recipient operates in. This field can be populated with Canadian or foreign cities.
+      en: >
+        The "Recipient city" is a mandatory field that identifies which city the recipient operates in.
+        This field can be populated with Canadian or foreign cities.
 
-        Official city names should be provided, including both official languages (where applicable in the following format: name English|name French
 
-        Free text, but a controlled list from Canada Revenue Agency’s qualified donees list of municipalities can be consulted: Canada Revenue Agency website (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-eng.html).
-      fr: |
-        La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
+        Official city names should be provided, including both official languages
+        (where applicable in the following format: name English|name French
 
-        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant) au format suivant : nom anglais|nom français
 
-        Texte libre, mais une liste contrôlée de la liste des municipalités désignées donataires de l’Agence du revenu du Canada peut être consultée: site Web de l’Agence du revenu du Canada (http://www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-fra.html).
+        Free text, but a controlled list from Canada Revenue Agency’s qualified donees list of
+        municipalities can be consulted: Canada Revenue Agency website (https//www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-eng.html).
+      fr: >
+        La « Ville du bénéficiaire » est un champ obligatoire qui indique la ville où le bénéficiaire
+        exerce ses activités. On peut y inscrire le nom de villes canadiennes ou de villes étrangères.
+
+
+        Nom officiel exact de la ville, y compris dans les deux langues officielles (le cas échéant)
+        au format suivant : nom anglais|nom français
+
+
+        Texte libre, mais une liste contrôlée de la liste des municipalités désignées donataires de
+        l’Agence du revenu du Canada peut être consultée: site Web de l’Agence du revenu du Canada
+        (https//www.cra-arc.gc.ca/chrts-gvng/qlfd-dns/mncplts-fra.html).
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -452,14 +568,20 @@ resources:
       en: Recipient Postal Code
       fr: Code postal du bénéficiaire
     description:
-      en: |
-        The "Recipient postal code" is a mandatory field that serves to identify the specific area in which the recipient operates. In cases where this field cannot be populated this field may be left blank.
+      en: >
+        The "Recipient postal code" is a mandatory field that serves to identify the specific area in
+        which the recipient operates. In cases where this field cannot be populated this field may be left blank.
+
 
         Should be in the format "A1A 1A1"; The Canada Post tool for looking up a postal code can be found on the Canada Post website.
-      fr: |
-        Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations à l'égard de la vie privée, il est possible de le laisser vide.
+      fr: >
+        Le « Code postal du bénéficiaire » est un champ obligatoire qui sert à identifier avec précision la
+        région où le bénéficiaire exerce ses activités. Si le fait de remplir ce champ suscite des préoccupations
+        à l'égard de la vie privée, il est possible de le laisser vide.
 
-        Devrait être selon le format « A1A 1A1 »; L'outil de Postes Canada permettant de rechercher un code postal se trouve sur le site Web de Postes Canada.
+
+        Devrait être selon le format « A1A 1A1 »; L'outil de Postes Canada permettant de rechercher un code
+        postal se trouve sur le site Web de Postes Canada.
     obligation:
       en: Optional
       fr: Facultatif
@@ -511,8 +633,10 @@ resources:
       en: Federal Riding Name (English)
       fr: Nom de la circonscription fédérale (anglais)
     description:
-      en: The federal riding name is the name of the riding in which the recipient resides.
-      fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
+      en: >
+        The federal riding name is the name of the riding in which the recipient resides.
+      fr: >
+        Le nom de la circonscription fédérale où réside le bénéficiaire.
     obligation:
       en: Optional
       fr: Facultatif
@@ -531,8 +655,10 @@ resources:
       en: Federal Riding Name (French)
       fr: Nom de la circonscription fédérale (français)
     description:
-      en: The federal riding name is the name of the riding in which the recipient resides.
-      fr: Le nom de la circonscription fédérale où réside le bénéficiaire.
+      en: >
+        The federal riding name is the name of the riding in which the recipient resides.
+      fr: >
+        Le nom de la circonscription fédérale où réside le bénéficiaire.
     obligation:
       en: Optional
       fr: Facultatif
@@ -551,8 +677,14 @@ resources:
       en: Federal Riding Number
       fr: Numéro de la circonscription fédérale
     description:
-      en: The federal riding number is based on the riding in which the recipient resides. Departments can consult the Elections Canada website in order to retrieve the federal riding number. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=e
-      fr: Numéro de la circonscription fédérale où réside le bénéficiaire. Les départements peuvent consulter le site-web d’Élections Canada pour trouver le numéro de la circonscription fédérale. http://www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=f
+      en: >
+        The federal riding number is based on the riding in which the recipient resides.
+        Departments can consult the Elections Canada website in order to retrieve the federal
+        riding number. https//www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=e
+      fr: >
+        Numéro de la circonscription fédérale où réside le bénéficiaire. Les départements
+        peuvent consulter le site-web d’Élections Canada pour trouver le numéro de la circonscription
+        fédérale. https//www.elections.ca/content.aspx?section=res&dir=cir/list&document=index338&lang=f
     obligation:
       en: Optional
       fr: Facultatif
@@ -601,8 +733,12 @@ resources:
       en: Program Name (English)
       fr: Nom du programme (anglais)
     description:
-      en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
-      fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
+      en: >
+        The program name is the name of the program, according to the terms
+        and conditions (Ts&Cs), under which a recipient is funded.
+      fr: >
+        Le nom du programme selon les modalités en vertu desquelles
+        le financement est versé au bénéficiaire.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -625,8 +761,12 @@ resources:
       en: Program Name (French)
       fr: Nom du programme (français)
     description:
-      en: The program name is the name of the program, according to the terms and conditions (Ts&Cs), under which a recipient is funded.
-      fr: Le nom du programme selon les modalités en vertu desquelles le financement est versé au bénéficiaire.
+      en: >
+        The program name is the name of the program, according to the
+        terms and conditions (Ts&Cs), under which a recipient is funded.
+      fr: >
+        Le nom du programme selon les modalités en vertu desquelles
+        le financement est versé au bénéficiaire.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -649,8 +789,10 @@ resources:
       en: Program Purpose (English)
       fr: But du programme (anglais)
     description:
-      en: The program purpose is the program’s purpose according to the Ts&Cs.
-      fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
+      en: >
+        The program purpose is the program’s purpose according to the Ts&Cs.
+      fr: >
+        Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -675,8 +817,10 @@ resources:
       en: Program Purpose (French)
       fr: But du programme (français)
     description:
-      en: The program purpose is the program’s purpose according to the Ts&Cs.
-      fr: Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
+      en: >
+        The program purpose is the program’s purpose according to the Ts&Cs.
+      fr: >
+        Le but du programme est celui dans lequel le programme a été créé, selon les modalités du programme.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -701,8 +845,12 @@ resources:
       en: Agreement Title (English)
       fr: Titre de l’entente (anglais)
     description:
-      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
-      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+      en: >
+        The agreement title is the title of the project or agreement that the recipient is undertaking.
+        In cases where there is no title, the agreement number will be duplicated here.
+      fr: >
+        Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage
+        le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -725,8 +873,13 @@ resources:
       en: Agreement Title (French)
       fr: Titre de l’entente (français)
     description:
-      en: The agreement title is the title of the project or agreement that the recipient is undertaking. In cases where there is no title, the agreement number will be duplicated here.
-      fr: Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut être réinscrit ici.
+      en: >
+        The agreement title is the title of the project or agreement that the recipient is
+        undertaking. In cases where there is no title, the agreement number will be duplicated here.
+      fr: >
+        Le nom de l'entente est le titre du projet ou de l'entente à l'égard duquel
+        s'engage le bénéficiaire. S'il n'y a pas de titre, le numéro de l'entente peut
+        être réinscrit ici.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -749,8 +902,11 @@ resources:
       en: Agreement Number
       fr: Numéro de l’entente
     description:
-      en: The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system.
-      fr: Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système de subventions et de contributions du ministère.
+      en: >
+        The agreement number should be the number on the agreement and/or in the departmental Gs&Cs system.
+      fr: >
+        Le numéro de l'entente est celui qui figure à l'entente et/ou dans le système
+        de subventions et de contributions du ministère.
     obligation:
       en: Optional
       fr: Facultatif
@@ -822,15 +978,25 @@ resources:
       en: Foreign Currency Type
       fr: Type de monnaie étrangère
     description:
-      en: |
-        The foreign currency type should be selected if a recipient is paid in a currency other than Canadian dollars. Select the type of foreign currency in this field (for example, US dollar (USD), Australian dollar (AUD), British pound (GBP)). This field is mandatory if the agreement is awarded in foreign currency.'
+      en: >
+        The foreign currency type should be selected if a recipient is paid in a currency other
+        than Canadian dollars. Select the type of foreign currency in this field (for example, US dollar
+        (USD), Australian dollar (AUD), British pound (GBP)). This field is mandatory if the agreement
+        is awarded in foreign currency.'
 
-        Foreign currency type is populated using the ISO 4217 alphabetic codes for foreign currency. This list can be found on the XE website. Entry is selected from a drop-down list.
 
+        Foreign currency type is populated using the ISO 4217 alphabetic codes for foreign currency.
+        This list can be found on the XE website. Entry is selected from a drop-down list.
       fr: |
-        Le champ Type de monnaie étrangère doit être rempli si le bénéficiaire est payé dans une devise autre que le dollar canadien. Il faut sélectionner le type de monnaie étrangère; par exemple, dollar américain (USD), dollar australien (AUD), livre sterling (GBP). Ce champ est obligatoire si l'entente est en devise étrangère.
+        Le champ Type de monnaie étrangère doit être rempli si le bénéficiaire est payé dans une
+        devise autre que le dollar canadien. Il faut sélectionner le type de monnaie étrangère; par
+        exemple, dollar américain (USD), dollar australien (AUD), livre sterling (GBP). Ce champ est
+        obligatoire si l'entente est en devise étrangère.
 
-        Le type de monnaie étrangère est complété à l'aide des codes alphabétiques ISO 4217 pour les monnaie étrangères. Cette liste se trouve sur le site Web XE. L'entrée est sélectionnée dans une liste déroulante.
+
+        Le type de monnaie étrangère est complété à l'aide des codes alphabétiques ISO 4217 pour les
+        monnaie étrangères. Cette liste se trouve sur le site Web XE. L'entrée est sélectionnée
+        dans une liste déroulante.
     obligation:
       en: Optional (Mandatory when funding provided in foreign currency)
       fr: Facultatif ( obligatoire si le financement est fourni en devise étrangère )
@@ -848,8 +1014,16 @@ resources:
       en: Foreign Currency Value
       fr: Valeur de la monnaie étrangère
     description:
-      en: The foreign currency value is the amount as signed in the grant or contribution agreement with the recipient. This field should be populated with a monetary value in the foreign currency. This field is mandatory if the agreement is awarded in a foreign currency.
-      fr: La valeur en monnaie étrangère est le montant convenu aux termes de l'entente de subvention ou de contribution avec le bénéficiaire. Ce champ doit être rempli en inscrivant la valeur dans la monnaie étrangère. Ce champ est obligatoire si l'entente est en devise étrangère.
+      en: >
+        The foreign currency value is the amount as signed in the grant or contribution
+        agreement with the recipient. This field should be populated with a monetary value
+        in the foreign currency. This field is mandatory if the agreement is awarded
+        in a foreign currency.
+      fr: >
+        La valeur en monnaie étrangère est le montant convenu aux termes de l'entente
+        de subvention ou de contribution avec le bénéficiaire. Ce champ doit être rempli
+        en inscrivant la valeur dans la monnaie étrangère. Ce champ est obligatoire si
+        l'entente est en devise étrangère.
     obligation: Mandatory if foreign currency type is selected
     datastore_type: money
     excel_required_formula: NOT(ISBLANK({foreign_currency_type}))
@@ -861,14 +1035,21 @@ resources:
       en: Agreement Start Date
       fr: Date de début de l’entente
     description:
-      en: |
-        The agreement start date is the assumed start of the agreement, normally identified based on the last date of signature, as captured in the initial agreement.
+      en: >
+        The agreement start date is the assumed start of the agreement, normally identified
+        based on the last date of signature, as captured in the initial agreement.
 
-        This date should identify the start of the funding agreement, and not the date of the grant or contribution project.
-      fr: |
-        La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente, commence généralement à être identifié en fonction de la dernière date de signature, conformément à l'entente initiale.
 
-        Cette date doit indiquer le début de l'accord de financement, et non la date du projet de subvention ou de contribution.
+        This date should identify the start of the funding agreement, and not
+        the date of the grant or contribution project.
+      fr: >
+        La date de début de l'entente est la date d'entrée en vigueur présumée de l'entente,
+        commence généralement à être identifié en fonction de la dernière date de signature,
+        conformément à l'entente initiale.
+
+
+        Cette date doit indiquer le début de l'accord de financement, et non la date
+        du projet de subvention ou de contribution.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -901,8 +1082,12 @@ resources:
       en: Projected Agreement End Date
       fr: Date de fin prévue de l’entente
     description:
-      en: The projected agreement end date is the assumed end of the agreement, or when the project is supposed to end, as captured in the initial agreement.
-      fr: La date de fin prévue de l'entente est la date de fin présumée de l'entente, ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
+      en: >
+        The projected agreement end date is the assumed end of the agreement, or when
+        the project is supposed to end, as captured in the initial agreement.
+      fr: >
+        La date de fin prévue de l'entente est la date de fin présumée de l'entente,
+        ou la date à laquelle le projet est censé prendre fin, conformément à l'entente initiale.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -928,8 +1113,12 @@ resources:
       en: Coverage (English|French; ...)
       fr: Portée (anglais|français; ...)
     description:
-      en: Coverage provides information about what will benefit from the project or agreement. Departments should populate this with any information they have available.
-      fr: Le champ « Portée » fournit des renseignements sur l'incidence générale prévue du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
+      en: >
+        Coverage provides information about what will benefit from the project or agreement.
+        Departments should populate this with any information they have available.
+      fr: >
+        Le champ « Portée » fournit des renseignements sur l'incidence générale prévue
+        du projet ou de l'entente. Les ministères peuvent entrer ici tout renseignement dont ils disposent.
     obligation:
       en: Optional
       fr: Facultatif
@@ -947,8 +1136,12 @@ resources:
       en: Description (English)
       fr: Description (anglais)
     description:
-      en: The description explains why the recipient received funding. It should provide a brief yet accurate description of what the recipient is undertaking.
-      fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
+      en: >
+        The description explains why the recipient received funding. It should provide
+        a brief yet accurate description of what the recipient is undertaking.
+      fr: >
+        La description explique à quelles fins le bénéficiaire a reçu le financement.
+        Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -971,8 +1164,12 @@ resources:
       en: Description (French)
       fr: Description (français)
     description:
-      en: The description explains why the recipient received funding. It should provide a brief yet accurate description of what the recipient is undertaking.
-      fr: La description explique à quelles fins le bénéficiaire a reçu le financement. Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
+      en: >
+        he description explains why the recipient received funding. It should provide a
+        brief yet accurate description of what the recipient is undertaking.
+      fr: >
+        La description explique à quelles fins le bénéficiaire a reçu le financement.
+        Elle doit décrire de façon brève, mais explicite, en quoi consistent les travaux du bénéficiaire.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -995,8 +1192,13 @@ resources:
       en: NAICS Identifier
       fr: Identificateur du SCIAN
     description:
-      en: The North American Industry Classification System (NAICS) is an industry classification system developed by the statistical agencies of Canada, Mexico and the United States.
-      fr: Le Système de classification des industries de l'Amérique du Nord (SCIAN) est un système de classification des industries conçu par les organismes statistiques du Canada, du Mexique et des États-Unis.
+      en: >
+        The North American Industry Classification System (NAICS) is an industry
+        classification system developed by the statistical agencies of Canada, Mexico and the United States.
+      fr: >
+        Le Système de classification des industries de l'Amérique du Nord (SCIAN) est
+        un système de classification des industries conçu par les organismes statistiques
+        du Canada, du Mexique et des États-Unis.
     obligation:
       en: Optional
       fr: Facultatif
@@ -1008,10 +1210,10 @@ resources:
 
         For example, if Employment and Social Development Canada is signing an agreement with an educational support services organization, the NAICS identifier would be 611710. The identifier is broken down as follows:
 
-        • sector: 61 (educational services)
-        • subsector: 1 (educational services)
-        • industry group: 7 (educational support services)
-        • industry: 10 (educational support services)
+        - sector: 61 (educational services)
+        - subsector: 1 (educational services)
+        - industry group: 7 (educational support services)
+        - industry: 10 (educational support services)
       fr: |
         Texte libre basé sur une liste contrôlée de Statistique Canada; cette liste est disponible pour les utilisateurs sur le site Web de Statistique Canada. https://www.statcan.gc.ca/fr/sujets/norme/scian/2022/v1/index
 
@@ -1019,10 +1221,10 @@ resources:
 
         Par exemple, si Emploi et Développement social Canada signe un accord avec un organisme de services de soutien à l’éducation, l’identifiant SCIAN sera 611710. L’identifiant se décompose comme suit :
 
-        • secteur : 61 (services d’enseignement);
-        • sous-secteur : 1 (services d’enseignement);
-        • groupe industriel : 7 (services de soutien à l’enseignement);
-        • industrie : 10 (services de soutien à l’enseignement).
+        - secteur : 61 (services d’enseignement);
+        - sous-secteur : 1 (services d’enseignement);
+        - groupe industriel : 7 (services de soutien à l’enseignement);
+        - industrie : 10 (services de soutien à l’enseignement).
     datastore_type: text
 
   # 3.33 Expected Results or Intended Outcome (English) (New Field)
@@ -1031,8 +1233,18 @@ resources:
       en: Expected Results or Intended Outcome (English)
       fr: Résultats attendus ou visés (anglais)
     description:
-      en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
-      fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
+      en: >
+        The expected results or intended outcome is the assumed result of project
+        completion. It should be populated in accordance with the project that the
+        recipient is undertaking or the program under which it is funded. This field
+        will attempt to explain why the project is being undertaken, and what the
+        final results should be.
+      fr: >
+        Les résultats attendus ou visés sont les résultats présumés qui découlent de
+        l'exécution d'un projet. Le champ doit être rempli en fonction du projet
+        qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel
+        il est financé. Ce champ vise à offrir une description de la raisond'être
+        du projet et de ce que devraient être les résultats finaux.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1057,8 +1269,17 @@ resources:
       en: Expected Results or Intended Outcome (French)
       fr: Résultats attendus ou visés (français)
     description:
-      en: The expected results or intended outcome is the assumed result of project completion. It should be populated in accordance with the project that the recipient is undertaking or the program under which it is funded. This field will attempt to explain why the project is being undertaken, and what the final results should be.
-      fr: Les résultats attendus ou visés sont les résultats présumés qui découlent de l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ vise à offrir une description de la raisond'être du projet et de ce que devraient être les résultats finaux.
+      en: >
+        The expected results or intended outcome is the assumed result of project completion.
+        It should be populated in accordance with the project that the recipient is undertaking
+        or the program under which it is funded. This field will attempt to explain why the
+        project is being undertaken, and what the final results should be.
+      fr: >
+        Les résultats attendus ou visés sont les résultats présumés qui découlent de
+        l'exécution d'un projet. Le champ doit être rempli en fonction du projet qu'entreprend
+        le bénéficiaire ou conformément au programme en vertu duquel il est financé. Ce champ
+        vise à offrir une description de la raisond'être du projet et de ce que devraient être
+        les résultats finaux.
     obligation:
       en: Mandatory
       fr: Obligatoire
@@ -1083,34 +1304,60 @@ resources:
       en: Additional Information (English)
       fr: Renseignements supplémentaires (anglais)
     description:
-      en: |
-        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
+      en: >
+        Additional information is information that departments are required to enter under
+        the guidance instructions for exceptions but that is not captured in any of the
+        aforementioned fields. It may contain information on:
 
-        • additional funding departments
-        • funding through a third party
-        • ministerial announcements
-        • research fields
-        • joint funding
-        • collaborators and partners
-        • keywords
-        • belated reporting
-        • novation agreements
-        • terminations
-        • repayability
-      fr: |
-        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
 
-        • autres ministères participent au financement;
-        • financement par l'intermédiaire d'un tiers;
-        • annonces ministérielles;
-        • domaines de recherche;
-        • financement conjoint;
-        • collaborateurs et partenaires;
-        • mots-clés;
-        • divulgation tardive;
-        • entente d'innovation;
-        • résiliations;
-        • remboursement.
+        - additional funding departments
+
+        - funding through a third party
+
+        - ministerial announcements
+
+        - research fields
+
+        - joint funding
+
+        - collaborators and partners
+
+        - keywords
+
+        - belated reporting
+
+        - novation agreements
+
+        - terminations
+
+        - repayability
+      fr: >
+        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions,
+        les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis
+        dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
+
+
+        - autres ministères participent au financement;
+
+        - financement par l'intermédiaire d'un tiers;
+
+        - annonces ministérielles;
+
+        - domaines de recherche;
+
+        - financement conjoint;
+
+        - collaborateurs et partenaires;
+
+        - mots-clés;
+
+        - divulgation tardive;
+
+        - entente d'innovation;
+
+        - résiliations;
+
+        - remboursement.
     obligation:
       en: Optional
       fr: Facultatif
@@ -1130,34 +1377,60 @@ resources:
       en: Additional Information (French)
       fr: Renseignements supplémentaires (français)
     description:
-      en: |
-        Additional information is information that departments are required to enter under the guidance instructions for exceptions but that is not captured in any of the aforementioned fields. It may contain information on:
+      en: >
+        Additional information is information that departments are required to enter under
+        the guidance instructions for exceptions but that is not captured in any of the
+        aforementioned fields. It may contain information on:
 
-        • additional funding departments
-        • funding through a third party
-        • ministerial announcements
-        • research fields
-        • joint funding
-        • collaborators and partners
-        • keywords
-        • belated reporting
-        • novation agreements
-        • terminations
-        • repayability
-      fr: |
-        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent des exceptions, les ministères doivent entrer ici les renseignements supplémentaires qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
 
-        • autres ministères participent au financement;
-        • financement par l'intermédiaire d'un tiers;
-        • annonces ministérielles;
-        • domaines de recherche;
-        • financement conjoint;
-        • collaborateurs et partenaires;
-        • mots-clés;
-        • divulgation tardive;
-        • entente d'innovation;
-        • résiliations;
-        • remboursement.
+        - additional funding departments
+
+        - funding through a third party
+
+        - ministerial announcements
+
+        - research fields
+
+        - joint funding
+
+        - collaborators and partners
+
+        - keywords
+
+        - belated reporting
+
+        - novation agreements
+
+        - terminations
+
+        - repayability
+      fr: >
+        Lorsqu'ils sont tenus de le faire conformément aux « Indications » qui traitent
+        des exceptions, les ministères doivent entrer ici les renseignements supplémentaires
+        qui ne sont pas saisis dans les champs précédents. Il peut s'agir de renseignements comme ceux-ci :
+
+
+        - autres ministères participent au financement;
+
+        - financement par l'intermédiaire d'un tiers;
+
+        - annonces ministérielles;
+
+        - domaines de recherche;
+
+        - financement conjoint;
+
+        - collaborateurs et partenaires;
+
+        - mots-clés;
+
+        - divulgation tardive;
+
+        - entente d'innovation;
+
+        - résiliations;
+
+        - remboursement.
     obligation:
       en: Optional
       fr: Facultatif
