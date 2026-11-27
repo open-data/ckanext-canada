@@ -339,12 +339,15 @@ def delete_activities(days: Optional[int] = 90,
         click.echo(f'Excluding activity_type {exclude_types}')
         conditions.append('activity_type NOT IN :exclude_types')
         params['exclude_types'] = exclude_types
+    bindparams = [
+        sa.bindparam(name, expanding=True)
+        for name in ('include_types', 'exclude_types')
+        if name in params
+    ]
+
     activity_count = model.Session.execute(sa.text(
         "SELECT count(*) FROM activity WHERE " + " AND ".join(conditions)
-        ).bindparams(
-            sa.bindparam('include_types', expanding=True),
-            sa.bindparam('exclude_types', expanding=True)
-        ), params).scalar()
+        ).bindparams(*bindparams), params).scalar()
 
     if not bool(activity_count):
         click.echo("\nNo activities found past {d} days".format(d=days))
@@ -356,10 +359,7 @@ def delete_activities(days: Optional[int] = 90,
 
     model.Session.execute(sa.text(
         "DELETE FROM activity WHERE " + " AND ".join(conditions)
-            ).bindparams(
-                sa.bindparam('include_types', expanding=True),
-                sa.bindparam('exclude_types', expanding=True)
-            ), params)
+            ).bindparams(*bindparams), params)
     model.Session.commit()
 
     click.echo("\nDeleted {num} rows from the activity table".format(
